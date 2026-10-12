@@ -670,7 +670,7 @@ export const ACHIEVEMENTS: AchievementItem[] = [
 export const HACKATHONS: HackathonItem[] = [
   {
     id: 'hack-build-to-ship',
-    slug: 'build-to-ship-hackathon',
+    slug: 'Build-to-ship-hackathon',
     eventName: 'Build to Ship Hackathon',
     date: '2026',
     role: 'Full Stack & AI Systems Engineer',
@@ -681,7 +681,7 @@ export const HACKATHONS: HackathonItem[] = [
       'Won 3rd Place among competing engineering teams in the Build to Ship Hackathon by architecting TradeVault, an enterprise-grade hybrid multi-agent quantitative trading and statistical forecasting platform with automated Alpaca broker execution and an emergency kill switch.',
     tech: ['Python', 'FastAPI', 'Node.js', 'Express', 'React', 'Groq DeepSeek-R1', 'Redis', 'MongoDB', 'Alpaca API'],
     links: {
-      project: 'https://tradevaultone.vercel.app/',
+      project: 'https://tradevaultone.vercel.app',
       repo: 'https://github.com/shivannagorkal/Tradint-agent',
     },
     teamMembers: [
