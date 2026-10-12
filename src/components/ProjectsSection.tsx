@@ -7,18 +7,23 @@ import { PROJECTS, type ProjectItem } from '../data/content';
 
 import { GlassCard } from './GlassCard';
 import { TechBadge } from './TechBadge';
+import { StatusBadge } from './StatusBadge';
+import { TeamMemberCard } from './TeamMemberCard';
 
 export const ProjectsSection: React.FC = () => {
   const [currentIndex, setCurrentIndex] = useState(0);
+  const [direction, setDirection] = useState<'forward' | 'backward'>('forward');
   const total = PROJECTS.length;
   const containerRef = useRef<HTMLDivElement>(null);
   const [touchStart, setTouchStart] = useState<number | null>(null);
 
   const prevSlide = useCallback(() => {
+    setDirection('backward');
     setCurrentIndex((prev) => (prev === 0 ? total - 1 : prev - 1));
   }, [total]);
 
   const nextSlide = useCallback(() => {
+    setDirection('forward');
     setCurrentIndex((prev) => (prev === total - 1 ? 0 : prev + 1));
   }, [total]);
 
@@ -63,6 +68,21 @@ export const ProjectsSection: React.FC = () => {
 
   const currentProject = PROJECTS[currentIndex];
 
+  const sliderVariants = {
+    enter: (dir: 'forward' | 'backward') => ({
+      x: dir === 'forward' ? 60 : -60,
+      opacity: 0,
+    }),
+    center: {
+      x: 0,
+      opacity: 1,
+    },
+    exit: (dir: 'forward' | 'backward') => ({
+      x: dir === 'forward' ? -60 : 60,
+      opacity: 0,
+    }),
+  };
+
   return (
     <section
       id="projects"
@@ -86,47 +106,59 @@ export const ProjectsSection: React.FC = () => {
               03 / PROJECTS
             </span>
             <h2
-              className="font-display text-4xl sm:text-5xl lg:text-6xl uppercase tracking-wider"
-              style={{ color: 'var(--text-primary)' }}
+              className="font-section-head text-3xl sm:text-4xl lg:text-5xl uppercase tracking-wider font-extrabold"
             >
-              SELECTED WORKS
+              <span className="gold-gradient-text">SELECTED WORKS</span>
             </h2>
           </div>
 
           <div className="flex items-center gap-4">
-            {/* Slide Counter */}
-            <div className="font-mono-code text-xs tracking-widest px-3 py-1.5 rounded-full border" style={{ borderColor: 'var(--border-subtle)', color: 'var(--text-secondary)' }}>
-              <span className="font-bold text-white dark:text-white light:text-black">
+            {/* Slide Counter - Clear and Visible in Both Themes */}
+            <div
+              className="font-mono-code text-xs tracking-widest px-3.5 py-1.5 rounded-full border flex items-center gap-1.5 font-bold shadow-sm"
+              style={{
+                borderColor: 'var(--border-strong)',
+                backgroundColor: 'var(--bg-card)',
+              }}
+            >
+              <span style={{ color: 'var(--text-primary)' }}>
                 {String(currentIndex + 1).padStart(2, '0')}
-              </span>{' '}
-              / {String(total).padStart(2, '0')}
+              </span>
+              <span style={{ color: 'var(--text-muted)' }}>/</span>
+              <span style={{ color: 'var(--text-muted)' }}>
+                {String(total).padStart(2, '0')}
+              </span>
             </div>
 
-            {/* Prev / Next Arrows */}
+            {/* Prev (Backward) / Next (Forward) Controls */}
             <div className="flex items-center gap-2">
               <button
+                type="button"
                 onClick={prevSlide}
+                title="Backward (Previous Project)"
                 aria-label="Previous project"
-                className="p-3 rounded-full border transition-all duration-200 hover:scale-105 active:scale-95 cursor-pointer shadow-md"
+                className="p-3 rounded-full border transition-all duration-200 hover:scale-110 active:scale-95 cursor-pointer shadow-md flex items-center justify-center group"
                 style={{
-                  backgroundColor: 'var(--bg-secondary)',
+                  backgroundColor: 'var(--bg-card)',
                   borderColor: 'var(--border-strong)',
                   color: 'var(--text-primary)',
                 }}
               >
-                <ChevronLeft className="w-4 h-4" />
+                <ChevronLeft className="w-4 h-4 transition-transform group-hover:-translate-x-0.5" />
               </button>
               <button
+                type="button"
                 onClick={nextSlide}
+                title="Forward (Next Project)"
                 aria-label="Next project"
-                className="p-3 rounded-full border transition-all duration-200 hover:scale-105 active:scale-95 cursor-pointer shadow-md"
+                className="p-3 rounded-full border transition-all duration-200 hover:scale-110 active:scale-95 cursor-pointer shadow-md flex items-center justify-center group"
                 style={{
-                  backgroundColor: 'var(--bg-secondary)',
+                  backgroundColor: 'var(--bg-card)',
                   borderColor: 'var(--border-strong)',
                   color: 'var(--text-primary)',
                 }}
               >
-                <ChevronRight className="w-4 h-4" />
+                <ChevronRight className="w-4 h-4 transition-transform group-hover:translate-x-0.5" />
               </button>
             </div>
 
@@ -147,25 +179,22 @@ export const ProjectsSection: React.FC = () => {
 
         {/* Horizontal Slider Area */}
         <div className="relative min-h-[540px] flex items-center justify-center">
-          <AnimatePresence mode="wait">
+          <AnimatePresence mode="wait" custom={direction}>
             <motion.div
               key={currentProject.id}
-              initial={{ opacity: 0, x: 40 }}
-              animate={{ opacity: 1, x: 0 }}
-              exit={{ opacity: 0, x: -40 }}
-              transition={{ duration: 0.45, ease: [0.16, 1, 0.3, 1] }}
+              custom={direction}
+              variants={sliderVariants}
+              initial="enter"
+              animate="center"
+              exit="exit"
+              transition={{ duration: 0.38, ease: [0.16, 1, 0.3, 1] }}
               className="w-full"
             >
               {/* Card Container with Glass & Cinematic Styling */}
-              <GlassCard className="p-8 sm:p-12 shadow-2xl">
-                {/* Top Subtle Flare Light */}
-                <div className="absolute top-0 left-0 right-0 h-[1px] bg-gradient-to-r from-transparent via-[var(--glass-highlight)] to-transparent pointer-events-none" />
-
-
-
+              <GlassCard className="p-4 sm:p-8 lg:p-12 shadow-2xl card-gold-border">
                 {/* Big Background Watermark Number */}
                 <span
-                  className="absolute -bottom-6 -right-3 text-8xl sm:text-9xl font-bold select-none pointer-events-none leading-none opacity-5 font-display"
+                  className="absolute -bottom-6 -right-3 text-8xl sm:text-9xl font-extrabold select-none pointer-events-none leading-none opacity-5 font-work-title"
                   style={{ color: 'var(--text-primary)' }}
                 >
                   {currentProject.number}
@@ -185,22 +214,13 @@ export const ProjectsSection: React.FC = () => {
                           {currentProject.category}
                         </span>
 
-                        {/* Status Chip */}
-                        <span
-                          className={`text-[10px] font-mono-code uppercase px-2.5 py-0.5 rounded-full border ${currentProject.status === 'Live'
-                              ? 'border-emerald-500/40 text-emerald-400 bg-emerald-950/20'
-                              : currentProject.status === 'In progress'
-                                ? 'border-amber-500/40 text-amber-300 bg-amber-950/20'
-                                : 'border-zinc-500/40 text-zinc-400 bg-zinc-900/20'
-                            }`}
-                        >
-                          ● {currentProject.status}
-                        </span>
+                        {/* Status Chip: Proper border line and solid color, no background */}
+                        <StatusBadge status={currentProject.status} />
                       </div>
 
                       {/* Project Title */}
                       <h3
-                        className="font-display text-4xl sm:text-5xl lg:text-6xl uppercase tracking-tight mb-4 group-hover:text-white transition-colors"
+                        className="font-work-title text-2xl min-[480px]:text-3xl sm:text-4xl lg:text-5xl uppercase tracking-tight mb-4 font-extrabold group-hover:text-white transition-colors break-words"
                         style={{ color: 'var(--text-primary)' }}
                       >
                         {currentProject.title}
@@ -208,11 +228,26 @@ export const ProjectsSection: React.FC = () => {
 
                       {/* Description */}
                       <p
-                        className="text-xs sm:text-sm lg:text-base leading-relaxed font-light mb-8 max-w-2xl font-body"
+                        className="text-xs sm:text-sm lg:text-base leading-relaxed font-light mb-6 max-w-2xl font-body"
                         style={{ color: 'var(--text-secondary)' }}
                       >
                         {currentProject.description}
                       </p>
+
+                      {/* Team Collaborators if present */}
+                      {currentProject.teamMembers && currentProject.teamMembers.length > 0 && (
+                        <div className="mb-6">
+                          <span className="text-[10px] font-mono-code uppercase tracking-widest block mb-2" style={{ color: 'var(--text-muted)' }}>
+                            TEAM MEMBERS ({currentProject.teamMembers.length})
+                          </span>
+                          <div className="flex flex-wrap items-center gap-1.5">
+                            {currentProject.teamMembers.map((member) => (
+                              <TeamMemberCard key={member.name} member={member} variant="circle-only" />
+                            ))}
+
+                          </div>
+                        </div>
+                      )}
                     </div>
 
                     {/* Tech Stack Pills */}
@@ -220,7 +255,7 @@ export const ProjectsSection: React.FC = () => {
                       <span className="text-[10px] font-mono-code uppercase tracking-widest block mb-3" style={{ color: 'var(--text-muted)' }}>
                         TECH STACK
                       </span>
-                      <div className="flex flex-wrap gap-2.5">
+                      <div className="flex flex-wrap gap-1.5 min-[380px]:gap-2 sm:gap-2.5">
                         {currentProject.tech.map((t) => (
                           <TechBadge key={t} name={t} />
                         ))}
@@ -235,20 +270,20 @@ export const ProjectsSection: React.FC = () => {
                       <span className="text-[10px] font-mono-code tracking-[0.25em] uppercase block mb-4" style={{ color: 'var(--text-muted)' }}>
                         // ARCHITECTURE METRICS
                       </span>
-                      <div className="space-y-4">
+                      <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-1 gap-2 sm:gap-3">
                         {currentProject.metrics.map((m) => (
                           <div
                             key={m.label}
-                            className="p-3.5 rounded-xl border flex items-center justify-between"
+                            className="p-2.5 sm:p-3.5 rounded-xl border flex flex-col justify-center sm:flex-row sm:items-center sm:justify-between gap-0.5 sm:gap-2"
                             style={{
                               backgroundColor: 'var(--bg-card)',
                               borderColor: 'var(--border-subtle)',
                             }}
                           >
-                            <span className="text-[10px] font-mono-code uppercase tracking-wider" style={{ color: 'var(--text-muted)' }}>
+                            <span className="text-[9.5px] sm:text-[10px] font-mono-code uppercase tracking-wider truncate" style={{ color: 'var(--text-muted)' }}>
                               {m.label}
                             </span>
-                            <span className="font-mono-code text-xs sm:text-sm font-bold" style={{ color: 'var(--text-primary)' }}>
+                            <span className="font-mono-code text-xs sm:text-sm font-bold truncate" style={{ color: 'var(--text-primary)' }}>
                               {m.value}
                             </span>
                           </div>
@@ -328,8 +363,10 @@ export const ProjectsSection: React.FC = () => {
               key={p.id}
               onClick={() => setCurrentIndex(idx)}
               aria-label={`Go to project ${p.title}`}
-              className={`h-1.5 transition-all duration-300 rounded-full cursor-pointer ${idx === currentIndex ? 'w-8 bg-white' : 'w-2 bg-zinc-600 hover:bg-zinc-400'
-                }`}
+              className={`h-2 transition-all duration-300 rounded-full cursor-pointer ${idx === currentIndex ? 'w-9' : 'w-2.5 hover:opacity-80'}`}
+              style={{
+                backgroundColor: idx === currentIndex ? 'var(--text-primary)' : 'var(--border-strong)',
+              }}
             />
           ))}
         </div>
@@ -345,7 +382,7 @@ export const ProjectsSection: React.FC = () => {
             }}
           >
             <Layers className="w-3.5 h-3.5" />
-            <span>View all {total} projects</span>
+            <span>View all projects</span>
           </Link>
         </div>
       </div>

@@ -26,12 +26,17 @@
   --video-mask: linear-gradient(to right, #000000 0%, rgba(0, 0, 0, 0.92) 36%, rgba(0, 0, 0, 0.65) 70%, rgba(0, 0, 0, 0.15) 100%);
   --video-mask-bottom: linear-gradient(to top, #000000 0%, transparent 100%);
 
-  /* Glass tokens - Dark Theme */
-  --glass-bg: rgba(12, 12, 14, 0.68);
-  --glass-border: rgba(255, 255, 255, 0.12);
-  --glass-border-hover: rgba(255, 255, 255, 0.35);
-  --glass-highlight: rgba(255, 255, 255, 0.18);
-  --glass-spotlight: rgba(255, 255, 255, 0.08);
+  /* Glass tokens - Dark Theme with Luxurious Golden Accents */
+  --glass-bg: rgba(12, 12, 14, 0.72);
+  --glass-border: rgba(229, 184, 66, 0.32);
+  --glass-border-hover: rgba(245, 208, 97, 0.72);
+  --glass-highlight: rgba(255, 235, 170, 0.18);
+  --glass-spotlight: rgba(229, 184, 66, 0.12);
+  --card-gold-border: rgba(229, 184, 66, 0.35);
+  --card-gold-border-hover: rgba(245, 208, 97, 0.75);
+  --gold-primary: #E5B842;
+  --gold-bright: #FDE68A;
+  --card-top-line: rgba(255, 255, 255, 0.75);
 }
 
 [data-theme="light"] {
@@ -50,11 +55,16 @@
   --video-mask-bottom: linear-gradient(to top, #ffffff 0%, transparent 100%);
 
   /* Glass tokens - Light Theme */
-  --glass-bg: rgba(255, 255, 255, 0.76);
+  --glass-bg: rgba(255, 255, 255, 0.82);
   --glass-border: rgba(0, 0, 0, 0.12);
   --glass-border-hover: rgba(0, 0, 0, 0.32);
   --glass-highlight: rgba(255, 255, 255, 0.9);
   --glass-spotlight: rgba(0, 0, 0, 0.05);
+  --card-gold-border: rgba(0, 0, 0, 0.12);
+  --card-gold-border-hover: rgba(0, 0, 0, 0.35);
+  --gold-primary: #B8860B;
+  --gold-bright: #D4AF37;
+  --card-top-line: rgba(0, 0, 0, 0.6);
 }
 
 html {
@@ -64,6 +74,8 @@ html {
   background-color: var(--bg-primary);
   color: var(--text-primary);
   transition: background-color 0.3s ease, color 0.3s ease;
+  overflow-x: hidden;
+  max-width: 100vw;
 }
 
 body {
@@ -71,6 +83,7 @@ body {
   padding: 0;
   min-height: 100vh;
   overflow-x: hidden;
+  max-width: 100vw;
   background-color: var(--bg-primary);
   color: var(--text-primary);
 }
@@ -111,6 +124,67 @@ body {
 
 .font-signature {
   font-family: var(--font-signature);
+}
+
+.gold-gradient-text {
+  background: linear-gradient(180deg, #A67C1E 0%, #C99726 40%, #8C5E0D 100%);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  display: inline-block;
+}
+
+[data-theme="dark"] .gold-gradient-text {
+  background: linear-gradient(180deg, #FFEAB5 0%, #E5B842 38%, #B88928 72%, #7A530E 100%);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  display: inline-block;
+}
+
+.gold-gradient-horizontal {
+  background: linear-gradient(90deg, #FFEAB5 0%, #E5B842 50%, #A97A24 100%);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  display: inline-block;
+}
+
+[data-theme="dark"] .card-gold-border {
+  border-color: rgba(229, 184, 66, 0.35) !important;
+}
+
+[data-theme="dark"] .card-gold-border:hover {
+  border-color: rgba(245, 208, 97, 0.75) !important;
+  box-shadow: 0 12px 36px rgba(229, 184, 66, 0.16) !important;
+}
+
+/* Thin Top Accent Line on Cards: White in dark theme, black in light theme */
+.card-top-line {
+  position: relative;
+  overflow: hidden;
+}
+
+.card-top-line::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  height: 1.5px;
+  background-color: var(--card-top-line);
+  pointer-events: none;
+  z-index: 20;
+}
+
+/* Professional & Distinctive Fonts for Projects and Achievements */
+.font-work-title {
+  font-family: 'Syne', var(--font-headline);
+  font-weight: 700;
+  letter-spacing: -0.015em;
+}
+
+.font-section-head {
+  font-family: 'Syne', var(--font-headline);
+  font-weight: 800;
+  letter-spacing: 0.035em;
 }
 
 /* Hairline borders */

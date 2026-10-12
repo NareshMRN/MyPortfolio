@@ -10,8 +10,11 @@ import {
   ExternalLink,
   FileText,
   CheckCircle2,
+  Sun,
+  Moon,
 } from 'lucide-react';
 import { PERSONAL_INFO } from '../data/content';
+import { useTheme } from '../context/ThemeContext';
 
 interface ResumeViewerModalProps {
   isOpen: boolean;
@@ -19,9 +22,14 @@ interface ResumeViewerModalProps {
 }
 
 export const ResumeViewerModal: React.FC<ResumeViewerModalProps> = ({ isOpen, onClose }) => {
+  const { theme } = useTheme();
+  const isDark = theme === 'dark';
+
   const [mounted, setMounted] = useState(false);
   const [isFullscreen, setIsFullscreen] = useState(false);
   const [isMinimized, setIsMinimized] = useState(false);
+  // Always default to natural white theme until the user manually clicks "Dark Doc"
+  const [invertDoc, setInvertDoc] = useState<boolean>(false);
 
   useEffect(() => {
     setMounted(true);
@@ -68,17 +76,26 @@ export const ResumeViewerModal: React.FC<ResumeViewerModalProps> = ({ isOpen, on
           animate={{ opacity: 1, y: 0, scale: 1 }}
           exit={{ opacity: 0, y: 30, scale: 0.9 }}
           transition={{ duration: 0.2 }}
-          className="fixed bottom-5 right-5 sm:bottom-8 sm:right-8 z-[9999] flex items-center gap-3 px-4 py-2.5 rounded-2xl border border-white/20 bg-[#0a0a0c]/95 backdrop-blur-xl shadow-2xl cursor-pointer hover:border-white/40 transition-all group"
+          className={`fixed bottom-5 right-5 sm:bottom-8 sm:right-8 z-[9999] flex items-center gap-3 px-4 py-2.5 rounded-2xl border backdrop-blur-xl shadow-2xl cursor-pointer transition-all group ${
+            isDark
+              ? 'border-white/20 bg-[#0a0a0c]/95 text-white hover:border-white/40'
+              : 'border-black/15 bg-white/95 text-zinc-900 hover:border-black/30'
+          }`}
           onClick={() => setIsMinimized(false)}
         >
           {/* Controls on dock */}
-          <div className="flex items-center gap-1.5 pr-2.5 border-r border-white/10" onClick={(e) => e.stopPropagation()}>
+          <div
+            className={`flex items-center gap-1.5 pr-2.5 border-r ${
+              isDark ? 'border-white/10' : 'border-black/10'
+            }`}
+            onClick={(e) => e.stopPropagation()}
+          >
             <button
               onClick={() => {
                 setIsMinimized(false);
                 onClose();
               }}
-              className="w-3.5 h-3.5 rounded-full bg-[#ff5f56] flex items-center justify-center hover:opacity-85 transition-opacity cursor-pointer"
+              className="w-3.5 h-3.5 rounded-full bg-[#ff5f56] flex items-center justify-center hover:opacity-85 transition-opacity cursor-pointer shadow-sm"
               title="Close"
               aria-label="Close"
             >
@@ -86,7 +103,7 @@ export const ResumeViewerModal: React.FC<ResumeViewerModalProps> = ({ isOpen, on
             </button>
             <button
               onClick={() => setIsMinimized(false)}
-              className="w-3.5 h-3.5 rounded-full bg-[#27c93f] flex items-center justify-center hover:opacity-85 transition-opacity cursor-pointer"
+              className="w-3.5 h-3.5 rounded-full bg-[#27c93f] flex items-center justify-center hover:opacity-85 transition-opacity cursor-pointer shadow-sm"
               title="Restore"
               aria-label="Restore"
             >
@@ -95,11 +112,19 @@ export const ResumeViewerModal: React.FC<ResumeViewerModalProps> = ({ isOpen, on
           </div>
 
           <div className="flex items-center gap-2">
-            <FileText className="w-4 h-4 text-zinc-300" />
-            <span className="font-mono-code text-xs text-white font-medium">
+            <FileText className={`w-4 h-4 ${isDark ? 'text-zinc-300' : 'text-zinc-600'}`} />
+            <span
+              className={`font-mono-code text-xs font-medium ${
+                isDark ? 'text-white' : 'text-zinc-900'
+              }`}
+            >
               {PERSONAL_INFO.name}_Resume_2026.pdf
             </span>
-            <span className="text-[10px] font-mono-code uppercase px-2 py-0.5 rounded bg-white/10 text-zinc-300">
+            <span
+              className={`text-[10px] font-mono-code uppercase px-2 py-0.5 rounded ${
+                isDark ? 'bg-white/10 text-zinc-300' : 'bg-black/5 text-zinc-600'
+              }`}
+            >
               Restore
             </span>
           </div>
@@ -119,7 +144,9 @@ export const ResumeViewerModal: React.FC<ResumeViewerModalProps> = ({ isOpen, on
             animate={{ opacity: 1 }}
             exit={{ opacity: 0 }}
             onClick={onClose}
-            className="absolute inset-0 bg-black/85 backdrop-blur-md cursor-pointer"
+            className={`absolute inset-0 backdrop-blur-md cursor-pointer transition-colors duration-300 ${
+              isDark ? 'bg-black/85' : 'bg-black/40'
+            }`}
           />
 
           {/* Modal Container */}
@@ -134,19 +161,31 @@ export const ResumeViewerModal: React.FC<ResumeViewerModalProps> = ({ isOpen, on
                 : 'w-full max-w-5xl h-[92vh] sm:h-[88vh] rounded-2xl border shadow-2xl'
             }`}
             style={{
-              backgroundColor: '#0a0a0c',
-              borderColor: 'rgba(255, 255, 255, 0.18)',
+              backgroundColor: isDark ? '#0a0a0c' : '#ffffff',
+              borderColor: isDark ? 'rgba(255, 255, 255, 0.18)' : 'rgba(0, 0, 0, 0.12)',
               boxShadow: isFullscreen
                 ? 'none'
-                : '0 25px 60px -15px rgba(0, 0, 0, 0.8), inset 0 1px 0 rgba(255, 255, 255, 0.2)',
+                : isDark
+                ? '0 25px 60px -15px rgba(0, 0, 0, 0.8), inset 0 1px 0 rgba(255, 255, 255, 0.2)'
+                : '0 25px 60px -15px rgba(0, 0, 0, 0.2), inset 0 1px 0 rgba(255, 255, 255, 0.8)',
             }}
           >
             {/* Custom Header Bar */}
-            <div className="flex items-center justify-between px-4 sm:px-6 py-3.5 border-b border-white/10 bg-black/60 backdrop-blur-lg">
+            <div
+              className={`flex items-center justify-between px-4 sm:px-6 py-3.5 border-b backdrop-blur-lg transition-colors duration-300 ${
+                isDark
+                  ? 'border-white/10 bg-black/60 text-white'
+                  : 'border-black/10 bg-zinc-100/90 text-zinc-900'
+              }`}
+            >
               {/* Left: Window Title & Status */}
               <div className="flex items-center gap-3">
                 {/* Traffic lights aesthetic with functional icons */}
-                <div className="group/controls flex items-center gap-1.5 pr-2 border-r border-white/10">
+                <div
+                  className={`group/controls flex items-center gap-1.5 pr-2 border-r ${
+                    isDark ? 'border-white/10' : 'border-black/10'
+                  }`}
+                >
                   {/* Red: Close */}
                   <button
                     onClick={onClose}
@@ -154,7 +193,10 @@ export const ResumeViewerModal: React.FC<ResumeViewerModalProps> = ({ isOpen, on
                     title="Close"
                     aria-label="Close"
                   >
-                    <X className="w-2 h-2 text-[#4a0000] opacity-80 group-hover/controls:opacity-100 transition-opacity" strokeWidth={3} />
+                    <X
+                      className="w-2 h-2 text-[#4a0000] opacity-80 group-hover/controls:opacity-100 transition-opacity"
+                      strokeWidth={3}
+                    />
                   </button>
 
                   {/* Yellow: Minimize */}
@@ -164,7 +206,10 @@ export const ResumeViewerModal: React.FC<ResumeViewerModalProps> = ({ isOpen, on
                     title="Minimize"
                     aria-label="Minimize"
                   >
-                    <Minus className="w-2 h-2 text-[#4a2e00] opacity-80 group-hover/controls:opacity-100 transition-opacity" strokeWidth={3} />
+                    <Minus
+                      className="w-2 h-2 text-[#4a2e00] opacity-80 group-hover/controls:opacity-100 transition-opacity"
+                      strokeWidth={3}
+                    />
                   </button>
 
                   {/* Green: Fullscreen Toggle */}
@@ -175,19 +220,35 @@ export const ResumeViewerModal: React.FC<ResumeViewerModalProps> = ({ isOpen, on
                     aria-label={isFullscreen ? 'Exit Fullscreen' : 'Fullscreen'}
                   >
                     {isFullscreen ? (
-                      <Minimize2 className="w-2 h-2 text-[#003d13] opacity-80 group-hover/controls:opacity-100 transition-opacity" strokeWidth={3} />
+                      <Minimize2
+                        className="w-2 h-2 text-[#003d13] opacity-80 group-hover/controls:opacity-100 transition-opacity"
+                        strokeWidth={3}
+                      />
                     ) : (
-                      <Maximize2 className="w-2 h-2 text-[#003d13] opacity-80 group-hover/controls:opacity-100 transition-opacity" strokeWidth={3} />
+                      <Maximize2
+                        className="w-2 h-2 text-[#003d13] opacity-80 group-hover/controls:opacity-100 transition-opacity"
+                        strokeWidth={3}
+                      />
                     )}
                   </button>
                 </div>
 
                 <div className="flex items-center gap-2">
-                  <FileText className="w-4 h-4 text-zinc-300" />
-                  <span className="font-mono-code text-xs sm:text-sm font-semibold text-white tracking-wide">
+                  <FileText className={`w-4 h-4 ${isDark ? 'text-zinc-300' : 'text-zinc-600'}`} />
+                  <span
+                    className={`font-mono-code text-xs sm:text-sm font-semibold tracking-wide ${
+                      isDark ? 'text-white' : 'text-zinc-900'
+                    }`}
+                  >
                     {PERSONAL_INFO.name}_Resume_2026.pdf
                   </span>
-                  <span className="hidden sm:inline-flex items-center gap-1 px-2 py-0.5 rounded text-[10px] font-mono-code bg-emerald-950/60 text-emerald-400 border border-emerald-500/30">
+                  <span
+                    className={`hidden sm:inline-flex items-center gap-1 px-2 py-0.5 rounded text-[10px] font-mono-code ${
+                      isDark
+                        ? 'bg-emerald-950/60 text-emerald-400 border border-emerald-500/30'
+                        : 'bg-emerald-50 text-emerald-700 border border-emerald-300'
+                    }`}
+                  >
                     <CheckCircle2 className="w-2.5 h-2.5" /> Verified · 2nd Year
                   </span>
                 </div>
@@ -195,11 +256,32 @@ export const ResumeViewerModal: React.FC<ResumeViewerModalProps> = ({ isOpen, on
 
               {/* Right: Actions */}
               <div className="flex items-center gap-2 sm:gap-3">
+                {/* Manual Document reading tone toggle (defaults to White Doc until clicked) */}
+                <button
+                  type="button"
+                  onClick={() => setInvertDoc((prev) => !prev)}
+                  className={`inline-flex items-center gap-1.5 px-2.5 sm:px-3 py-1.5 rounded-lg text-xs font-mono-code uppercase tracking-wider border transition-all cursor-pointer ${
+                    isDark
+                      ? 'border-white/15 bg-white/5 text-zinc-300 hover:border-white/40 hover:text-white'
+                      : 'border-black/15 bg-black/5 text-zinc-700 hover:border-black/30 hover:text-black'
+                  }`}
+                  title={invertDoc ? 'Switch back to original white document' : 'Switch to dark document tone'}
+                >
+                  {invertDoc ? <Sun className="w-3.5 h-3.5" /> : <Moon className="w-3.5 h-3.5" />}
+                  <span className="hidden md:inline">
+                    {invertDoc ? 'White Doc' : 'Dark Doc'}
+                  </span>
+                </button>
+
                 <a
                   href={PERSONAL_INFO.resumeUrl}
                   target="_blank"
                   rel="noopener noreferrer"
-                  className="hidden sm:inline-flex items-center gap-1.5 px-3 py-1.5 rounded-lg text-xs font-mono-code uppercase tracking-wider text-zinc-300 border border-white/15 hover:border-white/40 hover:text-white transition-all bg-white/5"
+                  className={`hidden sm:inline-flex items-center gap-1.5 px-3 py-1.5 rounded-lg text-xs font-mono-code uppercase tracking-wider border transition-all ${
+                    isDark
+                      ? 'text-zinc-300 border-white/15 bg-white/5 hover:border-white/40 hover:text-white'
+                      : 'text-zinc-700 border-black/15 bg-black/5 hover:border-black/30 hover:text-black'
+                  }`}
                   title="Open PDF in new tab"
                 >
                   <ExternalLink className="w-3.5 h-3.5" />
@@ -209,7 +291,11 @@ export const ResumeViewerModal: React.FC<ResumeViewerModalProps> = ({ isOpen, on
                 <a
                   href={PERSONAL_INFO.resumeUrl}
                   download
-                  className="inline-flex items-center gap-1.5 px-3.5 py-1.5 rounded-lg text-xs font-mono-code uppercase tracking-wider bg-white text-black font-semibold hover:bg-zinc-200 transition-all shadow-md"
+                  className={`inline-flex items-center gap-1.5 px-3.5 py-1.5 rounded-lg text-xs font-mono-code uppercase tracking-wider font-semibold transition-all shadow-md ${
+                    isDark
+                      ? 'bg-white text-black hover:bg-zinc-200'
+                      : 'bg-zinc-900 text-white hover:bg-zinc-800'
+                  }`}
                 >
                   <Download className="w-3.5 h-3.5" />
                   <span>Download</span>
@@ -218,7 +304,11 @@ export const ResumeViewerModal: React.FC<ResumeViewerModalProps> = ({ isOpen, on
                 {/* Fullscreen Toggle Header Button */}
                 <button
                   onClick={() => setIsFullscreen((prev) => !prev)}
-                  className="p-1.5 rounded-lg text-zinc-400 hover:text-white hover:bg-white/10 transition-colors cursor-pointer hidden sm:inline-flex"
+                  className={`p-1.5 rounded-lg transition-colors cursor-pointer hidden sm:inline-flex ${
+                    isDark
+                      ? 'text-zinc-400 hover:text-white hover:bg-white/10'
+                      : 'text-zinc-500 hover:text-zinc-900 hover:bg-black/10'
+                  }`}
                   title={isFullscreen ? 'Exit Fullscreen' : 'Fullscreen'}
                   aria-label={isFullscreen ? 'Exit Fullscreen' : 'Fullscreen'}
                 >
@@ -227,7 +317,11 @@ export const ResumeViewerModal: React.FC<ResumeViewerModalProps> = ({ isOpen, on
 
                 <button
                   onClick={onClose}
-                  className="p-1.5 rounded-lg text-zinc-400 hover:text-white hover:bg-white/10 transition-colors ml-1 cursor-pointer"
+                  className={`p-1.5 rounded-lg transition-colors ml-1 cursor-pointer ${
+                    isDark
+                      ? 'text-zinc-400 hover:text-white hover:bg-white/10'
+                      : 'text-zinc-500 hover:text-zinc-900 hover:bg-black/10'
+                  }`}
                   title="Close resume viewer"
                   aria-label="Close resume viewer"
                 >
@@ -237,21 +331,34 @@ export const ResumeViewerModal: React.FC<ResumeViewerModalProps> = ({ isOpen, on
             </div>
 
             {/* Document Viewer Body */}
-            <div className="flex-1 w-full h-full relative bg-[#121214] overflow-hidden">
+            <div
+              className={`flex-1 w-full h-full relative overflow-hidden transition-colors duration-300 ${
+                isDark ? 'bg-[#121214]' : 'bg-[#e4e4e7]'
+              }`}
+            >
               <iframe
                 src={`${PERSONAL_INFO.resumeUrl}#toolbar=0&navpanes=0&scrollbar=1`}
                 title="Naresh Resume Document"
-                className="w-full h-full border-none"
+                className="w-full h-full border-none transition-all duration-300"
+                style={{
+                  filter: invertDoc ? 'invert(0.92) hue-rotate(180deg) contrast(0.95)' : 'none',
+                }}
               />
 
               {/* Mobile Fallback Overlay if embedded PDF is unsupported */}
               <noscript>
-                <div className="absolute inset-0 flex flex-col items-center justify-center p-6 text-center text-zinc-300">
+                <div
+                  className={`absolute inset-0 flex flex-col items-center justify-center p-6 text-center ${
+                    isDark ? 'text-zinc-300' : 'text-zinc-700'
+                  }`}
+                >
                   <p className="mb-4">Unable to render PDF preview directly.</p>
                   <a
                     href={PERSONAL_INFO.resumeUrl}
                     download
-                    className="px-6 py-2.5 rounded-full bg-white text-black font-semibold text-xs font-mono-code"
+                    className={`px-6 py-2.5 rounded-full font-semibold text-xs font-mono-code ${
+                      isDark ? 'bg-white text-black' : 'bg-black text-white'
+                    }`}
                   >
                     Download Resume PDF
                   </a>

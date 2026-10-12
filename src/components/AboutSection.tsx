@@ -172,7 +172,7 @@ export const AboutSection: React.FC = () => {
     <section
       ref={sectionRef}
       id="about"
-      className="relative py-24 sm:py-32 px-6 sm:px-10 lg:px-16 border-t"
+      className="relative py-24 sm:py-32 px-4 sm:px-10 lg:px-16 border-t"
       style={{
         borderColor: 'var(--border-subtle)',
         backgroundColor: 'var(--bg-primary)',

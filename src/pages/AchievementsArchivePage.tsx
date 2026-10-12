@@ -2,6 +2,7 @@ import React from 'react';
 import { Link } from 'react-router-dom';
 import { ArrowLeft, ArrowRight, Award } from 'lucide-react';
 import { ACHIEVEMENTS } from '../data/content';
+import { TechBadge } from '../components/TechBadge';
 
 export const AchievementsArchivePage: React.FC = () => {
   return (
@@ -16,8 +17,8 @@ export const AchievementsArchivePage: React.FC = () => {
           <span className="text-[11px] font-mono-code uppercase tracking-[0.35em] block mb-3" style={{ color: 'var(--text-muted)' }}>
             ARCHIVE // 04
           </span>
-          <h1 className="font-display text-5xl sm:text-6xl md:text-7xl uppercase tracking-wider" style={{ color: 'var(--text-primary)' }}>
-            ALL ACHIEVEMENTS
+          <h1 className="font-section-head text-3xl min-[400px]:text-4xl sm:text-5xl md:text-6xl uppercase tracking-wider font-extrabold">
+            <span className="gold-gradient-text">ALL ACHIEVEMENTS</span>
           </h1>
           <p className="text-sm font-light mt-3 max-w-xl font-body" style={{ color: 'var(--text-secondary)' }}>
             Recognitions, production releases, and milestones achieved across competitions and development.
@@ -28,19 +29,32 @@ export const AchievementsArchivePage: React.FC = () => {
           {ACHIEVEMENTS.map((item) => (
             <div
               key={item.id}
-              className="group relative rounded-2xl border p-7 flex flex-col justify-between transition-all duration-300 hover:-translate-y-1 hover:shadow-2xl overflow-hidden"
+              className="group relative rounded-2xl border p-7 flex flex-col justify-between transition-all duration-300 hover:-translate-y-1 hover:shadow-2xl overflow-hidden card-gold-border card-top-line"
               style={{
                 backgroundColor: 'var(--bg-secondary)',
                 borderColor: 'var(--border-strong)',
               }}
             >
+              {/* Top Accent Line: White in dark theme, black in light theme */}
+              <div
+                className="absolute top-0 left-0 right-0 h-[1.5px] pointer-events-none z-20"
+                style={{ backgroundColor: 'var(--card-top-line)' }}
+              />
+
               <div>
                 <div className="flex items-center justify-between mb-4">
-                  <span className="font-display text-4xl tracking-tight opacity-20 font-bold" style={{ color: 'var(--text-primary)' }}>
+                  <span className="font-work-title text-3xl sm:text-4xl tracking-tight opacity-35 font-extrabold" style={{ color: 'var(--text-primary)' }}>
                     {item.year}
                   </span>
                   {item.result && (
-                    <span className="px-3 py-1 rounded-full text-[10px] font-mono-code uppercase tracking-wider border border-white/30 text-white bg-white/10 font-medium">
+                    <span
+                      className="px-3.5 py-1.5 rounded-full text-[10.5px] font-mono-code uppercase tracking-wider border font-bold shadow-sm transition-all"
+                      style={{
+                        borderColor: 'var(--border-strong)',
+                        color: 'var(--text-primary)',
+                        backgroundColor: 'var(--bg-card)',
+                      }}
+                    >
                       {item.result}
                     </span>
                   )}
@@ -49,7 +63,7 @@ export const AchievementsArchivePage: React.FC = () => {
                 <span className="text-[11px] font-mono-code uppercase tracking-wider block mb-1" style={{ color: 'var(--text-muted)' }}>
                   {item.organization}
                 </span>
-                <h2 className="font-display text-2xl uppercase tracking-wide mb-3 group-hover:text-white transition-colors" style={{ color: 'var(--text-primary)' }}>
+                <h2 className="font-work-title text-lg min-[400px]:text-xl sm:text-2xl font-bold uppercase tracking-tight mb-3 group-hover:text-white transition-colors break-words" style={{ color: 'var(--text-primary)' }}>
                   {item.title}
                 </h2>
 
@@ -58,23 +72,22 @@ export const AchievementsArchivePage: React.FC = () => {
                 </p>
               </div>
 
-              <div className="flex items-center justify-between pt-4 border-t" style={{ borderColor: 'var(--border-subtle)' }}>
-                <div className="flex flex-wrap gap-1.5">
+              <div className="pt-4 border-t space-y-2" style={{ borderColor: 'var(--border-subtle)' }}>
+                <div className="flex flex-wrap gap-1 min-[360px]:gap-1.5 w-full">
                   {item.tags.map((t) => (
-                    <span key={t} className="px-2.5 py-0.5 text-[10px] font-mono-code uppercase rounded border" style={{ borderColor: 'var(--border-subtle)', color: 'var(--text-muted)' }}>
-                      {t}
-                    </span>
+                    <TechBadge key={t} name={t} size="sm" />
                   ))}
                 </div>
-
-                <Link
-                  to={`/achievements/${item.slug}`}
-                  className="inline-flex items-center gap-1.5 text-xs font-mono-code uppercase tracking-wider hover:underline"
-                  style={{ color: 'var(--text-primary)' }}
-                >
-                  <span>Details</span>
-                  <ArrowRight className="w-3.5 h-3.5" />
-                </Link>
+                <div className="flex justify-end">
+                  <Link
+                    to={`/achievements/${item.slug}`}
+                    className="inline-flex items-center gap-1.5 text-xs font-mono-code uppercase tracking-wider hover:underline"
+                    style={{ color: 'var(--text-primary)' }}
+                  >
+                    <span>Details</span>
+                    <ArrowRight className="w-3.5 h-3.5" />
+                  </Link>
+                </div>
               </div>
             </div>
           ))}

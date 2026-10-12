@@ -1,5 +1,6 @@
 import React, { useState, useEffect, useRef, useMemo, useCallback } from 'react';
 import { motion, useInView, AnimatePresence } from 'framer-motion';
+import { X } from 'lucide-react';
 import { skillCategories, type SkillCategory, type Skill } from '../data/content';
 import { getTechMeta } from './TechBadge';
 import { useTheme } from '../context/ThemeContext';
@@ -79,8 +80,18 @@ export const SkillsSection: React.FC = () => {
   // Placed skills with calculated coordinates
   const [placedSkills, setPlacedSkills] = useState<PlacedSkill[]>([]);
 
-  // Mobile detection & Reduced Motion
-  const isMobile = typeof window !== 'undefined' && window.innerWidth < 768;
+  // Mobile detection (reactive to window resize) & Reduced Motion
+  const [isMobile, setIsMobile] = useState<boolean>(() =>
+    typeof window !== 'undefined' ? window.innerWidth < 768 : false
+  );
+  useEffect(() => {
+    const handleResize = () => {
+      setIsMobile(window.innerWidth < 768);
+    };
+    window.addEventListener('resize', handleResize);
+    return () => window.removeEventListener('resize', handleResize);
+  }, []);
+
   const prefersReducedMotion =
     typeof window !== 'undefined' &&
     window.matchMedia('(prefers-reduced-motion: reduce)').matches;
@@ -266,7 +277,7 @@ export const SkillsSection: React.FC = () => {
         backgroundColor: 'var(--bg-primary)',
       }}
     >
-      <div className="max-w-7xl mx-auto w-full">
+      <div className="max-w-[1440px] mx-auto w-full">
         {/* Section Eyebrow */}
         <motion.div
           initial={{ opacity: 0, y: 20 }}
@@ -365,12 +376,14 @@ export const SkillsSection: React.FC = () => {
         <div
           ref={imageContainerRef}
           onClick={() => isMobile && setActiveSkill(null)}
-          className="relative w-full max-w-[680px] sm:max-w-[760px] lg:max-w-[940px] xl:max-w-[1080px] 2xl:max-w-[1140px] aspect-square mx-auto flex items-center justify-center select-none"
+          className="relative -mx-4 sm:mx-auto w-[calc(100%+2rem)] sm:w-full max-w-[500px] sm:max-w-[760px] md:max-w-[900px] lg:max-w-[1060px] xl:max-w-[1200px] 2xl:max-w-[1300px] aspect-square flex items-center justify-center select-none my-5 sm:my-0"
         >
-          {/* Subtle Idle Float Wrapper */}
-          <motion.div
-            className="relative w-full h-full flex items-center justify-center"
-            animate={prefersReducedMotion ? {} : { y: [-3, 3, -3] }}
+          {/* Mobile Display Scale Wrapper (Bit bigger on mobile, 1:1 on large devices) */}
+          <div className="relative w-full h-full flex items-center justify-center scale-[1.18] sm:scale-100 origin-center transition-transform duration-300">
+            {/* Subtle Idle Float Wrapper */}
+            <motion.div
+              className="relative w-full h-full flex items-center justify-center"
+              animate={prefersReducedMotion ? {} : { y: [-3, 3, -3] }}
             transition={{
               duration: 6,
               repeat: Infinity,
@@ -422,7 +435,7 @@ export const SkillsSection: React.FC = () => {
                     tabIndex={0}
                     aria-label={`${skill.name} (${skill.categoryTitle})`}
                     aria-describedby={isHovered ? `tooltip-${skill.name}` : undefined}
-                    onMouseEnter={() => setActiveSkill(skill)}
+                    onMouseEnter={() => !isMobile && setActiveSkill(skill)}
                     onMouseLeave={() => !isMobile && setActiveSkill(null)}
                     onFocus={() => setActiveSkill(skill)}
                     onBlur={() => !isMobile && setActiveSkill(null)}
@@ -433,22 +446,22 @@ export const SkillsSection: React.FC = () => {
                     initial={prefersReducedMotion ? { opacity: 1, scale: 1 } : { opacity: 0, scale: 0 }}
                     animate={{
                       opacity: isDimmedByCategory ? 0.18 : (isHovered ? 1 : 0.95),
-                      scale: isHovered ? 1.35 : 1,
+                      scale: isHovered ? 1.3 : 1,
                     }}
                     transition={{
                       delay: prefersReducedMotion ? 0 : sIdx * 0.015,
                       duration: 0.3,
                     }}
-                    className="relative w-6 h-6 sm:w-7 sm:h-7 lg:w-8 lg:h-8 xl:w-9 xl:h-9 rounded-full flex items-center justify-center cursor-pointer outline-none transition-all duration-200 border backdrop-blur-md shadow-md group"
+                    className="relative w-7 h-7 min-[380px]:w-8 min-[380px]:h-8 sm:w-9 sm:h-9 md:w-10 md:h-10 lg:w-12 lg:h-12 xl:w-14 xl:h-14 rounded-full flex items-center justify-center cursor-pointer outline-none transition-all duration-200 border backdrop-blur-md shadow-md group"
                     style={{
                       backgroundColor:
                         theme === 'dark'
-                          ? 'rgba(12, 12, 16, 0.85)'
-                          : 'rgba(255, 255, 255, 0.92)',
+                          ? 'rgba(12, 12, 16, 0.88)'
+                          : 'rgba(255, 255, 255, 0.94)',
                       borderColor: isHovered ? skill.color : `${skill.color}66`,
                       boxShadow: isHovered
-                        ? `0 0 16px ${skill.color}, 0 0 26px ${skill.color}77, inset 0 1px 0 rgba(255,255,255,0.3)`
-                        : `0 2px 8px ${skill.color}35, inset 0 1px 0 rgba(255,255,255,0.15)`,
+                        ? `0 0 16px ${skill.color}, 0 0 26px ${skill.color}77, inset 0 1px 0 rgba(255,255,255,0.4)`
+                        : `0 2px 8px ${skill.color}35, inset 0 1px 0 rgba(255,255,255,0.2)`,
                     }}
                   >
                     {/* Outer animated ring on active/hovered */}
@@ -460,7 +473,7 @@ export const SkillsSection: React.FC = () => {
                     )}
 
                     {/* Brand SVG Icon */}
-                    <span className="w-3.5 h-3.5 sm:w-4 sm:h-4 lg:w-4.5 lg:h-4.5 xl:w-5 xl:h-5 flex items-center justify-center shrink-0 transition-transform group-hover:scale-110">
+                    <span className="w-full h-full p-1.5 min-[380px]:p-2 flex items-center justify-center shrink-0 transition-transform group-hover:scale-110 [&>svg]:w-full [&>svg]:h-full [&>svg]:max-w-full [&>svg]:max-h-full">
                       {skill.icon}
                     </span>
                   </motion.button>
@@ -551,25 +564,32 @@ export const SkillsSection: React.FC = () => {
             })}
           </motion.div>
         </div>
+      </div>
 
         {/* ------------------------------------------------------------------ */}
-        {/*  MOBILE TOOLTIP CARD (Bottom sheet docked on tap with icon & color) */}
+        {/*  MOBILE TOOLTIP CARD (Floating bottom sheet on tap with icon & info) */}
         {/* ------------------------------------------------------------------ */}
         <AnimatePresence>
           {isMobile && activeSkill && (
             <motion.div
-              initial={{ opacity: 0, y: 20 }}
-              animate={{ opacity: 1, y: 0 }}
-              exit={{ opacity: 0, y: 15 }}
-              transition={{ duration: 0.2 }}
-              className="mt-6 p-4 rounded-2xl border backdrop-blur-xl shadow-2xl relative z-30"
+              initial={{ opacity: 0, y: 50, scale: 0.95 }}
+              animate={{ opacity: 1, y: 0, scale: 1 }}
+              exit={{ opacity: 0, y: 40, scale: 0.95 }}
+              transition={{ duration: 0.22, ease: [0.16, 1, 0.3, 1] }}
+              className="fixed bottom-4 left-3 right-3 sm:left-auto sm:right-6 sm:w-96 z-[9999] p-4 rounded-2xl border backdrop-blur-2xl shadow-2xl"
               style={{
-                backgroundColor: 'var(--glass-bg)',
-                borderColor: `${activeSkill.color}55`,
-                boxShadow: `inset 0 1px 0 0 var(--glass-highlight), 0 15px 35px rgba(0,0,0,0.3), 0 0 25px ${activeSkill.color}25`,
+                backgroundColor:
+                  theme === 'dark'
+                    ? 'rgba(14, 14, 18, 0.94)'
+                    : 'rgba(255, 255, 255, 0.96)',
+                borderColor: `${activeSkill.color}66`,
+                boxShadow: `0 20px 50px rgba(0,0,0,0.5), 0 0 30px ${activeSkill.color}35`,
               }}
             >
-              <div className="flex items-center justify-between pb-2 mb-2 border-b" style={{ borderColor: 'var(--border-subtle)' }}>
+              <div
+                className="flex items-center justify-between pb-2 mb-2 border-b"
+                style={{ borderColor: 'var(--border-subtle)' }}
+              >
                 <span
                   className="text-[10px] font-mono-code uppercase tracking-widest flex items-center gap-1.5"
                   style={{ color: 'var(--text-muted)' }}
@@ -583,17 +603,17 @@ export const SkillsSection: React.FC = () => {
                 <button
                   type="button"
                   onClick={() => setActiveSkill(null)}
-                  className="text-xs font-mono-code px-2 py-0.5 rounded border text-[10px] uppercase"
-                  style={{ borderColor: 'var(--border-subtle)', color: 'var(--text-muted)' }}
+                  className="p-1 rounded-full text-zinc-400 hover:text-white cursor-pointer"
+                  aria-label="Close details"
                 >
-                  Close
+                  <X className="w-4 h-4" />
                 </button>
               </div>
 
               <div className="flex items-center gap-2.5 mb-1.5">
                 {activeSkill.icon && (
                   <span
-                    className="p-1.5 rounded-lg border flex items-center justify-center shrink-0"
+                    className="w-8 h-8 rounded-lg border flex items-center justify-center shrink-0 p-1.5"
                     style={{
                       backgroundColor: `${activeSkill.color}18`,
                       borderColor: `${activeSkill.color}44`,

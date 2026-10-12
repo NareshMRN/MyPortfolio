@@ -45,7 +45,7 @@ export const Navbar: React.FC = () => {
         borderColor: 'var(--border-subtle)',
       }}
     >
-      <div className="w-full px-6 sm:px-10 lg:px-12 xl:px-16 flex items-center justify-between">
+      <div className="w-full px-4 sm:px-8 lg:px-12 xl:px-16 flex items-center justify-between">
         {/* LOGO - Cursive aesthetic signature brand */}
         <a
           href="/#hero"
@@ -54,7 +54,7 @@ export const Navbar: React.FC = () => {
           style={{ color: 'var(--text-primary)' }}
           aria-label="Naresh Portfolio Home"
         >
-          <span className="font-signature text-3xl sm:text-4xl font-bold tracking-wide transition-all duration-200 group-hover:scale-105 inline-block -rotate-1">
+          <span className="font-signature text-2xl sm:text-4xl font-bold tracking-wide transition-all duration-200 group-hover:scale-105 inline-block -rotate-1">
             Naresh N
           </span>
 

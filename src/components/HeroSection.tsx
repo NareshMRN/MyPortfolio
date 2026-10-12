@@ -62,7 +62,7 @@ export const HeroSection: React.FC = () => {
   return (
     <section
       id="hero"
-      className="relative min-h-screen w-full flex items-center justify-start overflow-hidden pt-28 pb-16 px-4 sm:px-10 lg:px-12 xl:px-16 transition-colors duration-500"
+      className="relative min-h-screen w-full flex items-center justify-start overflow-hidden pt-28 pb-16 pl-2 sm:pl-4 lg:pl-6 xl:pl-8 pr-4 sm:pr-8 lg:pr-12 xl:pr-16 transition-colors duration-500"
     >
       {/* Hero Content Container - Full Width edge-to-edge alignment */}
       <div className="w-full relative z-10 flex flex-col justify-center">

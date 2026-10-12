@@ -14,6 +14,7 @@ import { HackathonsArchivePage } from './pages/HackathonsArchivePage';
 import { HackathonDetailPage } from './pages/HackathonDetailPage';
 import { CertificatesArchivePage } from './pages/CertificatesArchivePage';
 import { CertificateDetailPage } from './pages/CertificateDetailPage';
+import { ScrollToTopFloating } from './components/ScrollToTopFloating';
 
 // Scroll to top upon route transition
 function ScrollToTop() {
@@ -85,6 +86,8 @@ export function App() {
               <Route path="*" element={<Navigate to="/" replace />} />
             </Routes>
           </main>
+          {/* Floating Scroll to Top Button */}
+          <ScrollToTopFloating />
         </div>
       </BrowserRouter>
     </ThemeProvider>

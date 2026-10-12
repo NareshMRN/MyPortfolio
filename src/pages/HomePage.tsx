@@ -1,5 +1,4 @@
 import React from 'react';
-import { ArrowUp } from 'lucide-react';
 import { HeroSection } from '../components/HeroSection';
 import { AboutSection } from '../components/AboutSection';
 import { SkillsSection } from '../components/SkillsSection';
@@ -11,10 +10,6 @@ import { SocialIcons } from '../components/SocialIcons';
 import { PERSONAL_INFO } from '../data/content';
 
 export const HomePage: React.FC = () => {
-  const scrollToTop = () => {
-    window.scrollTo({ top: 0, behavior: 'smooth' });
-  };
-
   return (
     <div className="relative w-full z-10 transition-colors duration-500">
       {/* HERO SECTION */}
@@ -56,23 +51,9 @@ export const HomePage: React.FC = () => {
             </span>
           </div>
 
-          {/* Social Icons row in footer (Item 3 requirement) */}
+          {/* Social Icons row in footer */}
           <div className="flex items-center gap-6">
             <SocialIcons size="sm" />
-
-            {/* Back to top button */}
-            <button
-              onClick={scrollToTop}
-              className="p-2.5 rounded-full border hover:scale-105 transition-all cursor-pointer"
-              style={{
-                borderColor: 'var(--border-strong)',
-                color: 'var(--text-primary)',
-                backgroundColor: 'var(--bg-card)',
-              }}
-              aria-label="Scroll back to top"
-            >
-              <ArrowUp className="w-4 h-4" />
-            </button>
           </div>
         </div>
       </footer>

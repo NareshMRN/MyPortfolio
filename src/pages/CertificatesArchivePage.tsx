@@ -1,13 +1,14 @@
 import React, { useState } from 'react';
 import { Link } from 'react-router-dom';
-import { ArrowLeft, ArrowRight, ShieldCheck, Eye, ExternalLink, X } from 'lucide-react';
+import { ArrowLeft, ArrowRight, ShieldCheck, Eye } from 'lucide-react';
 import { CERTIFICATES, type CertificateItem } from '../data/content';
+import { CertificateTerminalModal } from '../components/CertificateTerminalModal';
 
 export const CertificatesArchivePage: React.FC = () => {
   const [selectedCert, setSelectedCert] = useState<CertificateItem | null>(null);
 
   return (
-    <div className="min-h-screen py-28 px-6 sm:px-10 lg:px-16" style={{ backgroundColor: 'var(--bg-primary)' }}>
+    <div className="min-h-screen py-28 px-6 sm:px-10 lg:px-16 transition-colors duration-300" style={{ backgroundColor: 'var(--bg-primary)' }}>
       <div className="max-w-7xl mx-auto">
         <Link to="/#achievements" className="inline-flex items-center gap-2 text-xs font-mono-code uppercase tracking-wider mb-8 hover:underline" style={{ color: 'var(--text-muted)' }}>
           <ArrowLeft className="w-4 h-4" />
@@ -15,14 +16,14 @@ export const CertificatesArchivePage: React.FC = () => {
         </Link>
 
         <div className="mb-14">
-          <span className="text-[11px] font-mono-code uppercase tracking-[0.35em] block mb-3" style={{ color: 'var(--text-muted)' }}>
+          <span className="text-[11px] font-mono-code uppercase tracking-[0.35em] block mb-3 font-semibold" style={{ color: 'var(--text-muted)' }}>
             ARCHIVE // 04
           </span>
-          <h1 className="font-display text-5xl sm:text-6xl md:text-7xl uppercase tracking-wider" style={{ color: 'var(--text-primary)' }}>
-            ALL CERTIFICATES
+          <h1 className="font-section-head text-3xl min-[400px]:text-4xl sm:text-5xl md:text-6xl uppercase tracking-wider font-extrabold">
+            <span className="gold-gradient-text">ALL CERTIFICATES</span>
           </h1>
           <p className="text-sm font-light mt-3 max-w-xl font-body" style={{ color: 'var(--text-secondary)' }}>
-            Official certifications and masterclass accreditations in Machine Learning, Vector Retrieval, and Generative AI.
+            Official certifications and workshop accreditations across AI Agents, Speech Synthesis, Robotics, Autonomous Systems, and Full-Stack Engineering.
           </p>
         </div>
 
@@ -30,18 +31,26 @@ export const CertificatesArchivePage: React.FC = () => {
           {CERTIFICATES.map((item) => (
             <div
               key={item.id}
-              className="group relative rounded-2xl border p-6 flex flex-col justify-between transition-all duration-300 hover:-translate-y-1 hover:shadow-2xl overflow-hidden"
+              className="group relative rounded-2xl border p-6 flex flex-col justify-between transition-all duration-300 hover:-translate-y-1 hover:shadow-2xl overflow-hidden card-gold-border card-top-line"
               style={{
                 backgroundColor: 'var(--bg-secondary)',
                 borderColor: 'var(--border-strong)',
               }}
             >
+              {/* Top Accent Line: White in dark theme, black in light theme */}
+              <div
+                className="absolute top-0 left-0 right-0 h-[1.5px] pointer-events-none z-20"
+                style={{ backgroundColor: 'var(--card-top-line)' }}
+              />
+
               <div>
-                {/* Thumbnail */}
+                {/* Thumbnail - Fit Container Cleanly */}
                 <div
-                  onClick={() => setSelectedCert(item)}
-                  className="relative w-full h-44 rounded-xl border mb-5 overflow-hidden flex items-center justify-center cursor-pointer group-hover:border-white/50 transition-all"
-                  style={{ backgroundColor: 'var(--bg-card)', borderColor: 'var(--border-subtle)' }}
+                  onClick={() => {
+                    setSelectedCert(item);
+                  }}
+                  className="relative w-full h-48 rounded-xl border mb-5 overflow-hidden flex items-center justify-center cursor-pointer group-hover:border-white/50 transition-all bg-black/80"
+                  style={{ borderColor: 'var(--border-subtle)' }}
                 >
                   {item.image ? (
                     <img
@@ -50,11 +59,11 @@ export const CertificatesArchivePage: React.FC = () => {
                       onError={(e) => {
                         (e.currentTarget as HTMLElement).style.display = 'none';
                       }}
-                      className="w-full h-full object-cover transition-transform duration-500 group-hover:scale-105"
+                      className="w-full h-full object-contain p-2 transition-transform duration-500 group-hover:scale-105"
                     />
                   ) : null}
 
-                  <div className="absolute inset-0 flex flex-col items-center justify-center p-4 text-center bg-black/60 group-hover:bg-black/40 transition-colors">
+                  <div className="absolute inset-0 flex flex-col items-center justify-center p-4 text-center bg-black/60 opacity-0 group-hover:opacity-100 transition-opacity">
                     <ShieldCheck className="w-7 h-7 text-white/80 mb-2" />
                     <span className="text-[11px] font-mono-code uppercase tracking-wider text-zinc-300 font-semibold line-clamp-1">
                       {item.title}
@@ -73,7 +82,7 @@ export const CertificatesArchivePage: React.FC = () => {
                     {item.date}
                   </span>
                 </div>
-                <h2 className="font-display text-2xl uppercase tracking-wide mb-2" style={{ color: 'var(--text-primary)' }}>
+                <h2 className="font-work-title text-base min-[400px]:text-lg sm:text-xl font-bold uppercase tracking-tight mb-2 break-words" style={{ color: 'var(--text-primary)' }}>
                   {item.title}
                 </h2>
 
@@ -82,24 +91,11 @@ export const CertificatesArchivePage: React.FC = () => {
                 </p>
               </div>
 
-              <div className="flex items-center justify-between pt-4 border-t" style={{ borderColor: 'var(--border-subtle)' }}>
-                {item.credentialLink ? (
-                  <a
-                    href={item.credentialLink}
-                    target="_blank"
-                    rel="noopener noreferrer"
-                    className="inline-flex items-center gap-1.5 text-xs font-mono-code uppercase tracking-wider text-zinc-300 hover:text-white"
-                  >
-                    <ExternalLink className="w-3.5 h-3.5" />
-                    <span>Verify</span>
-                  </a>
-                ) : (
-                  <span className="text-[10px] font-mono-code text-zinc-500">{item.credentialId}</span>
-                )}
-
+              {/* Action Links - Clean Overview Link */}
+              <div className="flex items-center justify-end pt-4 border-t" style={{ borderColor: 'var(--border-subtle)' }}>
                 <Link
                   to={`/certificates/${item.slug}`}
-                  className="inline-flex items-center gap-1.5 text-xs font-mono-code uppercase tracking-wider hover:underline"
+                  className="inline-flex items-center gap-1.5 text-xs font-mono-code uppercase tracking-wider hover:underline font-semibold"
                   style={{ color: 'var(--text-primary)' }}
                 >
                   <span>Overview</span>
@@ -110,69 +106,11 @@ export const CertificatesArchivePage: React.FC = () => {
           ))}
         </div>
 
-        {/* Lightbox Modal */}
-        {selectedCert && (
-          <div
-            className="fixed inset-0 z-50 flex items-center justify-center p-4 sm:p-8 bg-black/90 backdrop-blur-xl"
-            onClick={() => setSelectedCert(null)}
-          >
-            <div
-              onClick={(e) => e.stopPropagation()}
-              className="relative max-w-3xl w-full rounded-2xl border p-6 sm:p-8 shadow-2xl"
-              style={{
-                backgroundColor: 'var(--bg-secondary)',
-                borderColor: 'var(--border-strong)',
-              }}
-            >
-              <button
-                onClick={() => setSelectedCert(null)}
-                className="absolute top-4 right-4 p-2 rounded-full border hover:bg-white/10 transition-colors text-white"
-                style={{ borderColor: 'var(--border-strong)' }}
-                aria-label="Close"
-              >
-                <X className="w-5 h-5" />
-              </button>
-
-              <div className="mb-4">
-                <span className="text-[11px] font-mono-code uppercase tracking-widest text-zinc-400">
-                  {selectedCert.issuer} · {selectedCert.date}
-                </span>
-                <h3 className="font-display text-3xl uppercase tracking-wider text-white mt-1">
-                  {selectedCert.title}
-                </h3>
-              </div>
-
-              <div className="w-full h-80 rounded-xl border flex items-center justify-center overflow-hidden mb-6 bg-black/60 border-white/20">
-                <img
-                  src={selectedCert.image}
-                  alt={selectedCert.title}
-                  onError={(e) => {
-                    (e.currentTarget as HTMLElement).style.display = 'none';
-                  }}
-                  className="w-full h-full object-contain"
-                />
-                <div className="p-8 text-center text-zinc-400 font-mono-code text-xs">
-                  Certificate Image: <span className="text-white">{selectedCert.image}</span>
-                  <p className="mt-2 text-[11px] text-zinc-500">
-                    Image path: <code className="text-zinc-300">public/certificates/</code>
-                  </p>
-                </div>
-              </div>
-
-              {selectedCert.credentialLink && (
-                <a
-                  href={selectedCert.credentialLink}
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  className="inline-flex items-center gap-2 px-5 py-2.5 rounded-full text-xs font-mono-code uppercase tracking-wider bg-white text-black font-semibold hover:bg-zinc-200"
-                >
-                  <ExternalLink className="w-3.5 h-3.5" />
-                  <span>Verify Credential Certificate</span>
-                </a>
-              )}
-            </div>
-          </div>
-        )}
+        {/* Certificate Lightbox Modal - Theme-Adaptive Terminal Viewer */}
+        <CertificateTerminalModal
+          certificate={selectedCert}
+          onClose={() => setSelectedCert(null)}
+        />
       </div>
     </div>
   );

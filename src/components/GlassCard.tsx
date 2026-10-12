@@ -54,6 +54,14 @@ export const GlassCard: React.FC<GlassCardProps> = ({
       }}
       {...props}
     >
+      {/* 0. Thin Top Accent Line: White in dark theme, black in light theme */}
+      <div
+        className="absolute top-0 left-0 right-0 h-[1.5px] pointer-events-none z-20"
+        style={{
+          backgroundColor: 'var(--card-top-line, var(--text-primary))',
+        }}
+      />
+
       {/* 1. Cursor Following Spotlight Glow */}
       {enableSpotlight && mousePos && (
         <div

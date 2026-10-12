@@ -7,6 +7,13 @@
 // Types
 // ---------------------------------------------------------------------------
 
+export interface TeamMember {
+  name: string;
+  role?: string;
+  github?: string;
+  avatar?: string;
+}
+
 export interface ProjectItem {
   id: string;
   slug: string;
@@ -26,6 +33,7 @@ export interface ProjectItem {
     github?: string;
     video?: string;
   };
+  teamMembers?: TeamMember[];
   featured: boolean;
 }
 
@@ -51,7 +59,7 @@ export interface HackathonItem {
   role: string;
   teamSize: string;
   projectBuilt: string;
-  result: 'Winner' | 'Finalist' | 'Participant';
+  result: 'Winner' | 'Finalist' | 'Participant' | string;
   description: string;
   tech: string[];
   links: {
@@ -59,6 +67,7 @@ export interface HackathonItem {
     repo?: string;
     certificate?: string;
   };
+  teamMembers?: TeamMember[];
 }
 
 export interface CertificateItem {
@@ -72,6 +81,17 @@ export interface CertificateItem {
   tags: string[];
   credentialId?: string;
   credentialLink?: string;
+  // Detailed overview specifications:
+  problemStatement?: string;
+  objective?: string;
+  datasetDetails?: string;
+  concepts?: string[];
+  deliverables?: string[];
+  evaluationCriteria?: string[];
+  workshopHighlights?: string[];
+  keyHighlights?: string[];
+  projectLink?: string;
+  kaggleLink?: string;
 }
 
 export interface Skill {
@@ -297,9 +317,212 @@ export const PROJECTS: ProjectItem[] = [
     featured: true,
   },
   {
+    id: 'tradevault',
+    slug: 'tradevault',
+    number: '02',
+    title: 'TradeVault',
+    status: 'Live',
+    category: 'HYBRID MULTI-AGENT QUANTITATIVE TRADING',
+    tagline: 'Production-grade multi-agent quant trading platform with statistical forecasting and automated execution.',
+    description:
+      'Awarded 3rd Place in the Build to Ship Hackathon. Production-grade, end-to-end multi-agent quantitative trading platform. Features an iterative Bull vs Bear debate engine (Groq DeepSeek-R1), Deflated Sharpe Ratio (DSR) & PBO overfitting gates, RL fractional Kelly position sizing, and automated Alpaca broker order routing with zero-trust AES-256-GCM encryption and emergency kill switch.',
+    fullOverview:
+      'TradeVault is a production-grade quantitative trading advisory and automated execution engine engineered for high reliability under live market regimes. It features a microservice architecture spanning a React/Vite/Tailwind frontend, a Node.js/Express API gateway with Redis queuing and MongoDB audit trails, and a Python FastAPI Agent Runtime. Multi-model LLMs participate in iterative Bull vs Bear debates, guarded by a quantitative Risk Manager that vetoes overfitted signals using the Deflated Sharpe Ratio and CSCV backtest metrics, executing safe order flow to Alpaca Paper and Live markets.',
+    architectureDetails: [
+      'Multi-agent LLM debate engine with Groq DeepSeek-R1 for adversarial Bull vs Bear thesis generation',
+      'Python FastAPI Agent Runtime with Quant Factor calculations (Momentum, Volatility, Mean-Reversion, Value)',
+      'Probabilistic Quantile Forecasting generating P10, P25, Median (P50), P75, and P90 distribution bands',
+      'Overfitting Gate enforcing Deflated Sharpe Ratio (DSR) and Probability of Backtest Overfitting (PBO)',
+      'Node.js & Express API Gateway with Redis caching, WebSocket live events, and shared Zod schemas',
+      'Zero-trust credential vault with AES-256-GCM encryption and emergency one-click kill switch'
+    ],
+    features: [
+      '3rd Place Winner in the Build to Ship Hackathon',
+      'Automated broker execution via Alpaca Paper and Live trading APIs',
+      'Adversarial multi-agent debate with autonomous Trader and Risk Manager veto gates',
+      'Interactive real-time charting with order proposal confirmation and lot sizing',
+      'Tamper-evident immutable audit logging with pre-hook protected MongoDB storage'
+    ],
+    tech: ['Python', 'FastAPI', 'Node.js', 'Express', 'React', 'Redis', 'MongoDB', 'Groq / DeepSeek-R1', 'Alpaca API', 'Docker'],
+    metrics: [
+      { label: 'HACKATHON', value: '3rd Place Winner' },
+      { label: 'FORECASTING', value: 'P10–P90 Quantiles' },
+      { label: 'SECURITY', value: 'AES-256-GCM Vault' },
+    ],
+    links: {
+      live: 'https://tradevaultone.vercel.app/',
+      github: 'https://github.com/shivannagorkal/Tradint-agent',
+      video: 'https://drive.google.com/file/d/1xMjiYcjk2AKlkUHB2whCd4UQ7_v4MdNp/view',
+    },
+    teamMembers: [
+      { name: 'Naresh N', role: 'Lead AI & Full Stack Architect', github: 'https://github.com/NareshMRN' },
+      { name: 'Nikhil H M', role: 'Full Stack & Quant Engineer', github: 'https://github.com/nikhilshaiva-dev' },
+      { name: 'Nishanth S G', role: 'Frontend & UI Engineer', github: 'https://github.com/nishanthsg' },
+      { name: 'Shivanna', role: 'Full Stack & Broker Integrations', github: 'https://github.com/shivannagorkal' },
+      { name: 'G R Harsha', role: 'Data & Systems Engineer', github: 'https://github.com/grharsha777' },
+    ],
+    featured: true,
+  },
+  {
+    id: 'tryscan',
+    slug: 'tryscan',
+    number: '03',
+    title: 'TryScan',
+    status: 'Live',
+    category: 'SMART QR RESTAURANT PLATFORM',
+    tagline: 'Cloud-based smart QR ordering system digitising table-to-kitchen dining workflows in real time.',
+    description:
+      'Cloud-based Smart QR Restaurant Ordering System replacing physical menus and paper order slips. Customers scan dynamic table QR codes to browse menus, customize items, and place instant self-orders routed directly to a live kitchen display via WebSockets (Socket.io), complete with automated billing and unified owner analytics.',
+    fullOverview:
+      'TryScan (TableTap) eliminates ordering bottlenecks, paper waste, and manual communication errors in restaurants. Each dining table is equipped with a unique QR code. Guests access an interactive digital menu with category filtering and instant checkout, while kitchen staff monitor orders on a live Kanban-style kitchen display system powered by low-latency Socket.io WebSockets. Includes a comprehensive owner dashboard for menu curation, table management, sales analytics, and automated bill generation.',
+    architectureDetails: [
+      'React frontend with responsive menu catalog, real-time cart state, and order tracking',
+      'Node.js & Express RESTful backend with modular route architecture and authentication',
+      'Bidirectional WebSocket real-time event pipeline using Socket.io for instantaneous kitchen alerts',
+      'MongoDB document database for menu items, active table sessions, and order history',
+      'Automated digital receipt and bill calculation engine with tax and subtotal computation',
+      'Owner administration portal with operational analytics and menu availability toggles'
+    ],
+    features: [
+      'Contactless QR code self-ordering with table number verification',
+      'Real-time kitchen order display (KDS) updating order stages without page refreshes',
+      'Interactive digital menu with item descriptions, price tags, and custom notes',
+      'Instant billing calculation with automated order history tracking',
+      'Unified restaurant management dashboard for owners and kitchen staff'
+    ],
+    tech: ['React', 'Node.js', 'Express', 'MongoDB', 'Socket.io', 'Tailwind CSS', 'JavaScript'],
+    metrics: [
+      { label: 'ORDER FLOW', value: 'Real-time WebSockets' },
+      { label: 'WORKFLOW', value: '100% Paperless' },
+      { label: 'SYSTEM', value: 'Full Stack QR' },
+    ],
+    links: {
+      github: 'https://github.com/NareshMRN/TryScan',
+      live: 'https://tryscan.vercel.app',
+    },
+    featured: true,
+  },
+  {
+    id: 'vector-search',
+    slug: 'vector-search',
+    number: '04',
+    title: 'Semantic Search & RAG System',
+    status: 'Past',
+    category: 'AI / VECTOR SEARCH & RAG',
+    tagline: 'Semantic vector search and RAG pipeline for 100,000+ Flipkart Product Reviews on Kaggle.',
+    description:
+      'Engineered a complete Semantic Search and RAG pipeline on Kaggle using Sentence-Transformers and FAISS (IndexFlatIP) over 100,000+ Flipkart product reviews. Solved the limitation of traditional keyword search (e.g., retrieving "low-power air conditioner" when users search "energy-efficient AC") with sub-millisecond vector similarity and natural language answer generation.',
+    fullOverview:
+      'Traditional keyword-based search systems fail when users express intent using different terminology than stored in product databases (e.g., searching for "energy-efficient AC" missing "low-power air conditioner"). To solve this user-experience and revenue friction, this system builds a full semantic search and Retrieval-Augmented Generation (RAG) architecture on the Flipkart Product Customer Reviews Dataset (~100,000+ reviews). Text is preprocessed and projected into dense vector embeddings with Sentence-Transformers (SBERT), indexed using high-speed FAISS IndexFlatIP (Inner Product / Cosine Similarity), evaluated using Precision@K and Recall@K, and connected to a RAG pipeline that synthesizes accurate natural language answers directly from retrieved customer review context.',
+    architectureDetails: [
+      'Data cleaning, text normalization, and preprocessing on 100,000+ Flipkart customer reviews',
+      'Dense sentence embeddings generated using Sentence-Transformers (SBERT)',
+      'Sub-millisecond similarity search using FAISS IndexFlatIP vector index with Cosine/Inner Product scoring',
+      'RAG pipeline retrieving high-relevance semantic review context to generate grounded natural language answers',
+      'Rigorous quantitative evaluation benchmarking Precision@K and Recall@K across diverse user search intents',
+      'Comprehensive EDA: rating distribution plots, word clouds, text length analysis, and PCA embedding projections'
+    ],
+    features: [
+      'Intent-based semantic retrieval across 100k+ reviews beyond literal keyword matching',
+      'FAISS vector index optimized for high-throughput sub-millisecond retrieval',
+      'Grounding RAG answers on customer reviews with source attribution',
+      'Quantitative Precision@K and Recall@K evaluation metrics suite',
+      'Executed end-to-end Jupyter Notebook on Kaggle with visualizations and business insights report'
+    ],
+    tech: ['Python', 'Sentence-Transformers', 'FAISS', 'RAG', 'PyTorch', 'Pandas', 'Matplotlib', 'Kaggle'],
+    metrics: [
+      { label: 'DATASET', value: '100k+ Reviews' },
+      { label: 'INDEX', value: 'FAISS IndexFlatIP' },
+      { label: 'PLATFORM', value: 'Kaggle Notebook' },
+    ],
+    links: {
+      github: 'https://github.com/NareshMRN',
+      live: 'https://kaggle.com/nn2007',
+    },
+    featured: true,
+  },
+  {
+    id: 'gradio-image-gen',
+    slug: 'gradio-image-gen',
+    number: '05',
+    title: 'Product Image Generation with Gradio',
+    status: 'Past',
+    category: 'GENERATIVE AI / COMPETITION',
+    tagline: 'AI-powered product visual synthesizer ranking 63rd on Kaggle using Stable Diffusion and Gradio.',
+    description:
+      'Built an end-to-end AI product image generation pipeline for an e-commerce platform on Kaggle. Uses an LLM (Qwen 2.5-0.5B-Instruct) to engineer high-detail visual prompts (<70 words) and Stable Diffusion v1.5 to generate studio-grade visuals across 15 Flipkart products in an automated loop, wrapped in an interactive Gradio web interface. Ranked 63rd on the global leaderboard.',
+    fullOverview:
+      'Engineered an enterprise generative AI pipeline solving the challenge of transforming simple e-commerce product descriptions into photorealistic marketing visuals. The solution leverages an LLM (Qwen 2.5-0.5B-Instruct) with engineered system prompts optimizing lighting, composition, texture, and style while staying under 70 words to prevent CLIP token truncation. Prompts are fed into Stable Diffusion v1.5 with GPU acceleration. Scored on Prompt Quality (40 pts via cosine similarity with expert prompts), Image Quality (40 pts via CLIP Score), and Gradio UI (20 pts), achieving a competitive 63rd rank on Kaggle.',
+    architectureDetails: [
+      'LLM prompt engineering engine using Qwen 2.5-0.5B-Instruct to expand simple descriptions into cinematic visual briefs',
+      'Prompt constraints optimization (<70 words) preserving visual details without CLIP token truncation',
+      'Stable Diffusion v1.5 latent diffusion model fine-tuned for high-fidelity e-commerce product synthesis',
+      'Interactive Gradio web interface for real-time prompt previewing, parameter tuning, and image inspection',
+      'Automated batch inference loop processing all 15 Flipkart test products sequentially on Kaggle GPU T4',
+      'Full evaluation pipeline computing composite score: prompt_score*0.4 + image_score*0.4 + gradio_score*0.2'
+    ],
+    features: [
+      '63rd Rank achieved on the global Kaggle leaderboard with RMSE scoring',
+      'Automated batch generation loop across 15 Flipkart products in HD quality',
+      'Dual-stage pipeline: LLM Prompt Engineer -> Stable Diffusion v1.5 Generator',
+      'Interactive Gradio web application for live testing and review',
+      'Certified by NIAT Masterclasses in collaboration with EXL Senior GenAI Engineers'
+    ],
+    tech: ['Python', 'Gradio', 'Stable Diffusion v1.5', 'Qwen 2.5', 'Kaggle GPU', 'PyTorch', 'CLIP'],
+    metrics: [
+      { label: 'LEADERBOARD', value: '63rd Rank' },
+      { label: 'EVAL CRITERIA', value: 'Prompt + CLIP + UI' },
+      { label: 'PRODUCTS', value: '15 Flipkart Items' },
+    ],
+    links: {
+      github: 'https://github.com/NareshMRN',
+      live: 'https://kaggle.com/nn2007',
+    },
+    featured: false,
+  },
+  {
+    id: 'zyro-rag-challenge',
+    slug: 'zyro-rag-challenge',
+    number: '06',
+    title: 'Zyro Dynamics HR Help Desk',
+    status: 'Live',
+    category: 'ENTERPRISE RAG / LLM BOT',
+    tagline: 'Enterprise HR policy RAG chatbot with scope guardrails, MMR vector search, and sub-second Groq LLaMA-3.3 inference.',
+    description:
+      'Enterprise HR Policy Help Desk RAG Chatbot built for the NxtWave / NIAT RAG Challenge. Ingests and indexes 11 official Zyro Dynamics HR policy PDFs into FAISS with MMR retrieval, enforces a strict Out-of-Scope (OOS) classification guardrail, runs sub-second inference using Groq LLaMA-3.3-70B, and tracks production traces with LangSmith.',
+    fullOverview:
+      'Zyro Dynamics HR Help Desk is an enterprise-grade Retrieval-Augmented Generation (RAG) assistant engineered to answer employee HR queries with strict grounded accuracy. Built on Streamlit, LangChain, and Groq LLaMA-3.3-70B-Versatile, the system ingests 11 official Zyro Dynamics corporate policy manuals (covering leave, WFH, code of conduct, APR/PIP performance reviews, compensation, IT security, POSH, onboarding/separation, and travel & expenses). To ensure zero hallucination, queries first pass through a strict scope classifier (OOS_PROMPT) that detects and refuses out-of-scope non-HR questions. Valid queries retrieve context via FAISS Maximal Marginal Relevance (MMR) search with Sentence-Transformers embeddings (all-MiniLM-L6-v2), providing page-level source citations and end-to-end tracing via LangSmith.',
+    architectureDetails: [
+      'Strict two-stage LLM scope classifier (OOS_PROMPT) filtering non-HR queries before vector search',
+      'RecursiveCharacterTextSplitter (1000 chunk size, 150 overlap) across 11 official Zyro HR PDF manuals',
+      'FAISS vector index with Maximal Marginal Relevance (MMR, k=4, fetch_k=20, lambda=0.5) for diverse retrieval',
+      'Sentence-Transformers (all-MiniLM-L6-v2) normalized dense semantic embeddings',
+      'Groq LPU hardware acceleration powering LLaMA-3.3-70B-Versatile with 0.1 temperature for precise policy synthesis',
+      'Page-level source attribution format ([Source: document.pdf, page X]) and real-time LangSmith observability'
+    ],
+    features: [
+      'Automated scope gate preventing prompt injection and non-HR hallucinations',
+      'Instant answers grounded exclusively in 11 official company policy manuals',
+      'Transparent source citation expanders showing exact policy document and page numbers',
+      'Sub-second query response times powered by Groq LLaMA-3.3-70B inference',
+      'Cached vector index loading with Streamlit session state and conversational memory'
+    ],
+    tech: ['Python', 'Streamlit', 'LangChain', 'FAISS', 'Groq', 'Sentence-Transformers', 'LangSmith', 'PyPDF'],
+    metrics: [
+      { label: 'DOCUMENTS', value: '11 Policy PDFs' },
+      { label: 'RETRIEVAL', value: 'FAISS + MMR (k=4)' },
+      { label: 'LLM ENGINE', value: 'LLaMA 3.3 70B (Groq)' },
+    ],
+    links: {
+      github: 'https://github.com/NareshMRN/zyro-rag-challenge',
+      live: 'https://github.com/NareshMRN/zyro-rag-challenge',
+    },
+    featured: true,
+  },
+  {
     id: 'aira',
     slug: 'aira',
-    number: '02',
+    number: '07',
     title: 'Aira',
     status: 'Live',
     category: 'AI ENGLISH VOICE AGENT',
@@ -337,7 +560,7 @@ export const PROJECTS: ProjectItem[] = [
   {
     id: 'english-learning-app',
     slug: 'english-learning-app',
-    number: '03',
+    number: '08',
     title: 'English Learning App',
     status: 'In progress',
     category: 'NATIVE ANDROID / EDTECH',
@@ -370,114 +593,7 @@ export const PROJECTS: ProjectItem[] = [
       github: 'https://github.com/NareshMRN',
     },
     featured: true,
-  },
-  {
-    id: 'vector-search',
-    slug: 'vector-search',
-    number: '04',
-    title: 'Vector Search Engine',
-    status: 'Past',
-    category: 'AI / VECTOR SEARCH',
-    tagline: 'Semantic vector search engine for 100,000 Amazon Product Reviews.',
-    description:
-      'Built a vector searching project for 100,000 Amazon Products Reviews dataset to check the meaning and sentiment of each review. Utilizes high-dimensional embeddings and FAISS index for sub-millisecond similarity search. Certified by Official NIAT Masterclasses.',
-    fullOverview:
-      'A large-scale semantic information retrieval engine built on an Amazon Product Reviews dataset containing over 100,000 entries. Instead of traditional keyword indexing, queries and reviews are projected into a dense semantic vector space to analyze customer intent, semantic nuances, and sentiment polarity.',
-    architectureDetails: [
-      'Data preprocessing pipeline cleaning and normalizing 100,000 product reviews',
-      'Sentence embeddings generated with PyTorch transformers',
-      'FAISS (Facebook AI Similarity Search) index for high-speed nearest-neighbor retrieval',
-      'Sentiment polarity analysis correlated with review rating scores',
-      'Demonstrated sub-10ms retrieval latency across high-dimensional vectors'
-    ],
-    features: [
-      'Semantic conceptual search over 100k reviews beyond keyword matching',
-      'Instant sentiment classification and polarity scoring',
-      'Benchmarked index search using cosine similarity and L2 distance',
-      'Comprehensive performance evaluation and query analytics'
-    ],
-    tech: ['Python', 'FAISS', 'PyTorch', 'Transformers', 'NumPy', 'Pandas'],
-    metrics: [
-      { label: 'DATASET', value: '100k Reviews' },
-      { label: 'SPEED', value: '<10ms Search' },
-      { label: 'CERTIFICATE', value: 'NIAT Masterclass' },
-    ],
-    links: {
-      github: 'https://github.com/NareshMRN',
-    },
-    featured: true,
-  },
-  {
-    id: 'gradio-image-gen',
-    slug: 'gradio-image-gen',
-    number: '05',
-    title: 'Image Generation with Gradio',
-    status: 'Past',
-    category: 'GENERATIVE AI / COMPETITION',
-    tagline: 'Automated HD product image generation pipeline ranking 63rd on Kaggle.',
-    description:
-      'Built an Image Generation app with Gradio on the Kaggle platform to generate HD quality images for 15 Flipkart products in an automated loop. Achieved 63rd rank in the competition and awarded Official NIAT Masterclasses Certification.',
-    fullOverview:
-      'Engineered an automated generative AI pipeline using Gradio and diffusion models to programmatically synthesize photorealistic product visuals for e-commerce listings. Competed against hundreds of developers on Kaggle, securing 63rd rank for prompt consistency, image fidelity, and pipeline speed.',
-    architectureDetails: [
-      'Gradio interactive web UI for custom parameter tuning and prompt experimentation',
-      'Automated batch pipeline synthesizing product visuals across 15 Flipkart items',
-      'Prompt engineering methodology optimizing lighting, background, and texture',
-      'Kaggle GPU-accelerated inference loop with memory optimization'
-    ],
-    features: [
-      'Automated looping generation for 15 e-commerce products',
-      'Interactive Gradio control interface with live prompt tweaking',
-      'High-resolution output upscaling and quality filtering',
-      '63rd competitive ranking on Kaggle leaderboard'
-    ],
-    tech: ['Python', 'Gradio', 'Diffusion Models', 'Kaggle GPU', 'PIL'],
-    metrics: [
-      { label: 'COMPETITION', value: '63rd Rank' },
-      { label: 'PRODUCTS', value: '15 Flipkart Items' },
-      { label: 'CERTIFICATION', value: 'NIAT Official' },
-    ],
-    links: {
-      github: 'https://github.com/NareshMRN',
-      live: 'https://kaggle.com/nn2007',
-    },
-    featured: false,
-  },
-  {
-    id: 'kaggle-project',
-    slug: 'kaggle-project',
-    number: '06',
-    title: 'TODO: replace with my real Kaggle project',
-    status: 'Past',
-    category: 'TODO: CATEGORY',
-    tagline: 'TODO: replace with real tagline',
-    description:
-      'TODO: replace with my real Kaggle project. Problem: TODO. Dataset: TODO. Model/Approach: TODO. Result/Score: TODO. Notebook link: TODO.',
-    fullOverview:
-      'TODO: replace with detailed overview of the Kaggle project. Problem statement, dataset architecture, preprocessing, model architecture, training loop, and submission score.',
-    architectureDetails: [
-      'TODO: Dataset — describe the dataset used',
-      'TODO: Model/Approach — describe the ML approach',
-      'TODO: Training pipeline and hyperparameter tuning',
-      'TODO: Evaluation metrics and validation strategy'
-    ],
-    features: [
-      'TODO: Key finding or feature 1',
-      'TODO: Key finding or feature 2',
-      'TODO: Key finding or feature 3'
-    ],
-    tech: ['Python', 'TODO: add frameworks used'],
-    metrics: [
-      { label: 'PROBLEM', value: 'TODO: replace' },
-      { label: 'MODEL', value: 'TODO: replace' },
-      { label: 'SCORE', value: 'TODO: replace' },
-    ],
-    links: {
-      live: 'https://kaggle.com/nn2007',
-      github: 'https://github.com/NareshMRN',
-    },
-    featured: false,
-  },
+  }
 ];
 
 // ---------------------------------------------------------------------------
@@ -485,6 +601,21 @@ export const PROJECTS: ProjectItem[] = [
 // ---------------------------------------------------------------------------
 
 export const ACHIEVEMENTS: AchievementItem[] = [
+  {
+    id: 'ach-build-to-ship',
+    slug: 'build-to-ship-3rd-place',
+    title: '3rd Place Winner — Build to Ship Hackathon',
+    organization: 'Build to Ship Hackathon',
+    year: '2026',
+    result: '3rd Place Winner',
+    description:
+      'Secured 3rd place in the Build to Ship Hackathon with TradeVault, an autonomous multi-agent quantitative trading and risk governance platform.',
+    image: '',
+    tags: ['Hackathon', 'Multi-Agent AI', 'Quant Trading', 'FastAPI', 'FinTech'],
+    details:
+      'Awarded 3rd place in the competitive Build to Ship Hackathon for engineering TradeVault. Built an end-to-end multi-agent trading platform featuring Groq DeepSeek-R1 adversarial Bull/Bear debates, Deflated Sharpe Ratio (DSR) and PBO overfitting gates, probabilistic quantile forecasting, fractional Kelly lot sizing, and live Alpaca paper trading with AES-256-GCM zero-trust security.',
+    link: 'https://tradevaultone.vercel.app/',
+  },
   {
     id: 'ach-1',
     slug: 'solo-founder-sangeetha',
@@ -505,41 +636,30 @@ export const ACHIEVEMENTS: AchievementItem[] = [
     slug: 'kaggle-gradio-rank-63',
     title: '63rd Rank — Gradio Product Image Generation Competition',
     organization: 'Kaggle & NIAT Masterclasses',
-    year: '2025',
-    result: 'Rank 63',
+    year: '2026',
+    result: '63rd Rank',
     description:
-      'Secured 63rd rank on Kaggle by building an automated image generation pipeline for 15 Flipkart products in loop in HD quality using Gradio.',
+      'Secured 63rd rank on Kaggle by building an automated image generation pipeline for 15 Flipkart products in loop in HD quality using Gradio and Stable Diffusion.',
     image: '',
-    tags: ['Kaggle', 'Gradio', 'Generative AI'],
+    tags: ['Kaggle', 'Gradio', 'Stable Diffusion', 'Generative AI'],
     details:
-      'Competed in the NIAT Masterclasses Kaggle competition to synthesize e-commerce product imagery using diffusion models. Programmed an automated batch loop for 15 products with high prompt consistency and fast execution, ranking 63rd on the final leaderboard.',
+      'Competed in the NIAT Masterclasses Kaggle competition to synthesize e-commerce product imagery using diffusion models and Qwen 2.5 LLM prompt engineering. Programmed an automated batch loop for 15 Flipkart products evaluated on Prompt Quality (40 pts), Image Quality with CLIP score (40 pts), and Gradio UI (20 pts), ranking 63rd on the final leaderboard.',
     link: 'https://kaggle.com/nn2007',
   },
   {
-    id: 'ach-placeholder-1',
-    slug: 'placeholder-achievement-1',
-    title: 'TODO: replace with real achievement title',
-    organization: 'TODO: replace with organization',
-    year: 'TODO',
-    result: 'TODO: replace',
-    description: 'TODO: replace with a 2-line description of this achievement.',
+    id: 'ach-3',
+    slug: 'semantic-search-rag-kaggle',
+    title: 'Semantic Search & RAG Pipeline on Kaggle',
+    organization: 'Kaggle & NIAT Masterclasses',
+    year: '2026',
+    result: 'Kaggle Solved',
+    description:
+      'Built a complete Semantic Search and RAG pipeline with Sentence-Transformers and FAISS IndexFlatIP over 100,000+ Flipkart reviews to retrieve by intent.',
     image: '',
-    tags: ['TODO: Tag 1', 'TODO: Tag 2'],
-    details: 'TODO: replace with full details of this achievement.',
-    link: '',
-  },
-  {
-    id: 'ach-placeholder-2',
-    slug: 'placeholder-achievement-2',
-    title: 'TODO: replace with real achievement title',
-    organization: 'TODO: replace with organization',
-    year: 'TODO',
-    result: 'TODO: replace',
-    description: 'TODO: replace with a 2-line description of this achievement.',
-    image: '',
-    tags: ['TODO: Tag 1', 'TODO: Tag 2'],
-    details: 'TODO: replace with full details of this achievement.',
-    link: '',
+    tags: ['Kaggle', 'FAISS', 'RAG', 'Sentence-Transformers'],
+    details:
+      'Overcame the limitations of traditional keyword search on 100,000+ Flipkart customer reviews by engineering dense vector embeddings (SBERT) and FAISS IndexFlatIP vector search. Built a full RAG question-answering pipeline with Precision@K and Recall@K evaluation metrics, EDA visualizations, and an executed Kaggle notebook.',
+    link: 'https://kaggle.com/nn2007',
   },
 ];
 
@@ -549,37 +669,63 @@ export const ACHIEVEMENTS: AchievementItem[] = [
 
 export const HACKATHONS: HackathonItem[] = [
   {
-    id: 'hack-placeholder-1',
-    slug: 'placeholder-hackathon-1',
-    eventName: 'TODO: replace with hackathon event name',
-    date: 'TODO: replace with date',
-    role: 'TODO: replace with your role (e.g. Lead Developer)',
-    teamSize: 'TODO: replace (e.g. Team of 4)',
-    projectBuilt: 'TODO: replace with project name',
-    result: 'Participant',
-    description: 'TODO: replace with what you built and achieved at this hackathon.',
-    tech: ['TODO: Tech 1', 'TODO: Tech 2', 'TODO: Tech 3'],
+    id: 'hack-build-to-ship',
+    slug: 'build-to-ship-hackathon',
+    eventName: 'Build to Ship Hackathon',
+    date: '2026',
+    role: 'Full Stack & AI Systems Engineer',
+    teamSize: '5 Members',
+    projectBuilt: 'TradeVault — Multi-Agent Quant Trading Platform',
+    result: '3rd Place Winner',
+    description:
+      'Won 3rd Place among competing engineering teams in the Build to Ship Hackathon by architecting TradeVault, an enterprise-grade hybrid multi-agent quantitative trading and statistical forecasting platform with automated Alpaca broker execution and an emergency kill switch.',
+    tech: ['Python', 'FastAPI', 'Node.js', 'Express', 'React', 'Groq DeepSeek-R1', 'Redis', 'MongoDB', 'Alpaca API'],
     links: {
-      project: '',
+      project: 'https://tradevaultone.vercel.app/',
+      repo: 'https://github.com/shivannagorkal/Tradint-agent',
+    },
+    teamMembers: [
+      { name: 'Naresh N', role: 'Lead AI & Full Stack Architect', github: 'https://github.com/NareshMRN' },
+      { name: 'Nikhil H M', role: 'Full Stack & Quant Engineer', github: 'https://github.com/nikhilhm' },
+      { name: 'Nishanth S G', role: 'Frontend & UI Engineer', github: 'https://github.com/nishanthsg' },
+      { name: 'Shivanna', role: 'Full Stack & Broker Integrations', github: 'https://github.com/shivannagorkal' },
+      { name: 'G r Harsha', role: 'Data & Systems Engineer', github: 'https://github.com/grharsha' },
+    ],
+  },
+  {
+    id: 'hack-murf-ai',
+    slug: 'murf-ai-hackathon',
+    eventName: 'Murf.AI Hands-On App Building Hackathon',
+    date: 'March 2026',
+    role: 'AI App Developer',
+    teamSize: 'Solo Developer',
+    projectBuilt: 'Murf Voice Synthesis Pipeline',
+    result: 'Finalist',
+    description:
+      'Engineered an interactive voice generation app leveraging Murf.AI speech synthesis APIs and real-time audio playback during the national hackathon organized by Murf AI and NIAT.',
+    tech: ['Python', 'FastAPI', 'Web Audio API', 'Murf AI'],
+    links: {
+      project: 'https://thesangeetha.vercel.app/',
       repo: 'https://github.com/NareshMRN',
-      certificate: '',
+      certificate: '/certificates/NIAT_Certificate_Naresh N (1).pdf',
     },
   },
   {
-    id: 'hack-placeholder-2',
-    slug: 'placeholder-hackathon-2',
-    eventName: 'TODO: replace with hackathon event name',
-    date: 'TODO: replace with date',
-    role: 'TODO: replace with your role (e.g. Full Stack Developer)',
-    teamSize: 'TODO: replace (e.g. Solo / Team of 3)',
-    projectBuilt: 'TODO: replace with project name',
-    result: 'Finalist',
-    description: 'TODO: replace with what you built and achieved at this hackathon.',
-    tech: ['TODO: Tech 1', 'TODO: Tech 2'],
+    id: 'hack-kaggle-gradio',
+    slug: 'kaggle-gradio-competition',
+    eventName: 'NIAT Masterclasses x Kaggle Diffusion Hackathon',
+    date: '2025',
+    role: 'Generative AI Developer',
+    teamSize: 'Solo',
+    projectBuilt: 'Batch Product Image Generator',
+    result: 'Rank 63',
+    description:
+      'Automated batch image synthesis pipeline for 15 Flipkart products in loop in HD quality using Gradio and diffusion models, securing 63rd rank on the global competition leaderboard.',
+    tech: ['Kaggle', 'Gradio', 'Generative AI', 'Python'],
     links: {
-      project: '',
+      project: 'https://kaggle.com/nn2007',
       repo: 'https://github.com/NareshMRN',
-      certificate: '',
+      certificate: '/certificates/YU_NIAT_Building_LLM_Masterclass.jpg',
     },
   },
 ];
@@ -592,52 +738,178 @@ export const CERTIFICATES: CertificateItem[] = [
   {
     id: 'cert-vector-search',
     slug: 'vector-search-masterclass',
-    title: 'Vector Search Masterclass Project',
-    issuer: 'Official NIAT Masterclasses',
-    date: '2025',
+    title: 'Vector Search in Practice: Semantic Search with LLMs',
+    issuer: 'NIAT Masterclasses & Amazon',
+    date: '2026',
     description:
-      'Certified for building semantic vector search engine for 100,000 Amazon product reviews evaluating sentiment and semantic intent.',
-    image: '/certificates/vector-search.jpg', // Place your certificate image in public/certificates/
-    tags: ['Vector Search', 'FAISS', 'PyTorch'],
-    credentialId: 'NIAT-VS-2025',
+      'Certified by Applied Scientist Arpan Paul (Amazon) for building high-performance semantic search engines and RAG pipelines for 100,000+ Flipkart customer reviews using Sentence-Transformers and FAISS.',
+    image: '/certificates/YU_NIAT_Vector_Masterclass.jpg',
+    tags: ['Vector Search', 'FAISS', 'RAG', 'Sentence-Transformers', 'Kaggle'],
+    credentialId: 'NIAT-VS-2026',
     credentialLink: 'https://drive.google.com/file/d/1nEbTYC1KHf70gc5Hxr7Vge2Li1afKN-q/view?usp=drive_link',
+    problemStatement:
+      'Traditional keyword-based search systems fail when users express their intent using different words than those stored in the database. For example, a user searching for "energy-efficient AC" might not find products labeled as "low-power air conditioner", even though both refer to the same type of device. This results in poor user experience and missed business opportunities.',
+    objective:
+      'Build a complete Semantic Search and RAG (Retrieval-Augmented Generation) pipeline that understands user intent and retrieves relevant results based on meaning—not just keyword matching—using industry-standard vector search techniques.',
+    datasetDetails:
+      'Flipkart Product Customer Reviews Dataset (~100,000+ product reviews). Key columns: Product Name, Review, Rating, Summary. Domain: E-commerce customer sentiment and product reviews.',
+    concepts: [
+      'Text Preprocessing and Cleaning',
+      'Sentence Embeddings (Sentence-Transformers / SBERT)',
+      'Vector Similarity (Cosine Similarity, Inner Product)',
+      'FAISS Indexing (IndexFlatIP)',
+      'Retrieval-Augmented Generation (RAG)',
+      'Evaluation Metrics (Precision@K, Recall@K)',
+      'Exploratory Data Analysis (EDA) & PCA Dimensionality Reduction'
+    ],
+    deliverables: [
+      'Jupyter Notebook executed on Kaggle with all code, outputs, and cell explanations',
+      'EDA Visualizations (rating distribution, word clouds, text length plots, PCA embeddings)',
+      'Working Semantic Search Function with live example intent queries',
+      'RAG Pipeline that generates grounded, context-aware natural language answers',
+      'Evaluation Metrics Suite (Precision@K, Recall@K benchmarked across diverse queries)',
+      'Business Insights & Technical Recommendation Report (200–300 words)'
+    ],
+    projectLink: 'https://github.com/NareshMRN',
+    kaggleLink: 'https://kaggle.com/nn2007',
   },
   {
     id: 'cert-gradio-llm',
     slug: 'building-llm-app-gradio',
-    title: 'Building LLM App with Gradio',
-    issuer: 'Official NIAT Masterclasses',
-    date: '2025',
+    title: 'Building LLM Apps with Gradio Masterclass',
+    issuer: 'NIAT Masterclasses & EXL',
+    date: '2026',
     description:
-      'Certified for engineering interactive LLM applications and automated generative diffusion pipelines with Gradio.',
-    image: '/certificates/gradio-llm.jpg', // Place your certificate image in public/certificates/
-    tags: ['Gradio', 'Generative AI', 'Kaggle'],
-    credentialId: 'NIAT-GR-2025',
+      'Certified by Senior GenAI Engineer Suvojit Hore (EXL) for building an automated AI-powered product image generation pipeline using Qwen LLMs, Stable Diffusion v1.5, and Gradio, ranking 63rd on Kaggle.',
+    image: '/certificates/YU_NIAT_Building_LLM_Masterclass.jpg',
+    tags: ['Gradio', 'Generative AI', 'Stable Diffusion', 'LLM', 'Kaggle Rank 63'],
+    credentialId: 'NIAT-GR-2026',
     credentialLink: 'https://drive.google.com/file/d/1nEbTYC1KHf70gc5Hxr7Vge2Li1afKN-q/view?usp=drive_link',
+    problemStatement:
+      'You are an AI engineer at an e-commerce company. Your task is to build an AI powered product image generation system that takes simple product descriptions as input, uses an LLM to engineer detailed creative prompts optimized for image generation, generates professional product images using Stable Diffusion, and wraps everything in an interactive Gradio web interface.',
+    objective:
+      'Synthesize photorealistic product visuals for 15 test Flipkart product descriptions in an automated loop, achieving maximum prompt engineering similarity, high visual CLIP score, and seamless Gradio UI interaction.',
+    datasetDetails:
+      '15 Flipkart product descriptions provided in the competition dataset. Includes constraints: prompt length under 70 words to prevent CLIP token truncation while detailing lighting, composition, texture, and style.',
+    concepts: [
+      'Step 1: Load LLM (Qwen 2.5-0.5B-Instruct) & write prompt re-engineering function',
+      'Step 2: Load Stable Diffusion v1.5 & write image synthesis function from engineered prompts',
+      'Step 3: Build Gradio interface for live description input, prompt display, and image preview',
+      'Step 4: Execute batch pipeline on all 15 product descriptions with GPU T4 acceleration',
+      'Step 5: Run competition evaluation cells to compute final composite score and generate final_scores.csv'
+    ],
+    evaluationCriteria: [
+      'Prompt Quality (40 points): Cosine similarity comparison with expert reference prompts',
+      'Image Quality (40 points): CLIP Score measuring alignment between generated image and original description',
+      'Gradio UI (20 points): Fully functional web application accepting descriptions and rendering outputs',
+      'Combined Scoring Formula: score = prompt_score × 0.4 + image_score × 0.4 + gradio_score × 0.2 (Leaderboard ranked by RMSE: lower is better)',
+      'Competition Result: Secured 63rd Rank on the global Kaggle leaderboard'
+    ],
+    deliverables: [
+      'Full Kaggle Jupyter Notebook with executed cells and outputs',
+      'Automated batch generation pipeline for all 15 products',
+      'Interactive Gradio web interface for live interactive demonstration',
+      'final_scores.csv verified against submission criteria'
+    ],
+    projectLink: 'https://github.com/NareshMRN',
+    kaggleLink: 'https://kaggle.com/nn2007',
   },
   {
-    id: 'cert-placeholder-1',
-    slug: 'placeholder-certificate-1',
-    title: 'TODO: replace with certificate title',
-    issuer: 'TODO: replace with issuer',
-    date: 'TODO: replace with date',
-    description: 'TODO: replace with certificate description.',
-    image: '/certificates/placeholder-1.jpg',
-    tags: ['TODO: Tag 1', 'TODO: Tag 2'],
-    credentialId: 'TODO: replace',
-    credentialLink: '',
+    id: 'cert-ai-agents-201',
+    slug: 'ai-agents-201-workshop',
+    title: 'AI Agents 201 Hands-On Workshop',
+    issuer: 'NxtWave / NIAT',
+    date: 'April 2026',
+    description:
+      'Certified by CEO Rahul Attuluri for mastering and engineering autonomous AI agents, tool-calling frameworks, reasoning architectures, and practical agentic workflows.',
+    image: '/certificates/201AI-AGENTS_workshop.jpg',
+    tags: ['AI Agents', 'LLM', 'Python'],
+    credentialId: 'NXT-AGENTS-201',
+    credentialLink: '/certificates/201AI-AGENTS workshop.pdf',
   },
   {
-    id: 'cert-placeholder-2',
-    slug: 'placeholder-certificate-2',
-    title: 'TODO: replace with certificate title',
-    issuer: 'TODO: replace with issuer',
-    date: 'TODO: replace with date',
-    description: 'TODO: replace with certificate description.',
-    image: '/certificates/placeholder-2.jpg',
-    tags: ['TODO: Tag 1'],
-    credentialId: 'TODO: replace',
-    credentialLink: '',
+    id: 'cert-murf-ai',
+    slug: 'murf-ai-hackathon-cert',
+    title: 'Murf.AI Workshop & Hands-On App Building at NIAT',
+    issuer: 'Murf AI & NIAT',
+    date: 'March 2026',
+    description:
+      'Certified by Murf AI CEO Ankur Edkie for active hands-on engineering in the Murf AI campus workshop at NIAT, mastering studio-quality voice generation workflows.',
+    image: '/certificates/NIAT_Certificate_Naresh_N__1_.jpg',
+    tags: ['Murf AI', 'Voice AI', 'Audio Engineering', 'Python'],
+    credentialId: 'MURF-NIAT-2026',
+    credentialLink: '/certificates/NIAT_Certificate_Naresh N (1).pdf',
+    problemStatement:
+      'Traditional voiceover production requires expensive recording studios, high-end microphones, and professional voice actors, creating a high barrier to entry for rapid multimedia and application development.',
+    objective:
+      'Master and implement Murf AI—a leading industry-grade AI voice platform—to convert text into natural, studio-quality voiceovers within minutes directly inside custom applications and media pipelines.',
+    workshopHighlights: [
+      'Hands-on experience with a real-world, industry-standard AI voice platform',
+      'Exposure to practical end-to-end AI voice workflows used across tech and media enterprises',
+      'Creation of AI-powered audio pipelines and voice synthesis integrations',
+      'Practical implementation across core industry use-cases'
+    ],
+    keyHighlights: [
+      'Product Demos: Instant clear explanatory narration for product releases',
+      'Explainer Videos: High-retention narrative audio synchronized to visual flows',
+      'Marketing Content: Compelling, expressive brand voiceovers',
+      'Training Modules: Consistent, professional instructional voices for e-learning',
+      'Podcasts: Studio-level broadcast vocal tracks generated programmatically',
+      'Application Audio: In-app real-time speech and interactive voice assistants'
+    ],
+    projectLink: 'https://thesangeetha.vercel.app/',
+  },
+  {
+    id: 'cert-aiot-yu',
+    slug: 'connected-care-aiot-yu',
+    title: 'Connected Care with AIOT (Advanced)',
+    issuer: 'Yenepoya University & NIAT',
+    date: 'April 2026',
+    description:
+      'Advanced technical certification on building resilient AIoT solutions bridging embedded edge sensors and intelligent predictive analytics.',
+    image: '/certificates/YU_NIAT_AIOT.jpg',
+    tags: ['AIoT', 'Embedded Systems', 'Edge AI'],
+    credentialId: 'YU-NIAT-AIOT-2026',
+    credentialLink: '/certificates/YU_NIAT_AIOT.pdf',
+  },
+  {
+    id: 'cert-robotic-arms',
+    slug: 'robotic-arms-101',
+    title: 'Robotic Arms 101 Hands-On Workshop',
+    issuer: 'NIAT Robotics & Advanced Tech',
+    date: '2026',
+    description:
+      'Hands-on engineering workshop exploring robotic kinematics, servo motor control, forward and inverse kinematics, and automated trajectory planning.',
+    image: '/certificates/NIAT_Certificate_Robotic_Arms_2026_Naresh_N.jpg',
+    tags: ['Robotics', 'Kinematics', 'Hardware'],
+    credentialId: 'NIAT-ROBOTICS-ARM',
+    credentialLink: '/certificates/NIAT_Certificate_Robotic_Arms_2026_Naresh N.pdf',
+  },
+  {
+    id: 'cert-autonomous-vehicles',
+    slug: 'autonomous-vehicles-workshop',
+    title: 'Autonomous Vehicles Hands-On Workshop',
+    issuer: 'NIAT Robotics (Sai Teja, VP)',
+    date: '2026',
+    description:
+      'Practical engineering workshop on computer vision, sensor fusion, LiDAR/camera perception, and control loops for autonomous navigation.',
+    image: '/certificates/NIAT_Certificate_Naresh_N.jpg',
+    tags: ['Autonomous Vehicles', 'Computer Vision', 'Robotics'],
+    credentialId: 'NIAT-AUTO-VEHICLES',
+    credentialLink: '/certificates/NIAT_Certificate_Naresh N.pdf',
+  },
+  {
+    id: 'cert-base44',
+    slug: 'base44-app-building',
+    title: 'Base44 Hands-On App Building Workshop',
+    issuer: 'Base44 & NIAT',
+    date: 'November 2025',
+    description:
+      'Completed hands-on software development workshop building full-stack reactive web applications led by Elsa Welshofer.',
+    image: '/certificates/base44_wrokshop.jpg',
+    tags: ['Web Development', 'Full Stack', 'App Building'],
+    credentialId: 'BASE44-WS-2025',
+    credentialLink: '/certificates/base44 wrokshop.pdf',
   },
 ];
 

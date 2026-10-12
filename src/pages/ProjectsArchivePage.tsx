@@ -27,8 +27,8 @@ export const ProjectsArchivePage: React.FC = () => {
           <span className="text-[11px] font-mono-code uppercase tracking-[0.35em] block mb-3" style={{ color: 'var(--text-muted)' }}>
             ARCHIVE // 03
           </span>
-          <h1 className="font-display text-5xl sm:text-6xl md:text-7xl uppercase tracking-wider" style={{ color: 'var(--text-primary)' }}>
-            ALL PROJECTS
+          <h1 className="font-section-head text-3xl min-[400px]:text-4xl sm:text-5xl md:text-6xl uppercase tracking-wider font-extrabold">
+            <span className="gold-gradient-text">ALL PROJECTS</span>
           </h1>
           <p className="text-sm font-light mt-3 max-w-xl font-body" style={{ color: 'var(--text-secondary)' }}>
             Every product, AI agent, and distributed system engineered solo. Click any card for architecture deep dive.
@@ -40,13 +40,17 @@ export const ProjectsArchivePage: React.FC = () => {
           {PROJECTS.map((project) => (
             <div
               key={project.id}
-              className="group relative rounded-2xl border p-7 flex flex-col justify-between transition-all duration-300 hover:-translate-y-1 hover:shadow-2xl overflow-hidden"
+              className="group relative rounded-2xl border p-4 sm:p-7 flex flex-col justify-between transition-all duration-300 hover:-translate-y-1 hover:shadow-2xl overflow-hidden card-gold-border card-top-line"
               style={{
                 backgroundColor: 'var(--bg-secondary)',
                 borderColor: 'var(--border-strong)',
               }}
             >
-
+              {/* Top Accent Line: White in dark theme, black in light theme */}
+              <div
+                className="absolute top-0 left-0 right-0 h-[1.5px] pointer-events-none z-20"
+                style={{ backgroundColor: 'var(--card-top-line)' }}
+              />
 
               <div>
                 {/* Header */}
@@ -70,7 +74,7 @@ export const ProjectsArchivePage: React.FC = () => {
                 <span className="text-[10px] font-mono-code tracking-[0.2em] uppercase block mb-1" style={{ color: 'var(--text-muted)' }}>
                   {project.category}
                 </span>
-                <h2 className="font-display text-3xl uppercase tracking-wide mb-3 group-hover:text-white transition-colors" style={{ color: 'var(--text-primary)' }}>
+                <h2 className="font-work-title text-lg min-[400px]:text-xl sm:text-2xl font-bold uppercase tracking-tight mb-3 group-hover:text-white transition-colors break-words" style={{ color: 'var(--text-primary)' }}>
                   {project.title}
                 </h2>
 
@@ -94,8 +98,11 @@ export const ProjectsArchivePage: React.FC = () => {
                       href={project.links.live}
                       target="_blank"
                       rel="noopener noreferrer"
-                      className="text-zinc-400 hover:text-white transition-colors"
+                      className="transition-colors"
+                      style={{ color: 'var(--text-muted)' }}
                       aria-label="Live Demo"
+                      onMouseEnter={(e) => e.currentTarget.style.color = 'var(--text-primary)'}
+                      onMouseLeave={(e) => e.currentTarget.style.color = 'var(--text-muted)'}
                     >
                       <ExternalLink className="w-4 h-4" />
                     </a>
@@ -105,8 +112,11 @@ export const ProjectsArchivePage: React.FC = () => {
                       href={project.links.github}
                       target="_blank"
                       rel="noopener noreferrer"
-                      className="text-zinc-400 hover:text-white transition-colors"
+                      className="transition-colors"
+                      style={{ color: 'var(--text-muted)' }}
                       aria-label="GitHub Repo"
+                      onMouseEnter={(e) => e.currentTarget.style.color = 'var(--text-primary)'}
+                      onMouseLeave={(e) => e.currentTarget.style.color = 'var(--text-muted)'}
                     >
                       <GithubIcon className="w-4 h-4" />
                     </a>
@@ -116,8 +126,11 @@ export const ProjectsArchivePage: React.FC = () => {
                       href={project.links.video}
                       target="_blank"
                       rel="noopener noreferrer"
-                      className="text-zinc-400 hover:text-white transition-colors"
+                      className="transition-colors"
+                      style={{ color: 'var(--text-muted)' }}
                       aria-label="Video Demo"
+                      onMouseEnter={(e) => e.currentTarget.style.color = 'var(--text-primary)'}
+                      onMouseLeave={(e) => e.currentTarget.style.color = 'var(--text-muted)'}
                     >
                       <Play className="w-4 h-4" />
                     </a>
