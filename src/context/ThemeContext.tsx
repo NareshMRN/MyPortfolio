@@ -18,7 +18,7 @@ export const ThemeProvider: React.FC<{ children: React.ReactNode }> = ({ childre
     } catch {
       // fallback
     }
-    return 'white'; // default cinematic dark
+    return 'light'; // default cinematic light
   });
 
   useEffect(() => {
