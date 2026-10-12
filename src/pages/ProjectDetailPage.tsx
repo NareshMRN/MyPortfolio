@@ -6,10 +6,18 @@ import { TechBadge } from '../components/TechBadge';
 import { StatusBadge } from '../components/StatusBadge';
 import { TeamMemberCard } from '../components/TeamMemberCard';
 import { PROJECTS } from '../data/content';
+import { useSeo } from '../hooks/useSeo';
 
 export const ProjectDetailPage: React.FC = () => {
   const { slug } = useParams<{ slug: string }>();
   const project = PROJECTS.find((p) => p.slug === slug);
+
+  useSeo({
+    title: project ? `${project.title} — Project by Naresh N` : 'Not found',
+    description: project?.description ?? '',
+    path: `/projects/${slug}`,
+    noindex: !project,
+  });
 
   if (!project) {
     return <Navigate to="/projects" replace />;

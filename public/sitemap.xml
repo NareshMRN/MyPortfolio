@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
+  <url><loc>https://nareshn.me/</loc><priority>1.0</priority></url>
+  <url><loc>https://nareshn.me/projects</loc></url>
+  <url><loc>https://nareshn.me/achievements</loc></url>
+  <url><loc>https://nareshn.me/hackathons</loc></url>
+  <url><loc>https://nareshn.me/certificates</loc></url>
+
+  <url><loc>https://nareshn.me/projects/sangeetha</loc></url>
+  <url><loc>https://nareshn.me/projects/tradevault</loc></url>
+  <url><loc>https://nareshn.me/projects/tryscan</loc></url>
+  <url><loc>https://nareshn.me/projects/vector-search</loc></url>
+  <url><loc>https://nareshn.me/projects/gradio-image-gen</loc></url>
+  <url><loc>https://nareshn.me/projects/zyro-rag-challenge</loc></url>
+  <url><loc>https://nareshn.me/projects/aira</loc></url>
+  <url><loc>https://nareshn.me/projects/english-learning-app</loc></url>
+
+  <url><loc>https://nareshn.me/achievements/build-to-ship-3rd-place</loc></url>
+  <url><loc>https://nareshn.me/achievements/solo-founder-sangeetha</loc></url>
+  <url><loc>https://nareshn.me/achievements/kaggle-gradio-rank-63</loc></url>
+  <url><loc>https://nareshn.me/achievements/semantic-search-rag-kaggle</loc></url>
+
+  <url><loc>https://nareshn.me/hackathons/build-to-ship-hackathon</loc></url>
+  <url><loc>https://nareshn.me/hackathons/murf-ai-hackathon</loc></url>
+  <url><loc>https://nareshn.me/hackathons/kaggle-gradio-competition</loc></url>
+
+  <url><loc>https://nareshn.me/certificates/vector-search-masterclass</loc></url>
+  <url><loc>https://nareshn.me/certificates/building-llm-app-gradio</loc></url>
+  <url><loc>https://nareshn.me/certificates/ai-agents-201-workshop</loc></url>
+  <url><loc>https://nareshn.me/certificates/murf-ai-hackathon-cert</loc></url>
+  <url><loc>https://nareshn.me/certificates/connected-care-aiot-yu</loc></url>
+  <url><loc>https://nareshn.me/certificates/robotic-arms-101</loc></url>
+  <url><loc>https://nareshn.me/certificates/autonomous-vehicles-workshop</loc></url>
+  <url><loc>https://nareshn.me/certificates/base44-app-building</loc></url>
+</urlset>

@@ -15,6 +15,7 @@ import { HackathonDetailPage } from './pages/HackathonDetailPage';
 import { CertificatesArchivePage } from './pages/CertificatesArchivePage';
 import { CertificateDetailPage } from './pages/CertificateDetailPage';
 import { ScrollToTopFloating } from './components/ScrollToTopFloating';
+import NotFoundPage from './pages/NotFoundPage';
 
 // Scroll to top upon route transition
 function ScrollToTop() {
@@ -83,7 +84,7 @@ export function App() {
               <Route path="/hackathons/:slug" element={<HackathonDetailPage />} />
               <Route path="/certificates" element={<CertificatesArchivePage />} />
               <Route path="/certificates/:slug" element={<CertificateDetailPage />} />
-              <Route path="*" element={<Navigate to="/" replace />} />
+              <Route path="*" element={<NotFoundPage />} />
             </Routes>
           </main>
           {/* Floating Scroll to Top Button */}

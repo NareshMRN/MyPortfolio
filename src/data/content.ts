@@ -670,7 +670,7 @@ export const ACHIEVEMENTS: AchievementItem[] = [
 export const HACKATHONS: HackathonItem[] = [
   {
     id: 'hack-build-to-ship',
-    slug: 'Build-to-ship-hackathon',
+    slug: 'build-to-ship-hackathon',
     eventName: 'Build to Ship Hackathon',
     date: '2026',
     role: 'Full Stack & AI Systems Engineer',
