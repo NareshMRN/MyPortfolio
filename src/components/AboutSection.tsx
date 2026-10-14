@@ -243,9 +243,9 @@ export const AboutSection: React.FC = () => {
                     "{PERSONAL_INFO.quote}"
                   </p>
 
-                  {/* Handwritten signature of "Naresh" */}
+                  {/* Handwritten signature */}
                   <div
-                    className="font-signature text-2xl sm:text-3xl font-bold tracking-normal select-none -rotate-2"
+                    className="font-signature text-3xl sm:text-4xl font-normal tracking-wide select-none"
                     style={{ color: 'var(--text-primary)' }}
                   >
                     ~ {PERSONAL_INFO.signatureText}

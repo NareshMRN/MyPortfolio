@@ -50,14 +50,13 @@ export const Navbar: React.FC = () => {
         <a
           href="/#hero"
           onClick={(e) => handleNavClick(e, '/#hero')}
-          className="group flex items-center gap-1.5 select-none"
+          className="group flex items-center gap-1.5 select-none py-1"
           style={{ color: 'var(--text-primary)' }}
           aria-label="Naresh Portfolio Home"
         >
-          <span className="font-signature text-2xl sm:text-4xl font-bold tracking-wide transition-all duration-200 group-hover:scale-105 inline-block -rotate-1">
+          <span className="font-signature text-3xl sm:text-4xl font-normal tracking-wide transition-all duration-200 group-hover:scale-105 inline-block leading-none">
             Naresh N
           </span>
-
         </a>
 
         {/* RIGHT SIDE: Desktop Nav items + Controls, occupying full right side */}

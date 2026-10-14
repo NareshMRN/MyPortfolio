@@ -136,7 +136,7 @@ export const PERSONAL_INFO = {
   statusBadge: 'Available for internships & collaborations',
   quote:
     'Architecture is not just how software runs under load—it is how effortlessly it feels to the human on the other side.',
-  signatureText: 'Naresh',
+  signatureText: 'Naresh N',
   photo: '/assets/photo.jpg',
   resumeUrl: '/resume.pdf',
   videoUrl: '/videos/hero.mp4',
@@ -303,16 +303,15 @@ export const PROJECTS: ProjectItem[] = [
       'Curated playlists, search, and user profile management',
       'Admin dashboard with metrics on streams and user activity'
     ],
-    tech: ['Flutter', 'Next.js', 'Node.js', 'MongoDB Atlas', 'Docker', 'Riverpod', 'Zod', 'JWT'],
+    tech: ['Flutter', 'Next.js', 'Node.js', 'Express.js', 'MongoDB Atlas', 'Docker', 'Riverpod', 'Zod', 'JWT'],
     metrics: [
       { label: 'ROLE', value: 'Founder & Sole Dev' },
       { label: 'PLATFORMS', value: 'Android, Web, Admin' },
       { label: 'STATUS', value: 'Live in Production' },
     ],
     links: {
-      live: 'https://thesangeetha.vercel.app/',
+      live: 'https://thesangeetha.vercel.app/index.html',
       github: 'https://github.com/NareshMRN',
-      video: 'https://drive.google.com/file/d/1rlLNJWq6KeV34KiUQXDmqOojhJwBmPTM/view?usp=drive_link',
     },
     featured: true,
   },
@@ -633,13 +632,13 @@ export const ACHIEVEMENTS: AchievementItem[] = [
   },
   {
     id: 'ach-2',
-    slug: 'kaggle-gradio-rank-63',
-    title: '63rd Rank — Gradio Product Image Generation Competition',
+    slug: 'kaggle-gradio-rank-67',
+    title: '67th Rank — Gradio Product Image Generation Competition',
     organization: 'Kaggle & NIAT Masterclasses',
     year: '2026',
-    result: '63rd Rank',
+    result: '67/366 th Rank',
     description:
-      'Secured 63rd rank on Kaggle by building an automated image generation pipeline for 15 Flipkart products in loop in HD quality using Gradio and Stable Diffusion.',
+      'Secured 67th rank on Kaggle by building an automated image generation pipeline for 15 Flipkart products in loop in HD quality using Gradio and Stable Diffusion.',
     image: '',
     tags: ['Kaggle', 'Gradio', 'Stable Diffusion', 'Generative AI'],
     details:
@@ -659,6 +658,21 @@ export const ACHIEVEMENTS: AchievementItem[] = [
     tags: ['Kaggle', 'FAISS', 'RAG', 'Sentence-Transformers'],
     details:
       'Overcame the limitations of traditional keyword search on 100,000+ Flipkart customer reviews by engineering dense vector embeddings (SBERT) and FAISS IndexFlatIP vector search. Built a full RAG question-answering pipeline with Precision@K and Recall@K evaluation metrics, EDA visualizations, and an executed Kaggle notebook.',
+    link: 'https://kaggle.com/nn2007',
+  },
+  {
+    id: 'ach-4',
+    slug: 'zyro-rag-agent',
+    title: 'Zyro Dynamics HR Bot',
+    organization: 'Kaggle & NIAT Masterclasses',
+    year: '2026',
+    result: '76/84 th Rank',
+    description:
+      'Zyro Dynamics HR bot is a AI-powered HR assistant that can answer employee questions about HR policies and procedures.',
+    image: '',
+    tags: ['Kaggle', 'RAG', 'Langchain', 'Langsmith', 'AI', 'Streamlit', 'Groq_API_Key', 'Langgraph'],
+    details:
+      'Zyro Dynamics HR bot is a AI-powered HR assistant that can answer employee questions about HR policies and procedures.',
     link: 'https://kaggle.com/nn2007',
   },
 ];

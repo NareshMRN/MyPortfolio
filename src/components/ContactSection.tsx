@@ -1,8 +1,10 @@
 import React, { useRef, useState, type FormEvent, type KeyboardEvent } from 'react';
 import { motion, useInView } from 'framer-motion';
-import { ArrowUpRight, Download, Send, Terminal, CheckCircle2, AlertCircle } from 'lucide-react';
+import { ArrowUpRight, Download, Send, Terminal, CheckCircle2, AlertCircle, Loader2 } from 'lucide-react';
 import { PERSONAL_INFO } from '../data/content';
 import { SocialIcons } from './SocialIcons';
+
+const sleep = (ms: number) => new Promise((resolve) => setTimeout(resolve, ms));
 
 export const ContactSection: React.FC = () => {
   const sectionRef = useRef<HTMLElement>(null);
@@ -33,6 +35,8 @@ export const ContactSection: React.FC = () => {
   const handleSubmit = async (e: FormEvent<HTMLFormElement>) => {
     e.preventDefault();
 
+    if (status === 'sending') return;
+
     if (!formData.name.trim() || !formData.email.trim() || !formData.message.trim()) {
       setStatus('error');
       setTerminalLogs(['zsh: validation error: all parameters (name, email, message) are required']);
@@ -40,57 +44,65 @@ export const ContactSection: React.FC = () => {
     }
 
     setStatus('sending');
-    setTerminalLogs([
-      'Sending packet to gateway...',
-      'Validating payload encryption...',
-    ]);
+    setTerminalLogs(['Establishing secure connection...']);
 
     const { name, email, message } = formData;
-    const metaEnv = (import.meta as any).env || {};
-    const formspreeId = metaEnv.VITE_FORMSPREE_ID;
+    const formspreeId = (import.meta.env.VITE_FORMSPREE_ID || 'mrpeyjyl').trim();
 
     try {
-      if (formspreeId) {
-        const response = await fetch(`https://formspree.io/f/${formspreeId}`, {
-          method: 'POST',
-          headers: { 'Content-Type': 'application/json', Accept: 'application/json' },
-          body: JSON.stringify({ name, email, message }),
-        });
+      await sleep(350);
+      setTerminalLogs((prev) => [...prev, 'Encrypting message packet...']);
 
-        if (response.ok) {
-          setStatus('success');
-          setTerminalLogs([
-            'Sending packet to gateway... [DONE]',
-            `✓ Message sent successfully to ${PERSONAL_INFO.email}`,
-            'Process exited with status code 0 (SUCCESS)',
-          ]);
-          setFormData({ name: '', email: '', message: '' });
-          return;
-        }
-      }
+      await sleep(350);
+      setTerminalLogs((prev) => [...prev, 'Dispatching to destination...']);
 
-      // Mailto fallback protocol
-      const mailtoUrl = `mailto:${encodeURIComponent(PERSONAL_INFO.email)}?subject=${encodeURIComponent(
-        'Portfolio Contact from ' + name
-      )}&body=${encodeURIComponent(message + '\n\nSender: ' + name + ' (' + email + ')')}`;
+      const response = await fetch(`https://formspree.io/f/${formspreeId}`, {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+          Accept: 'application/json',
+        },
+        body: JSON.stringify({
+          name: name.trim(),
+          email: email.trim(),
+          message: message.trim(),
+          _subject: `New Portfolio Message from ${name.trim()}`,
+        }),
+      });
 
-      window.location.href = mailtoUrl;
+      if (response.ok) {
+        await sleep(300);
+        setTerminalLogs((prev) => [...prev, 'Dispatching to destination... [DONE]']);
 
-      setTimeout(() => {
+        await sleep(300);
+        setTerminalLogs((prev) => [...prev, '✓ Message transmitted successfully']);
+
+        await sleep(300);
+        setTerminalLogs((prev) => [...prev, `✓ Notification delivered to ${PERSONAL_INFO.email}`]);
+
+        await sleep(300);
+        setTerminalLogs((prev) => [...prev, 'Process completed with status code 0 (SUCCESS)']);
+
         setStatus('success');
-        setTerminalLogs([
-          'Sending packet to gateway... [DONE]',
-          '✓ Message sent via default mail client fallback',
-          'Process exited with status code 0',
-        ]);
-      }, 600);
-    } catch (err) {
-      console.error(err);
-      setStatus('error');
-      setTerminalLogs([
-        'zsh: fatal: connection to remote relay timed out',
-        `✗ Error: Transmission failed. Direct dispatch: ${PERSONAL_INFO.email}`,
+        setFormData({ name: '', email: '', message: '' });
+      } else {
+        const errorData = await response.json().catch(() => ({}));
+        const errorMsg =
+          errorData?.errors?.map((err: any) => err.message).join(', ') ||
+          errorData?.error ||
+          'Message dispatch failed';
+        throw new Error(errorMsg);
+      }
+    } catch (err: any) {
+      console.error('Form submission error:', err);
+      await sleep(250);
+      setTerminalLogs((prev) => [
+        ...prev,
+        'zsh: fatal: transmission interrupted',
+        '✗ Error: Unable to deliver message right now',
+        `Direct dispatch fallback: ${PERSONAL_INFO.email}`,
       ]);
+      setStatus('error');
     }
   };
 
@@ -243,7 +255,8 @@ export const ContactSection: React.FC = () => {
               </div>
 
               {/* Terminal Body (Always dark terminal with full terminal syntax coloring) */}
-              <form onSubmit={handleSubmit} className="p-6 sm:p-7 space-y-5 font-mono-code text-xs">
+              <form onSubmit={handleSubmit} className="p-6 sm:p-7 space-y-5 font-mono-code text-xs" action="https://formspree.io/f/mrpeyjyl"
+                method="POST">
                 {/* Initial command line */}
                 <div className="flex flex-wrap items-center gap-1.5 pb-3 border-b border-white/10">
                   <span className="text-emerald-400 font-bold">naresh@portfolio</span>
@@ -270,11 +283,12 @@ export const ContactSection: React.FC = () => {
                       name="name"
                       type="text"
                       required
+                      disabled={status === 'sending'}
                       value={formData.name}
                       onChange={(e) => setFormData({ ...formData, name: e.target.value })}
                       onKeyDown={handleNameKeyDown}
-                      placeholder="e.g. Alan Turing"
-                      className="w-full bg-[#11131b] border border-white/15 rounded-lg px-3.5 py-2.5 text-white placeholder-zinc-600 focus:outline-none focus:border-cyan-400 focus:ring-1 focus:ring-cyan-400 transition-all font-mono-code"
+                      placeholder="Your Name"
+                      className="w-full bg-[#11131b] border border-white/15 rounded-lg px-3.5 py-2.5 text-white placeholder-zinc-600 focus:outline-none focus:border-cyan-400 focus:ring-1 focus:ring-cyan-400 transition-all font-mono-code disabled:opacity-60 disabled:cursor-not-allowed"
                     />
                   </div>
                 </div>
@@ -294,11 +308,12 @@ export const ContactSection: React.FC = () => {
                       name="email"
                       type="email"
                       required
+                      disabled={status === 'sending'}
                       value={formData.email}
                       onChange={(e) => setFormData({ ...formData, email: e.target.value })}
                       onKeyDown={handleEmailKeyDown}
-                      placeholder="e.g. alan@turing.ac.uk"
-                      className="w-full bg-[#11131b] border border-white/15 rounded-lg px-3.5 py-2.5 text-white placeholder-zinc-600 focus:outline-none focus:border-cyan-400 focus:ring-1 focus:ring-cyan-400 transition-all font-mono-code"
+                      placeholder="e.g. yourname@gmail.com"
+                      className="w-full bg-[#11131b] border border-white/15 rounded-lg px-3.5 py-2.5 text-white placeholder-zinc-600 focus:outline-none focus:border-cyan-400 focus:ring-1 focus:ring-cyan-400 transition-all font-mono-code disabled:opacity-60 disabled:cursor-not-allowed"
                     />
                   </div>
                 </div>
@@ -318,10 +333,11 @@ export const ContactSection: React.FC = () => {
                       name="message"
                       rows={3}
                       required
+                      disabled={status === 'sending'}
                       value={formData.message}
                       onChange={(e) => setFormData({ ...formData, message: e.target.value })}
                       placeholder="Enter details of your project, opportunity or message..."
-                      className="w-full bg-[#11131b] border border-white/15 rounded-lg px-3.5 py-2.5 text-white placeholder-zinc-600 focus:outline-none focus:border-cyan-400 focus:ring-1 focus:ring-cyan-400 transition-all font-mono-code resize-none"
+                      className="w-full bg-[#11131b] border border-white/15 rounded-lg px-3.5 py-2.5 text-white placeholder-zinc-600 focus:outline-none focus:border-cyan-400 focus:ring-1 focus:ring-cyan-400 transition-all font-mono-code resize-none disabled:opacity-60 disabled:cursor-not-allowed"
                     />
                   </div>
                 </div>
@@ -331,19 +347,29 @@ export const ContactSection: React.FC = () => {
                   <button
                     type="submit"
                     disabled={status === 'sending'}
-                    className="w-full flex items-center justify-center gap-2 px-5 py-3 rounded-lg border border-emerald-500/40 bg-emerald-950/30 text-emerald-300 font-bold uppercase tracking-wider hover:bg-emerald-900/40 hover:border-emerald-400 active:scale-[0.99] transition-all cursor-pointer shadow-lg disabled:opacity-50"
+                    className={`w-full flex items-center justify-center gap-2.5 px-5 py-3 rounded-lg border font-bold uppercase tracking-wider transition-all shadow-lg ${status === 'sending'
+                      ? 'border-emerald-500/30 bg-emerald-950/20 text-emerald-400/70 cursor-not-allowed opacity-80 pointer-events-none'
+                      : 'border-emerald-500/40 bg-emerald-950/30 text-emerald-300 hover:bg-emerald-900/40 hover:border-emerald-400 active:scale-[0.99] cursor-pointer'
+                      }`}
                   >
-                    <Send className="w-3.5 h-3.5" />
-                    <span>
-                      {status === 'sending' ? '$ executing transmission...' : '$ send --execute'}
-                    </span>
+                    {status === 'sending' ? (
+                      <>
+                        <Loader2 className="w-4 h-4 animate-spin text-emerald-400" />
+                        <span>$ executing transmission...</span>
+                      </>
+                    ) : (
+                      <>
+                        <Send className="w-3.5 h-3.5" />
+                        <span>$ send --execute</span>
+                      </>
+                    )}
                   </button>
                 </div>
 
                 {/* Terminal Live Output Logs */}
                 {terminalLogs.length > 0 && (
                   <div
-                    className="p-3.5 rounded-lg border text-[11px] leading-relaxed space-y-1 font-mono-code bg-[#08090d]"
+                    className="p-3.5 rounded-lg border text-[11px] leading-relaxed space-y-1.5 font-mono-code bg-[#08090d] transition-all duration-300"
                     style={{
                       borderColor:
                         status === 'success'
@@ -354,19 +380,28 @@ export const ContactSection: React.FC = () => {
                     }}
                   >
                     {terminalLogs.map((log, idx) => (
-                      <div
+                      <motion.div
                         key={idx}
-                        className={
-                          log.startsWith('✓')
-                            ? 'text-emerald-400 font-bold'
-                            : log.startsWith('✗') || log.startsWith('zsh: error')
-                              ? 'text-red-400 font-bold'
-                              : 'text-zinc-400'
-                        }
+                        initial={{ opacity: 0, y: 3 }}
+                        animate={{ opacity: 1, y: 0 }}
+                        transition={{ duration: 0.25 }}
+                        className={`flex items-center gap-2 ${log.startsWith('✓')
+                          ? 'text-emerald-400 font-bold'
+                          : log.startsWith('✗') || log.startsWith('zsh:')
+                            ? 'text-red-400 font-bold'
+                            : 'text-zinc-400'
+                          }`}
                       >
-                        {log}
-                      </div>
+                        <span className="text-zinc-600 select-none">{'>'}</span>
+                        <span>{log}</span>
+                      </motion.div>
                     ))}
+                    {status === 'sending' && (
+                      <div className="flex items-center gap-2 text-cyan-400 pt-0.5">
+                        <span className="text-zinc-600 select-none">{'>'}</span>
+                        <span className="inline-block w-2 h-3.5 bg-cyan-400 animate-pulse" />
+                      </div>
+                    )}
                   </div>
                 )}
               </form>

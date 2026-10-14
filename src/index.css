@@ -1,5 +1,21 @@
 @import "tailwindcss";
 
+@font-face {
+  font-family: 'Segoe Script Local';
+  src: local('Segoe Script'), url('/fonts/segoesc.ttf') format('truetype');
+  font-weight: normal;
+  font-style: normal;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: 'Segoe Script Local';
+  src: local('Segoe Script Bold'), url('/fonts/segoescb.ttf') format('truetype');
+  font-weight: bold;
+  font-style: normal;
+  font-display: swap;
+}
+
 :root {
   --font-display: 'Bebas Neue', -apple-system, BlinkMacSystemFont, sans-serif;
   --font-headline: 'Syne', -apple-system, BlinkMacSystemFont, sans-serif;
@@ -9,7 +25,7 @@
   --font-space: 'Space Grotesk', -apple-system, sans-serif;
   --font-body: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
   --font-mono: 'JetBrains Mono', monospace;
-  --font-signature: 'Caveat', cursive;
+  --font-signature: 'Alex Brush', cursive;
 
   /* Theme tokens - Black, White, Grays ONLY */
   --bg-primary: #000000;
@@ -122,7 +138,8 @@ body {
   font-family: var(--font-mono);
 }
 
-.font-signature {
+.font-signature,
+.font-alex-brush {
   font-family: var(--font-signature);
 }
 

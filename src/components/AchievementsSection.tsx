@@ -14,7 +14,17 @@ import { GlassCard } from './GlassCard';
 import { TechBadge } from './TechBadge';
 import { CertificateTerminalModal } from './CertificateTerminalModal';
 
-export const AchievementsSection: React.FC = () => {
+interface AchievementsSectionProps {
+  limitAchievements?: number;
+  limitHackathons?: number;
+  limitCertificates?: number;
+}
+
+export const AchievementsSection: React.FC<AchievementsSectionProps> = ({
+  limitAchievements = 4,
+  limitHackathons = 2,
+  limitCertificates = 2,
+}) => {
   const [activeTab, setActiveTab] = useState<'achievements' | 'hackathons' | 'certificates'>('achievements');
   const [selectedCert, setSelectedCert] = useState<CertificateItem | null>(null);
 
@@ -104,7 +114,7 @@ export const AchievementsSection: React.FC = () => {
                 className="space-y-6"
               >
                 <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-                  {ACHIEVEMENTS.map((item) => (
+                  {ACHIEVEMENTS.slice(0, limitAchievements).map((item) => (
                     <GlassCard key={item.id} className="p-4 sm:p-7 card-gold-border card-top-line">
 
                       {/* Header: Large Year & Result Badge */}
@@ -114,17 +124,36 @@ export const AchievementsSection: React.FC = () => {
                         </span>
                         {item.result && (
                           <span
-                            className="px-3.5 py-1.5 rounded-full text-[10.5px] font-mono-code uppercase tracking-wider border font-bold shadow-sm transition-all"
+                            className="px-3.5 py-1.5 rounded-full text-[10px] font-mono-code uppercase tracking-wider font-bold inline-flex items-center gap-1.5 shadow-lg"
                             style={{
-                              borderColor: 'var(--border-strong)',
-                              color: 'var(--text-primary)',
-                              backgroundColor: 'var(--bg-card)',
+                              ...(item.result === 'Winner' || item.result === '3rd Place Winner'
+                                ? {
+                                  background: 'linear-gradient(135deg, #B8860B 0%, #DAA520 50%, #FFD700 100%)',
+                                  color: '#1a1000',
+                                  border: '1px solid rgba(255, 215, 0, 0.6)',
+                                  boxShadow: '0 4px 16px rgba(218, 165, 32, 0.35)',
+                                }
+                                : item.result === 'Finalist'
+                                  ? {
+                                    background: 'linear-gradient(135deg, #6B7280 0%, #9CA3AF 50%, #D1D5DB 100%)',
+                                    color: '#111827',
+                                    border: '1px solid rgba(209, 213, 219, 0.6)',
+                                    boxShadow: '0 4px 16px rgba(156, 163, 175, 0.35)',
+                                  }
+                                  : {
+                                    background: 'linear-gradient(135deg, #78716C 0%, #A8A29E 50%, #D6D3D1 100%)',
+                                    color: '#1C1917',
+                                    border: '1px solid rgba(168, 162, 158, 0.5)',
+                                    boxShadow: '0 4px 16px rgba(120, 113, 108, 0.3)',
+                                  }),
                             }}
                           >
-                            {item.result}
+                            <span style={{ fontSize: '12px', lineHeight: 1 }}>★</span> {item.result}
                           </span>
+
                         )}
                       </div>
+
 
                       {/* Title & Organization */}
                       <span className="text-[11px] font-mono-code uppercase tracking-wider block mb-1" style={{ color: 'var(--text-muted)' }}>
@@ -185,7 +214,7 @@ export const AchievementsSection: React.FC = () => {
                 className="space-y-6"
               >
                 <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-                  {HACKATHONS.map((item) => (
+                  {HACKATHONS.slice(0, limitHackathons).map((item) => (
                     <GlassCard key={item.id} className="p-4 sm:p-7 card-gold-border card-top-line">
 
 
@@ -200,19 +229,19 @@ export const AchievementsSection: React.FC = () => {
                           style={{
                             ...(item.result === 'Winner' || item.result === '3rd Place Winner'
                               ? {
-                                  background: 'linear-gradient(135deg, #B8860B 0%, #DAA520 50%, #FFD700 100%)',
-                                  color: '#1a1000',
-                                  border: '1px solid rgba(255, 215, 0, 0.6)',
-                                  boxShadow: '0 4px 16px rgba(218, 165, 32, 0.35)',
-                                }
+                                background: 'linear-gradient(135deg, #B8860B 0%, #DAA520 50%, #FFD700 100%)',
+                                color: '#1a1000',
+                                border: '1px solid rgba(255, 215, 0, 0.6)',
+                                boxShadow: '0 4px 16px rgba(218, 165, 32, 0.35)',
+                              }
                               : item.result === 'Finalist'
-                              ? {
+                                ? {
                                   background: 'linear-gradient(135deg, #6B7280 0%, #9CA3AF 50%, #D1D5DB 100%)',
                                   color: '#111827',
                                   border: '1px solid rgba(209, 213, 219, 0.6)',
                                   boxShadow: '0 4px 16px rgba(156, 163, 175, 0.35)',
                                 }
-                              : {
+                                : {
                                   background: 'linear-gradient(135deg, #78716C 0%, #A8A29E 50%, #D6D3D1 100%)',
                                   color: '#1C1917',
                                   border: '1px solid rgba(168, 162, 158, 0.5)',
@@ -288,7 +317,7 @@ export const AchievementsSection: React.FC = () => {
                       (c) => c.id === 'cert-gradio-llm' || c.id === 'cert-vector-search'
                     );
                     const homeCerts = masterclassCerts.length === 2 ? masterclassCerts : CERTIFICATES.slice(0, 2);
-                    return homeCerts.map((item) => (
+                    return homeCerts.slice(0, limitCertificates).map((item) => (
                       <GlassCard key={item.id} className="p-4 sm:p-6 flex flex-col justify-between card-gold-border card-top-line">
                         <div>
                           {/* Certificate Thumbnail Preview / Fit to Container */}
@@ -360,7 +389,7 @@ export const AchievementsSection: React.FC = () => {
                 <div className="pt-6 text-center">
                   <Link
                     to="/certificates"
-                    className="inline-flex items-center gap-2 text-xs font-mono-code uppercase tracking-wider px-8 py-3.5 rounded-full border bg-white/5 hover:bg-white/10 hover:border-white/40 transition-all shadow-lg font-semibold"
+                    className="inline-flex items-center gap-2 text-xs font-mono-code uppercase tracking-wider px-8 py-3.5 rounded-full border bg-white/5 hover:bg-white/10 hover:border-white/40 transition-all  font-semibold"
                     style={{ borderColor: 'var(--border-strong)', color: 'var(--text-primary)' }}
                   >
                     <span>View all certificates </span>
