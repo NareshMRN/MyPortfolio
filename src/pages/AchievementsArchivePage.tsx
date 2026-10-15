@@ -3,8 +3,16 @@ import { Link } from 'react-router-dom';
 import { ArrowLeft, ArrowRight, Award } from 'lucide-react';
 import { ACHIEVEMENTS } from '../data/content';
 import { TechBadge } from '../components/TechBadge';
+import { useSeo } from '../hooks/useSeo';
 
 export const AchievementsArchivePage: React.FC = () => {
+  useSeo({
+    title: 'Achievements & Milestones — Naresh N',
+    description:
+      'Milestones, recognitions, Kaggle Gradio Rank #63, and production releases by Naresh N.',
+    path: '/achievements',
+  });
+
   return (
     <div className="min-h-screen py-28 px-6 sm:px-10 lg:px-16" style={{ backgroundColor: 'var(--bg-primary)' }}>
       <div className="max-w-7xl mx-auto">

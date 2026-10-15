@@ -5,10 +5,18 @@ import { GithubIcon } from '../components/Icons';
 import { TechBadge } from '../components/TechBadge';
 import { TeamMemberCard } from '../components/TeamMemberCard';
 import { HACKATHONS } from '../data/content';
+import { useSeo } from '../hooks/useSeo';
 
 export const HackathonDetailPage: React.FC = () => {
   const { slug } = useParams<{ slug: string }>();
   const item = HACKATHONS.find((h) => h.slug === slug);
+
+  useSeo({
+    title: item ? `${item.title} — Hackathon by Naresh N` : 'Hackathon — Naresh N',
+    description: item?.description ?? '',
+    path: `/hackathons/${slug}`,
+    noindex: !item,
+  });
 
   if (!item) {
     return <Navigate to="/hackathons" replace />;

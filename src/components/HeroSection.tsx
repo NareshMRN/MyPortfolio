@@ -111,15 +111,19 @@ export const HeroSection: React.FC = () => {
             </div>
           </motion.div>
 
-          {/* Tagline */}
+          {/* Tagline & Entity Disambiguation */}
           <motion.div variants={fadeUpVariants}>
-            <p
-              className={`text-xs sm:text-sm font-mono-code uppercase tracking-[0.25em] sm:tracking-[0.35em] font-semibold flex items-center gap-2 transition-colors duration-300 ${isDark ? 'text-zinc-400' : 'text-zinc-600'
+            <div
+              className={`text-xs sm:text-sm font-mono-code uppercase tracking-[0.25em] sm:tracking-[0.35em] font-semibold flex items-center gap-2.5 transition-colors duration-300 ${isDark ? 'text-zinc-400' : 'text-zinc-600'
                 }`}
             >
-              <Sparkles className="w-3.5 h-3.5 flex-shrink-0" />
+              <span className={`font-bold tracking-widest ${isDark ? 'text-emerald-400' : 'text-emerald-600'}`}>
+                NARESH N
+              </span>
+              <span className={isDark ? 'text-zinc-600' : 'text-zinc-400'}>/</span>
+              <Sparkles className="w-3.5 h-3.5 flex-shrink-0 text-amber-400" />
               <span>{PERSONAL_INFO.title}</span>
-            </p>
+            </div>
           </motion.div>
 
           {/* Headline: strictly maximum 3 lines with mobile responsive scaling */}
@@ -130,6 +134,7 @@ export const HeroSection: React.FC = () => {
                 : 'text-black drop-shadow-[0_2px_12px_rgba(255,255,255,0.95)]'
                 }`}
             >
+              <span className="sr-only">Naresh N — Full Stack &amp; AI/ML Developer — </span>
               <span className={`block whitespace-nowrap font-light ${isDark ? 'text-white' : 'text-black'}`}>
                 BUILDING DIGITAL
               </span>

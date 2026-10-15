@@ -3,8 +3,16 @@ import { Link } from 'react-router-dom';
 import { ArrowLeft, ArrowRight, Calendar, Users } from 'lucide-react';
 import { HACKATHONS } from '../data/content';
 import { TechBadge } from '../components/TechBadge';
+import { useSeo } from '../hooks/useSeo';
 
 export const HackathonsArchivePage: React.FC = () => {
+  useSeo({
+    title: 'Hackathons Archive — Naresh N',
+    description:
+      'High-intensity hackathon projects, sprint builds, and engineering prototypes developed by Naresh N.',
+    path: '/hackathons',
+  });
+
   return (
     <div className="min-h-screen py-28 px-6 sm:px-10 lg:px-16" style={{ backgroundColor: 'var(--bg-primary)' }}>
       <div className="max-w-7xl mx-auto">

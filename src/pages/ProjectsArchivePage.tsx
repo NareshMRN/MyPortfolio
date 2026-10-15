@@ -4,8 +4,16 @@ import { ArrowLeft, ExternalLink, Play, ArrowRight } from 'lucide-react';
 import { GithubIcon } from '../components/Icons';
 import { PROJECTS } from '../data/content';
 import { TechBadge } from '../components/TechBadge';
+import { useSeo } from '../hooks/useSeo';
 
 export const ProjectsArchivePage: React.FC = () => {
+  useSeo({
+    title: 'Projects Archive — Naresh N | Full Stack & AI/ML Developer',
+    description:
+      'Browse all software engineering projects by Naresh N, including Sangeetha, TradeVault, TryScan, RAG pipelines, and full-stack web applications.',
+    path: '/projects',
+  });
+
   return (
     <div
       className="min-h-screen py-28 px-6 sm:px-10 lg:px-16"

@@ -1,4 +1,5 @@
 import React from 'react';
+import { useSeo } from '../hooks/useSeo';
 import { HeroSection } from '../components/HeroSection';
 import { AboutSection } from '../components/AboutSection';
 import { SkillsSection } from '../components/SkillsSection';
@@ -9,6 +10,14 @@ import { ContactSection } from '../components/ContactSection';
 import { Footer } from '../components/Footer';
 
 export const HomePage: React.FC = () => {
+  useSeo({
+    title: 'Naresh N — Full Stack & AI/ML Developer | Official Portfolio',
+    description:
+      'Official portfolio of Naresh N (NareshMRN), Full Stack & AI/ML Developer and Founder of Sangeetha based in Mangaluru, India. B.Tech CSE-IT at NIAT x Yenepoya University. Explore software projects, machine learning models, Kaggle competitions, hackathons, and certifications.',
+    path: '/',
+    image: '/og-image.jpg',
+  });
+
   return (
     <div className="relative w-full z-10 transition-colors duration-500">
       {/* HERO SECTION */}

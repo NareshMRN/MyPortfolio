@@ -3,10 +3,18 @@ import { useParams, Link, Navigate } from 'react-router-dom';
 import { ArrowLeft, ShieldCheck, ExternalLink, CheckCircle2, FileText } from 'lucide-react';
 import { CERTIFICATES } from '../data/content';
 import { TechBadge } from '../components/TechBadge';
+import { useSeo } from '../hooks/useSeo';
 
 export const CertificateDetailPage: React.FC = () => {
   const { slug } = useParams<{ slug: string }>();
   const item = CERTIFICATES.find((c) => c.slug === slug);
+
+  useSeo({
+    title: item ? `${item.title} — Certificate earned by Naresh N` : 'Certificate — Naresh N',
+    description: item?.description ?? '',
+    path: `/certificates/${slug}`,
+    noindex: !item,
+  });
 
   if (!item) {
     return <Navigate to="/certificates" replace />;

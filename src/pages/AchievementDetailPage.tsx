@@ -3,10 +3,18 @@ import { useParams, Link, Navigate } from 'react-router-dom';
 import { ArrowLeft, ExternalLink, Award, Trophy, CheckCircle2, Layers, ShieldCheck, ArrowRight, Sparkles } from 'lucide-react';
 import { ACHIEVEMENTS } from '../data/content';
 import { TechBadge } from '../components/TechBadge';
+import { useSeo } from '../hooks/useSeo';
 
 export const AchievementDetailPage: React.FC = () => {
   const { slug } = useParams<{ slug: string }>();
   const item = ACHIEVEMENTS.find((a) => a.slug === slug);
+
+  useSeo({
+    title: item ? `${item.title} — Achievement by Naresh N` : 'Achievement — Naresh N',
+    description: item?.description ?? '',
+    path: `/achievements/${slug}`,
+    noindex: !item,
+  });
 
   if (!item) {
     return <Navigate to="/achievements" replace />;

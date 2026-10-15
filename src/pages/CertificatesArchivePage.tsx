@@ -3,8 +3,16 @@ import { Link } from 'react-router-dom';
 import { ArrowLeft, ArrowRight, ShieldCheck, Eye } from 'lucide-react';
 import { CERTIFICATES, type CertificateItem } from '../data/content';
 import { CertificateTerminalModal } from '../components/CertificateTerminalModal';
+import { useSeo } from '../hooks/useSeo';
 
 export const CertificatesArchivePage: React.FC = () => {
+  useSeo({
+    title: 'Certifications & Credentials — Naresh N',
+    description:
+      'Verified engineering credentials, AI/ML workshops, deep learning masterclasses, and technical certifications earned by Naresh N.',
+    path: '/certificates',
+  });
+
   const [selectedCert, setSelectedCert] = useState<CertificateItem | null>(null);
 
   return (
