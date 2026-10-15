@@ -12,7 +12,7 @@ export const HackathonDetailPage: React.FC = () => {
   const item = HACKATHONS.find((h) => h.slug === slug);
 
   useSeo({
-    title: item ? `${item.title} — Hackathon by Naresh N` : 'Hackathon — Naresh N',
+    title: item ? `${item.eventName} — Hackathon by Naresh N` : 'Hackathon — Naresh N',
     description: item?.description ?? '',
     path: `/hackathons/${slug}`,
     noindex: !item,
