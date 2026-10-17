@@ -1,6 +1,6 @@
-import React, { useState } from 'react';
+import React, { useState, useRef, useEffect } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
-import { ExternalLink, Award, Calendar, Users, Eye, ArrowRight, ShieldCheck } from 'lucide-react';
+import { ExternalLink, Award, Calendar, Users, Eye, ArrowRight, ShieldCheck, ChevronsRight, ChevronsLeft } from 'lucide-react';
 import { Link } from 'react-router-dom';
 import {
   ACHIEVEMENTS,
@@ -28,6 +28,32 @@ export const AchievementsSection: React.FC<AchievementsSectionProps> = ({
   const [activeTab, setActiveTab] = useState<'achievements' | 'hackathons' | 'certificates'>('achievements');
   const [selectedCert, setSelectedCert] = useState<CertificateItem | null>(null);
 
+  const tabsContainerRef = useRef<HTMLDivElement>(null);
+  const [canScrollRight, setCanScrollRight] = useState(true);
+
+  const checkTabsScroll = () => {
+    if (tabsContainerRef.current) {
+      const { scrollLeft, scrollWidth, clientWidth } = tabsContainerRef.current;
+      setCanScrollRight(scrollLeft + clientWidth < scrollWidth - 10);
+    }
+  };
+
+  useEffect(() => {
+    checkTabsScroll();
+    window.addEventListener('resize', checkTabsScroll);
+    return () => window.removeEventListener('resize', checkTabsScroll);
+  }, []);
+
+  const handleScrollToggle = () => {
+    if (tabsContainerRef.current) {
+      if (canScrollRight) {
+        tabsContainerRef.current.scrollBy({ left: 160, behavior: 'smooth' });
+      } else {
+        tabsContainerRef.current.scrollTo({ left: 0, behavior: 'smooth' });
+      }
+    }
+  };
+
   const tabs = [
     { id: 'achievements', label: 'ACHIEVEMENTS', count: ACHIEVEMENTS.length, path: '/achievements' },
     { id: 'hackathons', label: 'HACKATHONS', count: HACKATHONS.length, path: '/hackathons' },
@@ -37,66 +63,100 @@ export const AchievementsSection: React.FC<AchievementsSectionProps> = ({
   return (
     <section
       id="achievements"
-      className="relative py-24 sm:py-32 px-4 sm:px-10 lg:px-16 border-t"
+      className="relative py-24 sm:py-32 px-4 sm:px-10 lg:px-16 border-t overflow-hidden w-full max-w-full"
       style={{
         borderColor: 'var(--border-subtle)',
         backgroundColor: 'var(--bg-primary)',
       }}
     >
-      <div className="max-w-7xl mx-auto">
+      <div className="max-w-7xl mx-auto w-full">
         {/* Eyebrow & Headline */}
-        <div className="flex flex-col md:flex-row md:items-end justify-between mb-12 gap-6">
-          <div>
+        <div className="flex flex-col md:flex-row md:items-end justify-between mb-12 gap-6 w-full">
+          <div className="max-w-full">
             <span
-              className="text-[11px] font-mono-code uppercase tracking-[0.35em] block mb-4"
+              className="text-[10px] sm:text-[11px] font-mono-code uppercase tracking-[0.2em] sm:tracking-[0.35em] block mb-3 sm:mb-4 max-w-full truncate"
               style={{ color: 'var(--text-muted)' }}
             >
               04 / ACHIEVEMENTS & CREDENTIALS
             </span>
             <h2
-              className="font-section-head text-3xl sm:text-4xl lg:text-5xl uppercase tracking-wider font-extrabold"
+              className="font-section-head text-2xl min-[360px]:text-3xl sm:text-4xl lg:text-5xl uppercase tracking-normal min-[360px]:tracking-wider font-extrabold break-words max-w-full"
             >
-              <span className="gold-gradient-text">MILESTONES & PROOF</span>
+              <span className="gold-gradient-text inline-block max-w-full">MILESTONES & PROOF</span>
             </h2>
           </div>
 
-          {/* Three Tab Switcher */}
+          {/* Three Tab Switcher (Small original GitHub size on laptop, scrollable with simple >> on mobile) */}
           <div
-            className="inline-flex p-1.5 rounded-full border backdrop-blur-md self-start md:self-auto"
+            className="relative inline-flex items-center max-w-full md:max-w-none md:w-auto md:shrink-0 self-start md:self-auto rounded-full border backdrop-blur-md p-1.5 overflow-hidden"
             style={{
               borderColor: 'var(--border-strong)',
               backgroundColor: 'var(--bg-secondary)',
             }}
           >
-            {tabs.map((tab) => {
-              const isActive = activeTab === tab.id;
-              return (
-                <button
-                  key={tab.id}
-                  onClick={() => setActiveTab(tab.id)}
-                  className="relative px-5 py-2 rounded-full text-xs font-mono-code uppercase tracking-wider transition-colors duration-200 cursor-pointer"
-                  style={{
-                    color: isActive ? 'var(--text-primary)' : 'var(--text-muted)',
-                  }}
-                >
-                  {isActive && (
-                    <motion.div
-                      layoutId="activeTabPill"
-                      className="absolute inset-0 rounded-full border shadow-md"
-                      style={{
-                        backgroundColor: 'var(--bg-card)',
-                        borderColor: 'var(--border-strong)',
-                      }}
-                      transition={{ type: 'spring', stiffness: 350, damping: 30 }}
-                    />
-                  )}
-                  <span className="relative z-10 flex items-center gap-1.5 font-bold">
-                    {tab.label}
+            {/* Scrollable Track for Tabs with mobile mask to prevent letter 'C' from peeking */}
+            <div
+              ref={tabsContainerRef}
+              onScroll={checkTabsScroll}
+              className="flex items-center gap-1 overflow-x-auto [scrollbar-width:none] [-ms-overflow-style:none] [&::-webkit-scrollbar]:hidden w-full md:w-auto md:overflow-visible pr-10 md:pr-0 [mask-image:linear-gradient(to_right,black_0%,black_calc(100%-2.5rem),transparent_100%)] md:[mask-image:none] [-webkit-mask-image:linear-gradient(to_right,black_0%,black_calc(100%-2.5rem),transparent_100%)] md:[-webkit-mask-image:none]"
+            >
+              {tabs.map((tab) => {
+                const isActive = activeTab === tab.id;
+                return (
+                  <button
+                    key={tab.id}
+                    onClick={(e) => {
+                      setActiveTab(tab.id);
+                      e.currentTarget.scrollIntoView({ behavior: 'smooth', block: 'nearest', inline: 'center' });
+                    }}
+                    className="relative px-5 py-2 rounded-full text-xs font-mono-code uppercase tracking-wider transition-colors duration-200 cursor-pointer shrink-0 whitespace-nowrap"
+                    style={{
+                      color: isActive ? 'var(--text-primary)' : 'var(--text-muted)',
+                    }}
+                  >
+                    {isActive && (
+                      <motion.div
+                        layoutId="activeTabPill"
+                        className="absolute inset-0 rounded-full border shadow-md"
+                        style={{
+                          backgroundColor: 'var(--bg-card)',
+                          borderColor: 'var(--border-strong)',
+                        }}
+                        transition={{ type: 'spring', stiffness: 350, damping: 30 }}
+                      />
+                    )}
+                    <span className="relative z-10 flex items-center gap-1.5 font-bold">
+                      {tab.label}
+                    </span>
+                  </button>
+                );
+              })}
+            </div>
 
-                  </span>
-                </button>
-              );
-            })}
+            {/* >> Mobile Indicator Button (Simple borderless chevron with vignette, hidden on laptop) */}
+            <div
+              className="md:hidden absolute right-0 top-0 bottom-0 flex items-center justify-end pr-2 pl-10 pointer-events-none rounded-r-full"
+              style={{
+                background: 'linear-gradient(to right, transparent 0%, var(--bg-secondary) 40%, var(--bg-secondary) 100%)',
+              }}
+            >
+              <button
+                type="button"
+                onClick={handleScrollToggle}
+                aria-label={canScrollRight ? "Scroll right to see more tabs" : "Scroll back to first tab"}
+                title={canScrollRight ? "More tabs available" : "Back to start"}
+                className="pointer-events-auto flex items-center justify-center p-1 cursor-pointer transition-transform hover:scale-110 active:scale-95"
+                style={{
+                  color: canScrollRight ? 'var(--accent-gold, #e5b842)' : 'var(--text-muted)',
+                }}
+              >
+                {canScrollRight ? (
+                  <ChevronsRight className="w-4 h-4 animate-pulse" />
+                ) : (
+                  <ChevronsLeft className="w-4 h-4 opacity-60" />
+                )}
+              </button>
+            </div>
           </div>
         </div>
 
@@ -113,9 +173,9 @@ export const AchievementsSection: React.FC<AchievementsSectionProps> = ({
                 transition={{ duration: 0.3 }}
                 className="space-y-6"
               >
-                <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+                <div className="grid grid-cols-1 md:grid-cols-2 gap-5 md:gap-6 w-full">
                   {ACHIEVEMENTS.slice(0, limitAchievements).map((item) => (
-                    <GlassCard key={item.id} className="p-4 sm:p-7 card-gold-border card-top-line">
+                    <GlassCard key={item.id} className="p-4 sm:p-7 card-gold-border card-top-line w-full">
 
                       {/* Header: Large Year & Result Badge */}
                       <div className="flex items-center justify-between mb-4">
@@ -213,9 +273,9 @@ export const AchievementsSection: React.FC<AchievementsSectionProps> = ({
                 transition={{ duration: 0.3 }}
                 className="space-y-6"
               >
-                <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+                <div className="grid grid-cols-1 md:grid-cols-2 gap-5 md:gap-6 w-full">
                   {HACKATHONS.slice(0, limitHackathons).map((item) => (
-                    <GlassCard key={item.id} className="p-4 sm:p-7 card-gold-border card-top-line">
+                    <GlassCard key={item.id} className="p-4 sm:p-7 card-gold-border card-top-line w-full">
 
 
                       {/* Header Row: Date & Result Badge */}
@@ -311,14 +371,14 @@ export const AchievementsSection: React.FC<AchievementsSectionProps> = ({
                 transition={{ duration: 0.3 }}
                 className="space-y-6"
               >
-                <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+                <div className="grid grid-cols-1 md:grid-cols-2 gap-5 md:gap-6 w-full">
                   {(() => {
                     const masterclassCerts = CERTIFICATES.filter(
                       (c) => c.id === 'cert-gradio-llm' || c.id === 'cert-vector-search'
                     );
                     const homeCerts = masterclassCerts.length === 2 ? masterclassCerts : CERTIFICATES.slice(0, 2);
                     return homeCerts.slice(0, limitCertificates).map((item) => (
-                      <GlassCard key={item.id} className="p-4 sm:p-6 flex flex-col justify-between card-gold-border card-top-line">
+                      <GlassCard key={item.id} className="p-4 sm:p-6 flex flex-col justify-between card-gold-border card-top-line w-full">
                         <div>
                           {/* Certificate Thumbnail Preview / Fit to Container */}
                           <div

@@ -59,19 +59,19 @@ export const HackathonsArchivePage: React.FC = () => {
                     style={{
                       ...(item.result === 'Winner' || item.result === '3rd Place Winner'
                         ? {
-                            background: 'linear-gradient(135deg, #B8860B 0%, #DAA520 50%, #FFD700 100%)',
-                            color: '#1a1000',
-                            border: '1px solid rgba(255, 215, 0, 0.6)',
-                            boxShadow: '0 4px 16px rgba(218, 165, 32, 0.35)',
-                          }
+                          background: 'linear-gradient(135deg, #B8860B 0%, #DAA520 50%, #FFD700 100%)',
+                          color: '#1a1000',
+                          border: '1px solid rgba(255, 215, 0, 0.6)',
+                          boxShadow: '0 4px 16px rgba(218, 165, 32, 0.35)',
+                        }
                         : item.result === 'Finalist'
-                        ? {
+                          ? {
                             background: 'linear-gradient(135deg, #6B7280 0%, #9CA3AF 50%, #D1D5DB 100%)',
                             color: '#111827',
                             border: '1px solid rgba(209, 213, 219, 0.6)',
                             boxShadow: '0 4px 16px rgba(156, 163, 175, 0.35)',
                           }
-                        : {
+                          : {
                             background: 'linear-gradient(135deg, #78716C 0%, #A8A29E 50%, #D6D3D1 100%)',
                             color: '#1C1917',
                             border: '1px solid rgba(168, 162, 158, 0.5)',

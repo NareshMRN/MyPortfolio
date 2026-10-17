@@ -133,6 +133,14 @@ export const PERSONAL_INFO = {
   subheadline:
     'Second-year B.Tech CSE-IT student at NIAT (NxtWave of Innovation in Advanced Technologies) affiliated with Yenepoya University (NIAT x YU), Mangaluru. Founder and sole developer of Sangeetha.',
   whoamiTerminal: '$ whoami -> Naresh · 2nd Year B.Tech CSE-IT · NIAT Mangaluru',
+  terminalPhrases: [
+    '$ whoami -> Naresh · 2nd Year B.Tech CSE-IT · NIAT Mangaluru',
+    '$ role -> Full Stack Developer and AI/ML Engineer · Product Builder',
+    '$ project -> Founder & Sole Developer of Sangeetha',
+    '$ stack -> React · TypeScript · Python · PyTorch · Tailwind',
+    '$ passion -> Architecting high-performance digital experiences',
+    '$ status -> Available for internships & collaborations',
+  ],
   statusBadge: 'Available for internships & collaborations',
   quote:
     'Architecture is not just how software runs under load—it is how effortlessly it feels to the human on the other side.',

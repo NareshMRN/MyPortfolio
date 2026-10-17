@@ -28,19 +28,7 @@ export const Footer: React.FC = () => {
           </span>
         </div>
 
-        <div className="flex items-center gap-6">
-          <SocialIcons size="sm" />
-          <button
-            onClick={scrollToTop}
-            aria-label="Scroll to top"
-            className="flex items-center gap-2 px-3.5 py-1.5 rounded-full border text-xs font-mono-code uppercase tracking-wider hover:bg-white/10 transition-colors cursor-pointer"
-            style={{
-              borderColor: 'var(--border-subtle)',
-              color: 'var(--text-secondary)',
-            }}
-          >
-          </button>
-        </div>
+
       </div>
 
       {/* Massive Full-Width Name Display */}
@@ -69,9 +57,8 @@ export const Footer: React.FC = () => {
           © {new Date().getFullYear()} {PERSONAL_INFO.fullName}. ALL RIGHTS RESERVED.
         </div>
         <div className="flex items-center gap-4">
-          <span>BUILT WITH INTENT</span>
-          <span>·</span>
-          <span>MANGALURU, INDIA</span>
+
+          <span>Mangaluru<span> · </span>Karnataka<span> · </span>India</span>
         </div>
       </div>
     </footer>

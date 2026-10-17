@@ -39,9 +39,8 @@ export const GlassCard: React.FC<GlassCardProps> = ({
       ref={cardRef}
       onMouseMove={handleMouseMove}
       onMouseLeave={handleMouseLeave}
-      className={`group relative rounded-2xl overflow-hidden transition-all duration-300 ${
-        hoverLift ? 'hover:-translate-y-1 hover:shadow-2xl' : ''
-      } ${className}`.trim()}
+      className={`group relative rounded-2xl overflow-hidden transition-all duration-300 ${hoverLift ? 'hover:-translate-y-1 hover:shadow-2xl' : ''
+        } ${className}`.trim()}
       style={{
         backgroundColor: 'var(--glass-bg)',
         borderColor: 'var(--glass-border)',

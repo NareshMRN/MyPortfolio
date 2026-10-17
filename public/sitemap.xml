@@ -1,11 +1,31 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
+<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9"
+        xmlns:image="http://www.google.com/schemas/sitemap-image/1.1">
+  <!-- 
+    Author Identity & Official Social Profiles:
+    - GitHub:    https://github.com/NareshMRN
+    - Kaggle:    https://kaggle.com/nn2007
+    - X/Twitter: https://x.com/NareshN929
+    - Instagram: https://instagram.com/mr_naresh_1819_
+    Indexed via Schema.org sameAs and rel="me" in index.html (cross-domain URLs cannot be <loc> tags per sitemaps.org standard)
+  -->
+
   <!-- Core Pages -->
   <url>
     <loc>https://nareshn.me/</loc>
-    <lastmod>2026-10-15</lastmod>
+    <lastmod>2026-10-17</lastmod>
     <changefreq>weekly</changefreq>
     <priority>1.0</priority>
+    <image:image>
+      <image:loc>https://nareshn.me/og-image.jpg</image:loc>
+      <image:title>Naresh N — Full Stack Developer &amp; AI/ML Engineer</image:title>
+      <image:caption>Official Portfolio of Naresh N (NareshMRN)</image:caption>
+    </image:image>
+    <image:image>
+      <image:loc>https://nareshn.me/assets/photo.jpg</image:loc>
+      <image:title>Naresh N</image:title>
+      <image:caption>Portrait of Naresh N</image:caption>
+    </image:image>
   </url>
   <url>
     <loc>https://nareshn.me/projects</loc>

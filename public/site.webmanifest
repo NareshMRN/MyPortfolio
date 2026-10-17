@@ -1,0 +1,17 @@
+{
+  "name": "Naresh N — Full Stack Developer & AI Engineer",
+  "short_name": "Naresh N",
+  "description": "Official portfolio of Naresh N (NareshMRN), Full Stack Developer & AI Engineer from Mangaluru, India.",
+  "start_url": "/",
+  "display": "standalone",
+  "background_color": "#09090b",
+  "theme_color": "#09090b",
+  "icons": [
+    {
+      "src": "/favicon.svg",
+      "sizes": "any",
+      "type": "image/svg+xml",
+      "purpose": "any maskable"
+    }
+  ]
+}

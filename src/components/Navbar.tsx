@@ -1,4 +1,5 @@
 import React, { useState, useEffect } from 'react';
+import { motion, AnimatePresence } from 'framer-motion';
 import { Sun, Moon, Menu, X, ArrowUpRight } from 'lucide-react';
 import { useTheme } from '../context/ThemeContext';
 import { NAVIGATION_LINKS } from '../data/content';
@@ -22,8 +23,18 @@ export const Navbar: React.FC = () => {
       const element = document.getElementById(targetId);
       if (element) {
         e.preventDefault();
-        element.scrollIntoView({ behavior: 'smooth' });
         setMobileMenuOpen(false);
+        setTimeout(() => {
+          if (window.__lenis) {
+            window.__lenis.scrollTo(element, {
+              duration: 1.8,
+              offset: -40,
+              easing: (t: number) => 1 - Math.pow(1 - t, 4),
+            });
+          } else {
+            element.scrollIntoView({ behavior: 'smooth' });
+          }
+        }, 120);
       }
     }
   };
@@ -147,45 +158,75 @@ export const Navbar: React.FC = () => {
         </div>
       </div>
 
-      {/* MOBILE DROPDOWN MENU */}
-      {mobileMenuOpen && (
-        <div
-          className="md:hidden border-t px-6 py-6 space-y-4 shadow-2xl backdrop-blur-xl"
-          style={{
-            backgroundColor: 'var(--bg-secondary)',
-            borderColor: 'var(--border-subtle)',
-          }}
-        >
-          <nav className="flex flex-col space-y-3">
-            {NAVIGATION_LINKS.map((link) => (
-              <a
-                key={link.name}
-                href={link.href}
-                onClick={(e) => handleNavClick(e, link.href)}
-                className="text-xs font-mono-code uppercase tracking-[0.25em] py-2 border-b transition-colors"
-                style={{
-                  borderColor: 'var(--border-subtle)',
-                  color: 'var(--text-secondary)',
-                }}
-              >
-                {link.name}
-              </a>
-            ))}
-          </nav>
-          <a
-            href="/#contact"
-            onClick={(e) => handleNavClick(e, '/#contact')}
-            className="inline-flex items-center justify-center gap-2 w-full text-xs font-mono-code uppercase tracking-wider px-4 py-3 rounded-full font-semibold mt-2"
+      {/* MOBILE DROPDOWN MENU - Smooth Animated Transition */}
+      <AnimatePresence>
+        {mobileMenuOpen && (
+          <motion.div
+            initial={{ opacity: 0, height: 0 }}
+            animate={{ opacity: 1, height: 'auto' }}
+            exit={{ opacity: 0, height: 0 }}
+            transition={{
+              duration: 0.35,
+              ease: [0.16, 1, 0.3, 1],
+            }}
+            className="md:hidden overflow-hidden border-t px-6 py-6 space-y-4 shadow-2xl backdrop-blur-xl"
             style={{
-              backgroundColor: 'var(--accent-contrast)',
-              color: 'var(--accent-contrast-inv)',
+              backgroundColor: 'var(--bg-secondary)',
+              borderColor: 'var(--border-subtle)',
             }}
           >
-            <span>LET'S TALK</span>
-            <ArrowUpRight className="w-3.5 h-3.5" />
-          </a>
-        </div>
-      )}
+            <motion.nav
+              initial="closed"
+              animate="open"
+              exit="closed"
+              variants={{
+                open: { transition: { staggerChildren: 0.05, delayChildren: 0.04 } },
+                closed: { transition: { staggerChildren: 0.03, staggerDirection: -1 } },
+              }}
+              className="flex flex-col space-y-2"
+            >
+              {NAVIGATION_LINKS.map((link) => (
+                <motion.a
+                  key={link.name}
+                  variants={{
+                    open: { opacity: 1, x: 0 },
+                    closed: { opacity: 0, x: -8 },
+                  }}
+                  transition={{ duration: 0.22 }}
+                  href={link.href}
+                  onClick={(e) => handleNavClick(e, link.href)}
+                  className="text-xs font-mono-code uppercase tracking-[0.25em] py-2.5 border-b transition-colors active:opacity-70"
+                  style={{
+                    borderColor: 'var(--border-subtle)',
+                    color: 'var(--text-secondary)',
+                  }}
+                >
+                  {link.name}
+                </motion.a>
+              ))}
+            </motion.nav>
+            <motion.div
+              initial={{ opacity: 0, y: 8 }}
+              animate={{ opacity: 1, y: 0 }}
+              exit={{ opacity: 0, y: 8 }}
+              transition={{ delay: 0.12, duration: 0.22 }}
+            >
+              <a
+                href="/#contact"
+                onClick={(e) => handleNavClick(e, '/#contact')}
+                className="inline-flex items-center justify-center gap-2 w-full text-xs font-mono-code uppercase tracking-wider px-4 py-3 rounded-full font-semibold mt-2 active:scale-[0.98] transition-transform"
+                style={{
+                  backgroundColor: 'var(--accent-contrast)',
+                  color: 'var(--accent-contrast-inv)',
+                }}
+              >
+                <span>LET'S TALK</span>
+                <ArrowUpRight className="w-3.5 h-3.5" />
+              </a>
+            </motion.div>
+          </motion.div>
+        )}
+      </AnimatePresence>
     </header>
   );
 };

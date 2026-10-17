@@ -1,5 +1,9 @@
 /// <reference types="vite/client" />
 
+interface Window {
+  __lenis?: any;
+}
+
 interface ImportMetaEnv {
   readonly VITE_FORMSPREE_ID?: string;
 }
@@ -7,3 +11,4 @@ interface ImportMetaEnv {
 interface ImportMeta {
   readonly env: ImportMetaEnv;
 }
+

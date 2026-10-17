@@ -68,12 +68,12 @@ export function App() {
         <VideoLayer />
 
         {/* Main Application Container */}
-        <div className="relative z-10 min-h-screen flex flex-col font-body">
+        <div className="relative z-10 min-h-screen flex flex-col font-body w-full max-w-full overflow-x-hidden">
           {/* Top Sticky/Floating Navbar */}
           <Navbar />
 
           {/* Page Routing */}
-          <main className="flex-1 w-full">
+          <main className="flex-1 w-full max-w-full overflow-x-hidden">
             <Routes>
               <Route path="/" element={<HomePage />} />
               <Route path="/projects" element={<ProjectsArchivePage />} />

@@ -67,13 +67,12 @@ export const ProjectsArchivePage: React.FC = () => {
                     {project.number} //
                   </span>
                   <span
-                    className={`text-[10px] font-mono-code uppercase px-2.5 py-0.5 rounded-full border ${
-                      project.status === 'Live'
+                    className={`text-[10px] font-mono-code uppercase px-2.5 py-0.5 rounded-full border ${project.status === 'Live'
                         ? 'border-emerald-500/40 text-emerald-400 bg-emerald-950/20'
                         : project.status === 'In progress'
-                        ? 'border-amber-500/40 text-amber-300 bg-amber-950/20'
-                        : 'border-zinc-500/40 text-zinc-400 bg-zinc-900/20'
-                    }`}
+                          ? 'border-amber-500/40 text-amber-300 bg-amber-950/20'
+                          : 'border-zinc-500/40 text-zinc-400 bg-zinc-900/20'
+                      }`}
                   >
                     ● {project.status}
                   </span>

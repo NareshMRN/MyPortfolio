@@ -1,4 +1,33 @@
+# Robots.txt for nareshn.me — Optimized for Google, Bing, and AI Search Engines
 User-agent: *
 Allow: /
 
+# Google Search Crawlers
+User-agent: Googlebot
+Allow: /
+
+User-agent: Googlebot-Image
+Allow: /
+
+# Bing & Yahoo Crawlers
+User-agent: Bingbot
+Allow: /
+
+# AI Search & LLM Engines (Google Gemini, ChatGPT Search, Perplexity, Claude, Apple)
+User-agent: GPTBot
+Allow: /
+
+User-agent: PerplexityBot
+Allow: /
+
+User-agent: ClaudeBot
+Allow: /
+
+User-agent: Applebot
+Allow: /
+
+User-agent: CCBot
+Allow: /
+
+# Canonical Sitemap Location
 Sitemap: https://nareshn.me/sitemap.xml
