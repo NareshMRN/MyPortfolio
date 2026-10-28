@@ -1,6 +1,22 @@
 @import "tailwindcss";
 
 @font-face {
+  font-family: 'Nevera';
+  src: url('/fonts/nevera.regular.otf') format('opentype');
+  font-weight: 100 900;
+  font-style: normal;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: 'NCL Gasdrifo';
+  src: url('/fonts/NCLGasdrifo-Demo.otf') format('opentype');
+  font-weight: 100 900;
+  font-style: normal;
+  font-display: swap;
+}
+
+@font-face {
   font-family: 'Segoe Script Local';
   src: local('Segoe Script'), url('/fonts/segoesc.ttf') format('truetype');
   font-weight: normal;
@@ -26,6 +42,8 @@
   --font-body: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
   --font-mono: 'JetBrains Mono', monospace;
   --font-signature: 'Alex Brush', cursive;
+  --font-nevera: 'Nevera', sans-serif;
+  --font-gasdrifo: 'NCL Gasdrifo', Georgia, serif;
 
   /* Theme tokens - Black, White, Grays ONLY */
   --bg-primary: #000000;
@@ -141,6 +159,14 @@ body {
 .font-signature,
 .font-alex-brush {
   font-family: var(--font-signature);
+}
+
+.font-nevera {
+  font-family: var(--font-nevera);
+}
+
+.font-gasdrifo {
+  font-family: var(--font-gasdrifo);
 }
 
 .gold-gradient-text {

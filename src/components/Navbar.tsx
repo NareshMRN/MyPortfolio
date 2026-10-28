@@ -57,7 +57,7 @@ export const Navbar: React.FC = () => {
       }}
     >
       <div className="w-full px-4 sm:px-8 lg:px-12 xl:px-16 flex items-center justify-between">
-        {/* LOGO - Cursive aesthetic signature brand */}
+        {/* LOGO - Nevera brand name */}
         <a
           href="/#hero"
           onClick={(e) => handleNavClick(e, '/#hero')}
@@ -65,7 +65,7 @@ export const Navbar: React.FC = () => {
           style={{ color: 'var(--text-primary)' }}
           aria-label="Naresh Portfolio Home"
         >
-          <span className="font-signature text-3xl sm:text-4xl font-normal tracking-wide transition-all duration-200 group-hover:scale-105 inline-block leading-none">
+          <span className="font-nevera text-2xl sm:text-3xl tracking-wide transition-all duration-200 group-hover:opacity-80 inline-block leading-none">
             Naresh N
           </span>
         </a>

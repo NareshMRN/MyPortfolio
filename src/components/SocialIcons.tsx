@@ -77,12 +77,13 @@ export const SocialIcons: React.FC<SocialIconsProps> = ({ size = 'md', className
 
   const sizeClasses = {
     sm: 'w-9 h-9 rounded-lg',
-    md: 'w-12 h-12 rounded-xl',
-    lg: 'w-14 h-14 rounded-2xl',
+    md: 'w-10 h-10 sm:w-12 sm:h-12 rounded-xl',
+    lg: 'w-12 h-12 sm:w-14 sm:h-14 rounded-2xl',
   }[size];
 
   return (
-    <div className={`flex flex-wrap items-center gap-3 ${className}`.trim()}>
+    <div className={`flex flex-nowrap items-center justify-between sm:justify-start sm:gap-3 w-full sm:w-auto ${className}`.trim()}>
+
       {socials.map((social) => (
         <div key={social.name} className="relative">
           {/* Tooltip on hover */}

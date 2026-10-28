@@ -37,14 +37,15 @@ export const Footer: React.FC = () => {
         style={{ borderColor: 'var(--border-subtle)' }}
       >
         <h2
-          className="font-display font-black uppercase text-center leading-[0.82] w-full block select-none whitespace-nowrap transition-all duration-300 pointer-events-none"
+          className="font-nevera uppercase text-center w-full block select-none whitespace-nowrap transition-all duration-300 pointer-events-none"
           style={{
             fontSize: 'clamp(3.8rem, 18.2vw, 24rem)',
             color: 'var(--text-primary)',
-            letterSpacing: '-0.015em',
+            letterSpacing: '-0.01em',
+            lineHeight: 1,
           }}
         >
-          {PERSONAL_INFO.fullName.toUpperCase()}
+          NARESH
         </h2>
       </div>
 
@@ -54,7 +55,7 @@ export const Footer: React.FC = () => {
         style={{ color: 'var(--text-muted)' }}
       >
         <div>
-          © {new Date().getFullYear()} {PERSONAL_INFO.fullName}. ALL RIGHTS RESERVED.
+          © {new Date().getFullYear()} {PERSONAL_INFO.fullName} ·  ALL RIGHTS RESERVED.
         </div>
         <div className="flex items-center gap-4">
 

@@ -206,7 +206,7 @@ export const ContactSection: React.FC = () => {
           </div>
 
           {/* Right Column (6 cols): Realistic Mac Terminal Window (Item 4 requirement) */}
-          <div className="lg:col-span-6 w-full">
+          <div className="lg:col-span-6 sm:col-span-12 w-full ">
             <motion.div
               initial={{ opacity: 0, y: 20 }}
               animate={isInView ? { opacity: 1, y: 0 } : {}}
