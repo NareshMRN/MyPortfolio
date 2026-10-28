@@ -80,7 +80,7 @@ export const AchievementsSection: React.FC<AchievementsSectionProps> = ({
               04 / ACHIEVEMENTS & CREDENTIALS
             </span>
             <h2
-              className="font-section-head text-2xl min-[360px]:text-3xl sm:text-4xl lg:text-5xl uppercase tracking-normal min-[360px]:tracking-wider font-extrabold break-words max-w-full"
+              className="font-section-head text-xl min-[360px]:text-2xl sm:text-4xl lg:text-5xl uppercase tracking-tight min-[360px]:tracking-normal font-extrabold break-normal leading-tight max-w-full"
             >
               <span className="gold-gradient-text inline-block max-w-full">MILESTONES & PROOF</span>
             </h2>

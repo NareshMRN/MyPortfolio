@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import { Link } from 'react-router-dom';
 import { ArrowLeft, ExternalLink, Play, ArrowRight } from 'lucide-react';
 import { GithubIcon } from '../components/Icons';
@@ -14,9 +14,18 @@ export const ProjectsArchivePage: React.FC = () => {
     path: '/projects',
   });
 
+  useEffect(() => {
+    window.scrollTo({ top: 0, left: 0, behavior: 'instant' as ScrollBehavior });
+    document.documentElement.scrollTop = 0;
+    document.body.scrollTop = 0;
+    if (window.__lenis) {
+      window.__lenis.scrollTo(0, { immediate: true, force: true });
+    }
+  }, []);
+
   return (
     <div
-      className="min-h-screen py-28 px-6 sm:px-10 lg:px-16"
+      className="min-h-screen py-24 sm:py-28 px-4 sm:px-10 lg:px-16"
       style={{ backgroundColor: 'var(--bg-primary)' }}
     >
       <div className="max-w-7xl mx-auto">
@@ -32,11 +41,11 @@ export const ProjectsArchivePage: React.FC = () => {
 
         {/* Page Header */}
         <div className="mb-14">
-          <span className="text-[11px] font-mono-code uppercase tracking-[0.35em] block mb-3" style={{ color: 'var(--text-muted)' }}>
+          <span className="text-[11px] font-mono-code uppercase tracking-[0.35em] block mb-3 font-semibold" style={{ color: 'var(--text-muted)' }}>
             ARCHIVE // 03
           </span>
-          <h1 className="font-section-head text-3xl min-[400px]:text-4xl sm:text-5xl md:text-6xl uppercase tracking-wider font-extrabold">
-            <span className="gold-gradient-text">ALL PROJECTS</span>
+          <h1 className="font-section-head text-xl min-[360px]:text-2xl min-[480px]:text-3xl sm:text-4xl md:text-5xl lg:text-6xl uppercase tracking-tight min-[480px]:tracking-normal font-extrabold break-normal leading-tight max-w-full">
+            <span className="gold-gradient-text inline-block max-w-full">ALL PROJECTS</span>
           </h1>
           <p className="text-sm font-light mt-3 max-w-xl font-body" style={{ color: 'var(--text-secondary)' }}>
             Every product, AI agent, and distributed system engineered solo. Click any card for architecture deep dive.

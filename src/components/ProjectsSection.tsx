@@ -106,7 +106,7 @@ export const ProjectsSection: React.FC = () => {
               03 / PROJECTS
             </span>
             <h2
-              className="font-section-head text-3xl sm:text-4xl lg:text-5xl uppercase tracking-wider font-extrabold"
+              className="font-section-head text-2xl min-[360px]:text-3xl sm:text-4xl lg:text-5xl uppercase tracking-tight min-[360px]:tracking-normal font-extrabold break-normal leading-tight"
             >
               <span className="gold-gradient-text">SELECTED WORKS</span>
             </h2>

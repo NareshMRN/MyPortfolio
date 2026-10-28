@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import { Link } from 'react-router-dom';
 import { ArrowLeft, ArrowRight, Calendar, Users } from 'lucide-react';
 import { HACKATHONS } from '../data/content';
@@ -13,8 +13,17 @@ export const HackathonsArchivePage: React.FC = () => {
     path: '/hackathons',
   });
 
+  useEffect(() => {
+    window.scrollTo({ top: 0, left: 0, behavior: 'instant' as ScrollBehavior });
+    document.documentElement.scrollTop = 0;
+    document.body.scrollTop = 0;
+    if (window.__lenis) {
+      window.__lenis.scrollTo(0, { immediate: true, force: true });
+    }
+  }, []);
+
   return (
-    <div className="min-h-screen py-28 px-6 sm:px-10 lg:px-16" style={{ backgroundColor: 'var(--bg-primary)' }}>
+    <div className="min-h-screen py-24 sm:py-28 px-4 sm:px-10 lg:px-16" style={{ backgroundColor: 'var(--bg-primary)' }}>
       <div className="max-w-7xl mx-auto">
         <Link to="/#achievements" className="inline-flex items-center gap-2 text-xs font-mono-code uppercase tracking-wider mb-8 hover:underline" style={{ color: 'var(--text-muted)' }}>
           <ArrowLeft className="w-4 h-4" />
@@ -22,11 +31,11 @@ export const HackathonsArchivePage: React.FC = () => {
         </Link>
 
         <div className="mb-14">
-          <span className="text-[11px] font-mono-code uppercase tracking-[0.35em] block mb-3" style={{ color: 'var(--text-muted)' }}>
+          <span className="text-[11px] font-mono-code uppercase tracking-[0.35em] block mb-3 font-semibold" style={{ color: 'var(--text-muted)' }}>
             ARCHIVE // 04
           </span>
-          <h1 className="font-section-head text-3xl min-[400px]:text-4xl sm:text-5xl md:text-6xl uppercase tracking-wider font-extrabold">
-            <span className="gold-gradient-text">ALL HACKATHONS</span>
+          <h1 className="font-section-head text-xl min-[360px]:text-2xl min-[480px]:text-3xl sm:text-4xl md:text-5xl lg:text-6xl uppercase tracking-tight min-[480px]:tracking-normal font-extrabold break-normal leading-tight max-w-full">
+            <span className="gold-gradient-text inline-block max-w-full">ALL HACKATHONS</span>
           </h1>
           <p className="text-sm font-light mt-3 max-w-xl font-body" style={{ color: 'var(--text-secondary)' }}>
             Intensive builds, time-constrained hackathons, and sprint-delivered software prototypes.

@@ -705,6 +705,7 @@ export const HACKATHONS: HackathonItem[] = [
     links: {
       project: 'https://tradevaultone.vercel.app',
       repo: 'https://github.com/shivannagorkal/Tradint-agent',
+      certificate: 'https://drive.google.com/file/d/1XDofeFY-JfByVqlpGlSz8KG79K9pRH4C/view?usp=sharing',
     },
     teamMembers: [
       { name: 'Naresh N', role: 'Lead AI & Full Stack Architect', github: 'https://github.com/NareshMRN' },
@@ -757,6 +758,71 @@ export const HACKATHONS: HackathonItem[] = [
 // ---------------------------------------------------------------------------
 
 export const CERTIFICATES: CertificateItem[] = [
+  {
+    id: 'cert-build-to-ship',
+    slug: 'build-to-ship-hackathon',
+    title: 'Build to Ship Hackathon & AI Workshop 2026',
+    issuer: 'NxtWave & NIAT',
+    date: 'September 2026',
+    description:
+      'Certified by NxtWave CEO Rahul Attuluri for successfully participating in the Build to Ship AI Workshop 2026 and Hackathon, demonstrating modern AI engineering by building, integrating, and deploying intelligent applications using cutting-edge AI technologies, and securing 3rd Place for TradeVault.',
+    image: '/certificates/Build2Ship_Participants_Sem3.jpg',
+    tags: [
+      'Build to Ship',
+      'Multi-Agent AI',
+      'Quant Trading',
+      'FastAPI',
+      'Groq DeepSeek-R1',
+      'Alpaca API',
+      '3rd Place Winner',
+    ],
+    credentialId: 'NXT-B2S-2026',
+    credentialLink:
+      'https://drive.google.com/file/d/1XDofeFY-JfByVqlpGlSz8KG79K9pRH4C/view?usp=sharing',
+    problemStatement:
+      'Hackathons often incentivize brittle prototypes that collapse when exposed to live market feeds, asynchronous socket streams, or rigorous risk audits. The Build to Ship AI challenge mandated engineering teams to bridge the gap between ideation and production deployment by delivering a robust, end-to-end intelligent platform capable of handling real-world market uncertainties and automated execution without human intervention.',
+    objective:
+      'Architect, develop, and ship TradeVault—an autonomous multi-agent quantitative trading and risk governance platform. The system leverages adversarial Groq DeepSeek-R1 Bull vs. Bear debate engines, Deflated Sharpe Ratio (DSR) & PBO overfitting gates, and automated order routing to Alpaca broker markets with zero-trust AES-256-GCM credential encryption and an emergency kill switch, winning 3rd Place overall.',
+    datasetDetails:
+      'High-frequency tick data, OHLCV market feeds, and historical financial metrics streamed via Alpaca Market Data and Yahoo Finance APIs, complemented by real-time macroeconomic news feeds and sentiment vectors across differing market volatility regimes.',
+    concepts: [
+      'Adversarial Multi-Agent Debates: Groq DeepSeek-R1 LLM agents engaging in iterative Bull vs. Bear analytical debates to evaluate trade theses',
+      'Statistical Overfitting Governance: Enforcing Deflated Sharpe Ratio (DSR) and Probability of Backtest Overfitting (PBO) via Combinatorially Symmetric Cross-Validation (CSCV)',
+      'Probabilistic Quantile Forecasting: Regression modeling across P10, P25, Median (P50), P75, and P90 confidence intervals for risk-aware price bounds',
+      'Automated Broker Routing: Direct Alpaca Paper & Live market trade execution governed by fractional Kelly position sizing algorithms',
+      'Zero-Trust Cryptographic Vault: AES-256-GCM encrypted API key storage with memory-isolated ephemeral keys and an emergency one-click kill switch',
+      'Full-Stack Distributed System: React/Vite/Tailwind frontend, Node.js/Express API gateway with Redis pub/sub queue, and Python FastAPI agent runtime',
+    ],
+    workshopHighlights: [
+      'Intensive hands-on engineering in modern AI agent orchestration, reasoning chains, and autonomous tool invocation',
+      'Design of fault-tolerant agent feedback loops with automated risk vetoes and human-in-the-loop safeguards',
+      'Production deployment workflows utilizing FastAPI, WebSockets, Redis queuing, and Vercel edge infrastructure',
+      'Sprint delivery under tight deadlines, achieving high test coverage, clean system boundaries, and live broker integration',
+    ],
+    keyHighlights: [
+      'Hackathon Award: Secured 3rd Place among university-wide engineering teams for architecting TradeVault',
+      'Sub-Second LLM Debates: Low-latency adversarial Bull/Bear evaluations powered by Groq-accelerated DeepSeek-R1',
+      'Autonomous Risk Manager: Independent agent with authority to veto proposals failing Deflated Sharpe Ratio thresholds',
+      'Live Execution Pipeline: End-to-end order flow from signals to Alpaca broker fills with real-time portfolio telemetry',
+      'Zero-Trust Security: AES-256-GCM encrypted secrets vault protecting broker credentials against exfiltration',
+      'Production Cloud Architecture: Frontend live on Vercel with resilient backend microservices',
+    ],
+    deliverables: [
+      'Official Certificate of Participation accredited by NxtWave CEO Rahul Attuluri (Issue Date: 22/09/2026)',
+      'Production-grade source code repository on GitHub with complete multi-agent runtime and broker integrations',
+      'Live deployed web application accessible on Vercel (https://tradevaultone.vercel.app)',
+      'End-to-end architecture walkthrough and system demo video',
+      'Comprehensive backtesting validation suite with DSR, CSCV, and Kelly criterion documentation',
+    ],
+    evaluationCriteria: [
+      'Engineering Rigor & Architecture (30%): Production readiness, modular microservice separation, error resilience, and deployment stability',
+      'AI & Multi-Agent Innovation (25%): Quality of adversarial reasoning, agent debate dynamics, and prompt engineering orchestration',
+      'Risk & Quantitative Validity (20%): Mathematical rigor of DSR overfitting gates, PBO calculations, and Kelly criterion position sizing',
+      'Execution & Usability (15%): Tactile UI responsiveness, intuitive telemetry dashboard, and live broker execution feedback',
+      'Final Hackathon Outcome: Awarded 3rd Place Winner in the Build to Ship Hackathon',
+    ],
+    projectLink: 'https://tradevaultone.vercel.app',
+  },
   {
     id: 'cert-vector-search',
     slug: 'vector-search-masterclass',

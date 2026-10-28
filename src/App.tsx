@@ -19,15 +19,54 @@ import NotFoundPage from './pages/NotFoundPage';
 
 // Scroll to top upon route transition
 function ScrollToTop() {
-  const { pathname } = useLocation();
+  const { pathname, search, hash } = useLocation();
+
   useEffect(() => {
-    window.scrollTo(0, 0);
-  }, [pathname]);
+    // If navigating with a hash (e.g. /#achievements or /#projects), let the hash handler or element scroll handle it
+    if (hash) {
+      const element = document.getElementById(hash.slice(1));
+      if (element) {
+        const timer = setTimeout(() => {
+          if (window.__lenis) {
+            window.__lenis.scrollTo(element, { offset: -40, immediate: true });
+          } else {
+            element.scrollIntoView({ behavior: 'auto' });
+          }
+        }, 80);
+        return () => clearTimeout(timer);
+      }
+      return;
+    }
+
+    const resetToTop = () => {
+      window.scrollTo({ top: 0, left: 0, behavior: 'instant' as ScrollBehavior });
+      document.documentElement.scrollTop = 0;
+      document.body.scrollTop = 0;
+      if (window.__lenis) {
+        window.__lenis.scrollTo(0, { immediate: true, force: true });
+      }
+    };
+
+    resetToTop();
+    const rafId = requestAnimationFrame(resetToTop);
+    const timeoutId = setTimeout(resetToTop, 60);
+
+    return () => {
+      cancelAnimationFrame(rafId);
+      clearTimeout(timeoutId);
+    };
+  }, [pathname, search, hash]);
+
   return null;
 }
 
 export function App() {
   useEffect(() => {
+    // Disable browser's automatic scroll restoration to ensure user always starts at top
+    if ('scrollRestoration' in window.history) {
+      window.history.scrollRestoration = 'manual';
+    }
+
     // Check reduced motion preference
     const prefersReducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
     if (prefersReducedMotion) return;
@@ -43,6 +82,8 @@ export function App() {
       touchMultiplier: 2,
     });
 
+    window.__lenis = lenis;
+
     let animationFrameId: number;
     function raf(time: number) {
       lenis.raf(time);
@@ -53,6 +94,7 @@ export function App() {
     return () => {
       cancelAnimationFrame(animationFrameId);
       lenis.destroy();
+      delete window.__lenis;
     };
   }, []);
 
