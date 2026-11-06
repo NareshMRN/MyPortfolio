@@ -42,8 +42,8 @@ export const Navbar: React.FC = () => {
   return (
     <header
       className={`fixed top-0 left-0 right-0 z-40 transition-all duration-300 ${scrolled
-          ? 'backdrop-blur-md border-b shadow-xl py-3.5'
-          : 'backdrop-blur-sm border-b py-4 lg:py-5'
+        ? 'backdrop-blur-md border-b shadow-xl py-3.5'
+        : 'backdrop-blur-sm border-b py-4 lg:py-5'
         }`}
       style={{
         backgroundColor: scrolled
@@ -57,7 +57,7 @@ export const Navbar: React.FC = () => {
       }}
     >
       <div className="w-full px-4 sm:px-8 lg:px-12 xl:px-16 flex items-center justify-between">
-        {/* LOGO - Nevera brand name */}
+        {/* LOGO - Orange Avenue brand name */}
         <a
           href="/#hero"
           onClick={(e) => handleNavClick(e, '/#hero')}
@@ -65,7 +65,7 @@ export const Navbar: React.FC = () => {
           style={{ color: 'var(--text-primary)' }}
           aria-label="Naresh Portfolio Home"
         >
-          <span className="font-nevera text-2xl sm:text-3xl tracking-wide transition-all duration-200 group-hover:opacity-80 inline-block leading-none">
+          <span className="font-orange-avenue text-2xl sm:text-3xl tracking-wide transition-all duration-200 group-hover:opacity-80 inline-block leading-none">
             Naresh N
           </span>
         </a>

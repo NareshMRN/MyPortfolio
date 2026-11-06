@@ -9,6 +9,14 @@
 }
 
 @font-face {
+  font-family: 'Orange Avenue';
+  src: url('/fonts/OrangeAvenueDEMO-Regular.otf') format('opentype');
+  font-weight: normal;
+  font-style: normal;
+  font-display: swap;
+}
+
+@font-face {
   font-family: 'NCL Gasdrifo';
   src: url('/fonts/NCLGasdrifo-Demo.otf') format('opentype');
   font-weight: 100 900;
@@ -43,6 +51,7 @@
   --font-mono: 'JetBrains Mono', monospace;
   --font-signature: 'Alex Brush', cursive;
   --font-nevera: 'Nevera', sans-serif;
+  --font-orange-avenue: 'Orange Avenue', Georgia, serif;
   --font-gasdrifo: 'NCL Gasdrifo', Georgia, serif;
 
   /* Theme tokens - Black, White, Grays ONLY */
@@ -163,6 +172,10 @@ body {
 
 .font-nevera {
   font-family: var(--font-nevera);
+}
+
+.font-orange-avenue {
+  font-family: var(--font-orange-avenue);
 }
 
 .font-gasdrifo {
