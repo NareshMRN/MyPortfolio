@@ -1,6 +1,7 @@
 # Robots.txt for nareshn.me — Optimized for Google, Bing, and AI Search Engines
 User-agent: *
 Allow: /
+Disallow: /resume.pdf
 
 # Google Search Crawlers
 User-agent: Googlebot

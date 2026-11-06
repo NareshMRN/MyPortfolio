@@ -110,8 +110,8 @@ export const SocialIcons: React.FC<SocialIconsProps> = ({ size = 'md', className
           {/* Glass Button with Shine and Lift */}
           <a
             href={social.href}
-            target="_blank"
-            rel="noopener noreferrer"
+            target={social.name === 'Email' ? '_self' : '_blank'}
+            rel={social.name === 'Email' ? undefined : 'noopener noreferrer me'}
             aria-label={social.ariaLabel}
             onMouseEnter={() => setActiveTooltip(social.name)}
             onMouseLeave={() => setActiveTooltip(null)}

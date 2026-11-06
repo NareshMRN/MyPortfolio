@@ -1,19 +1,19 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9"
         xmlns:image="http://www.google.com/schemas/sitemap-image/1.1">
-  <!-- 
+  <!--
     Author Identity & Official Social Profiles:
     - GitHub:    https://github.com/NareshMRN
-    - Kaggle:    https://kaggle.com/nn2007
+    - Kaggle:    https://www.kaggle.com/nn2007
     - X/Twitter: https://x.com/NareshN929
-    - Instagram: https://instagram.com/mr_naresh_1819_
-    Indexed via Schema.org sameAs and rel="me" in index.html (cross-domain URLs cannot be <loc> tags per sitemaps.org standard)
+    - Instagram: https://www.instagram.com/mr_naresh_1819_
+    Indexed via Schema.org sameAs and rel="me" in index.html
   -->
 
   <!-- Core Pages -->
   <url>
     <loc>https://nareshn.me/</loc>
-    <lastmod>2026-10-17</lastmod>
+    <lastmod>2026-11-06</lastmod>
     <changefreq>weekly</changefreq>
     <priority>1.0</priority>
     <image:image>
@@ -29,25 +29,25 @@
   </url>
   <url>
     <loc>https://nareshn.me/projects</loc>
-    <lastmod>2026-10-15</lastmod>
+    <lastmod>2026-11-06</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.9</priority>
   </url>
   <url>
     <loc>https://nareshn.me/achievements</loc>
-    <lastmod>2026-10-15</lastmod>
+    <lastmod>2026-11-06</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.8</priority>
   </url>
   <url>
     <loc>https://nareshn.me/hackathons</loc>
-    <lastmod>2026-10-15</lastmod>
+    <lastmod>2026-11-06</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.8</priority>
   </url>
   <url>
     <loc>https://nareshn.me/certificates</loc>
-    <lastmod>2026-10-15</lastmod>
+    <lastmod>2026-11-06</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.8</priority>
   </url>
@@ -55,49 +55,49 @@
   <!-- Projects -->
   <url>
     <loc>https://nareshn.me/projects/sangeetha</loc>
-    <lastmod>2026-10-15</lastmod>
+    <lastmod>2026-11-06</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.85</priority>
   </url>
   <url>
     <loc>https://nareshn.me/projects/tradevault</loc>
-    <lastmod>2026-10-15</lastmod>
+    <lastmod>2026-11-06</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.8</priority>
   </url>
   <url>
     <loc>https://nareshn.me/projects/tryscan</loc>
-    <lastmod>2026-10-15</lastmod>
+    <lastmod>2026-11-06</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.8</priority>
   </url>
   <url>
     <loc>https://nareshn.me/projects/vector-search</loc>
-    <lastmod>2026-10-15</lastmod>
+    <lastmod>2026-11-06</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.8</priority>
   </url>
   <url>
     <loc>https://nareshn.me/projects/gradio-image-gen</loc>
-    <lastmod>2026-10-15</lastmod>
+    <lastmod>2026-11-06</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.75</priority>
   </url>
   <url>
     <loc>https://nareshn.me/projects/zyro-rag-challenge</loc>
-    <lastmod>2026-10-15</lastmod>
+    <lastmod>2026-11-06</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.75</priority>
   </url>
   <url>
     <loc>https://nareshn.me/projects/aira</loc>
-    <lastmod>2026-10-15</lastmod>
+    <lastmod>2026-11-06</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.75</priority>
   </url>
   <url>
     <loc>https://nareshn.me/projects/english-learning-app</loc>
-    <lastmod>2026-10-15</lastmod>
+    <lastmod>2026-11-06</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.75</priority>
   </url>
@@ -105,25 +105,31 @@
   <!-- Achievements -->
   <url>
     <loc>https://nareshn.me/achievements/build-to-ship-3rd-place</loc>
-    <lastmod>2026-10-15</lastmod>
+    <lastmod>2026-11-06</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.7</priority>
   </url>
   <url>
     <loc>https://nareshn.me/achievements/solo-founder-sangeetha</loc>
-    <lastmod>2026-10-15</lastmod>
+    <lastmod>2026-11-06</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.7</priority>
   </url>
   <url>
-    <loc>https://nareshn.me/achievements/kaggle-gradio-rank-63</loc>
-    <lastmod>2026-10-15</lastmod>
+    <loc>https://nareshn.me/achievements/kaggle-gradio-rank-67</loc>
+    <lastmod>2026-11-06</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.7</priority>
   </url>
   <url>
     <loc>https://nareshn.me/achievements/semantic-search-rag-kaggle</loc>
-    <lastmod>2026-10-15</lastmod>
+    <lastmod>2026-11-06</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.7</priority>
+  </url>
+  <url>
+    <loc>https://nareshn.me/achievements/zyro-rag-agent</loc>
+    <lastmod>2026-11-06</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.7</priority>
   </url>
@@ -131,69 +137,75 @@
   <!-- Hackathons -->
   <url>
     <loc>https://nareshn.me/hackathons/build-to-ship-hackathon</loc>
-    <lastmod>2026-10-15</lastmod>
+    <lastmod>2026-11-06</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.7</priority>
   </url>
   <url>
     <loc>https://nareshn.me/hackathons/murf-ai-hackathon</loc>
-    <lastmod>2026-10-15</lastmod>
+    <lastmod>2026-11-06</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.7</priority>
   </url>
   <url>
     <loc>https://nareshn.me/hackathons/kaggle-gradio-competition</loc>
-    <lastmod>2026-10-15</lastmod>
+    <lastmod>2026-11-06</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.7</priority>
   </url>
 
   <!-- Certificates -->
   <url>
+    <loc>https://nareshn.me/certificates/build-to-ship-hackathon</loc>
+    <lastmod>2026-11-06</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.65</priority>
+  </url>
+  <url>
     <loc>https://nareshn.me/certificates/vector-search-masterclass</loc>
-    <lastmod>2026-10-15</lastmod>
+    <lastmod>2026-11-06</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.65</priority>
   </url>
   <url>
     <loc>https://nareshn.me/certificates/building-llm-app-gradio</loc>
-    <lastmod>2026-10-15</lastmod>
+    <lastmod>2026-11-06</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.65</priority>
   </url>
   <url>
     <loc>https://nareshn.me/certificates/ai-agents-201-workshop</loc>
-    <lastmod>2026-10-15</lastmod>
+    <lastmod>2026-11-06</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.65</priority>
   </url>
   <url>
     <loc>https://nareshn.me/certificates/murf-ai-hackathon-cert</loc>
-    <lastmod>2026-10-15</lastmod>
+    <lastmod>2026-11-06</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.65</priority>
   </url>
   <url>
     <loc>https://nareshn.me/certificates/connected-care-aiot-yu</loc>
-    <lastmod>2026-10-15</lastmod>
+    <lastmod>2026-11-06</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.65</priority>
   </url>
   <url>
     <loc>https://nareshn.me/certificates/robotic-arms-101</loc>
-    <lastmod>2026-10-15</lastmod>
+    <lastmod>2026-11-06</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.65</priority>
   </url>
   <url>
     <loc>https://nareshn.me/certificates/autonomous-vehicles-workshop</loc>
-    <lastmod>2026-10-15</lastmod>
+    <lastmod>2026-11-06</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.65</priority>
   </url>
   <url>
     <loc>https://nareshn.me/certificates/base44-app-building</loc>
-    <lastmod>2026-10-15</lastmod>
+    <lastmod>2026-11-06</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.65</priority>
   </url>

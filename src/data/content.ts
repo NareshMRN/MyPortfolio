@@ -153,8 +153,8 @@ export const PERSONAL_INFO = {
   phone: '9535808478',
   location: 'Mangaluru, Karnataka, India',
   githubUrl: 'https://github.com/NareshMRN',
-  kaggleUrl: 'https://kaggle.com/nn2007',
-  instagramUrl: 'https://instagram.com/mr_naresh_1819_',
+  kaggleUrl: 'https://www.kaggle.com/nn2007',
+  instagramUrl: 'https://www.instagram.com/mr_naresh_1819_/',
   xUrl: 'https://x.com/NareshN929',
 };
 
@@ -444,7 +444,7 @@ export const PROJECTS: ProjectItem[] = [
     ],
     links: {
       github: 'https://github.com/NareshMRN',
-      live: 'https://kaggle.com/nn2007',
+      live: 'https://www.kaggle.com/nn2007',
     },
     featured: true,
   },
@@ -483,7 +483,7 @@ export const PROJECTS: ProjectItem[] = [
     ],
     links: {
       github: 'https://github.com/NareshMRN',
-      live: 'https://kaggle.com/nn2007',
+      live: 'https://www.kaggle.com/nn2007',
     },
     featured: false,
   },
@@ -651,7 +651,7 @@ export const ACHIEVEMENTS: AchievementItem[] = [
     tags: ['Kaggle', 'Gradio', 'Stable Diffusion', 'Generative AI'],
     details:
       'Competed in the NIAT Masterclasses Kaggle competition to synthesize e-commerce product imagery using diffusion models and Qwen 2.5 LLM prompt engineering. Programmed an automated batch loop for 15 Flipkart products evaluated on Prompt Quality (40 pts), Image Quality with CLIP score (40 pts), and Gradio UI (20 pts), ranking 63rd on the final leaderboard.',
-    link: 'https://kaggle.com/nn2007',
+    link: 'https://www.kaggle.com/nn2007',
   },
   {
     id: 'ach-3',
@@ -666,7 +666,7 @@ export const ACHIEVEMENTS: AchievementItem[] = [
     tags: ['Kaggle', 'FAISS', 'RAG', 'Sentence-Transformers'],
     details:
       'Overcame the limitations of traditional keyword search on 100,000+ Flipkart customer reviews by engineering dense vector embeddings (SBERT) and FAISS IndexFlatIP vector search. Built a full RAG question-answering pipeline with Precision@K and Recall@K evaluation metrics, EDA visualizations, and an executed Kaggle notebook.',
-    link: 'https://kaggle.com/nn2007',
+    link: 'https://www.kaggle.com/nn2007',
   },
   {
     id: 'ach-4',
@@ -681,7 +681,7 @@ export const ACHIEVEMENTS: AchievementItem[] = [
     tags: ['Kaggle', 'RAG', 'Langchain', 'Langsmith', 'AI', 'Streamlit', 'Groq_API_Key', 'Langgraph'],
     details:
       'Zyro Dynamics HR bot is a AI-powered HR assistant that can answer employee questions about HR policies and procedures.',
-    link: 'https://kaggle.com/nn2007',
+    link: 'https://www.kaggle.com/nn2007',
   },
 ];
 
@@ -746,7 +746,7 @@ export const HACKATHONS: HackathonItem[] = [
       'Automated batch image synthesis pipeline for 15 Flipkart products in loop in HD quality using Gradio and diffusion models, securing 63rd rank on the global competition leaderboard.',
     tech: ['Kaggle', 'Gradio', 'Generative AI', 'Python'],
     links: {
-      project: 'https://kaggle.com/nn2007',
+      project: 'https://www.kaggle.com/nn2007',
       repo: 'https://github.com/NareshMRN',
       certificate: '/certificates/YU_NIAT_Building_LLM_Masterclass.jpg',
     },
@@ -859,7 +859,7 @@ export const CERTIFICATES: CertificateItem[] = [
       'Business Insights & Technical Recommendation Report (200–300 words)'
     ],
     projectLink: 'https://github.com/NareshMRN',
-    kaggleLink: 'https://kaggle.com/nn2007',
+    kaggleLink: 'https://www.kaggle.com/nn2007',
   },
   {
     id: 'cert-gradio-llm',
@@ -900,7 +900,7 @@ export const CERTIFICATES: CertificateItem[] = [
       'final_scores.csv verified against submission criteria'
     ],
     projectLink: 'https://github.com/NareshMRN',
-    kaggleLink: 'https://kaggle.com/nn2007',
+    kaggleLink: 'https://www.kaggle.com/nn2007',
   },
   {
     id: 'cert-ai-agents-201',

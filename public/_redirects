@@ -1,0 +1,11 @@
+# Force HTTPS (Netlify)
+http://nareshn.me/* https://nareshn.me/:splat 301!
+http://www.nareshn.me/* https://nareshn.me/:splat 301!
+https://www.nareshn.me/* https://nareshn.me/:splat 301!
+
+# Old slug redirect (sitemap had rank-63, code uses rank-67)
+/achievements/kaggle-gradio-rank-63 /achievements/kaggle-gradio-rank-67 301
+
+# SPA fallback — must be LAST rule
+/* /index.html 200
+

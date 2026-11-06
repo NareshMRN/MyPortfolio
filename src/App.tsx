@@ -121,6 +121,7 @@ export function App() {
               <Route path="/projects" element={<ProjectsArchivePage />} />
               <Route path="/projects/:slug" element={<ProjectDetailPage />} />
               <Route path="/achievements" element={<AchievementsArchivePage />} />
+              <Route path="/achievements/kaggle-gradio-rank-63" element={<Navigate to="/achievements/kaggle-gradio-rank-67" replace />} />
               <Route path="/achievements/:slug" element={<AchievementDetailPage />} />
               <Route path="/hackathons" element={<HackathonsArchivePage />} />
               <Route path="/hackathons/:slug" element={<HackathonDetailPage />} />
