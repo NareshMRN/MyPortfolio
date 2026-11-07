@@ -2,6 +2,7 @@ import React, { useRef, useState, useEffect } from 'react';
 import { motion, useInView } from 'framer-motion';
 import { ABOUT_CONTENT, PERSONAL_INFO } from '../data/content';
 import { GlassCard } from './GlassCard';
+import { PhotoViewerModal } from './PhotoViewerModal';
 
 /* ------------------------------------------------------------------ */
 /*  Animated Counter – Counts up from 0 when scrolled into view       */
@@ -69,6 +70,7 @@ const AnimatedCounter: React.FC<{
 const TiltPhoto: React.FC = () => {
   const frameRef = useRef<HTMLDivElement>(null);
   const [tilt, setTilt] = useState({ x: 0, y: 0 });
+  const [isModalOpen, setIsModalOpen] = useState(false);
 
   const handleMouseMove = (e: React.MouseEvent<HTMLDivElement>) => {
     if (!frameRef.current) return;
@@ -83,60 +85,66 @@ const TiltPhoto: React.FC = () => {
   };
 
   return (
-    <div
-      ref={frameRef}
-      onMouseMove={handleMouseMove}
-      onMouseLeave={handleMouseLeave}
-      className="relative w-full max-w-sm mx-auto"
-      style={{ perspective: '800px' }}
-    >
-      <motion.div
-        animate={{ rotateX: tilt.x, rotateY: tilt.y }}
-        transition={{ type: 'spring', stiffness: 200, damping: 25 }}
-        className="relative rounded-2xl overflow-hidden border"
-        style={{
-          borderColor: 'var(--border-subtle)',
-          background: 'var(--bg-card)',
-        }}
+    <>
+      <div
+        ref={frameRef}
+        onMouseMove={handleMouseMove}
+        onMouseLeave={handleMouseLeave}
+        onClick={() => setIsModalOpen(true)}
+        className="relative w-full max-w-[340px] min-[400px]:max-w-[375px] sm:max-w-sm mx-auto cursor-pointer"
+        style={{ perspective: '800px' }}
       >
-        {/* Photo */}
-        <div className="aspect-[3/4] w-full overflow-hidden">
-          <img
-            src={PERSONAL_INFO.photo}
-            alt={`${PERSONAL_INFO.name} portrait`}
-            className="w-full h-full object-cover"
-            loading="lazy"
-            onError={(e) => {
-              // Fallback if photo doesn't exist
-              const target = e.target as HTMLImageElement;
-              target.style.display = 'none';
-              if (target.parentElement) {
-                target.parentElement.innerHTML = `
-                  <div class="w-full h-full flex items-center justify-center" style="background: var(--bg-secondary);">
-                    <span class="font-display text-7xl tracking-widest" style="color: var(--text-muted);">${PERSONAL_INFO.name.charAt(0)}</span>
-                  </div>
-                `;
-              }
-            }}
-          />
-        </div>
-
-        {/* Bottom label */}
-        <div
-          className="absolute bottom-0 inset-x-0 py-3 px-4 text-center"
+        <motion.div
+          animate={{ rotateX: tilt.x, rotateY: tilt.y }}
+          transition={{ type: 'spring', stiffness: 200, damping: 25 }}
+          className="relative rounded-2xl overflow-hidden border"
           style={{
-            background: 'linear-gradient(to top, var(--bg-primary) 0%, transparent 100%)',
+            borderColor: 'var(--border-subtle)',
+            background: 'var(--bg-card)',
           }}
         >
-          <span
-            className="text-[10px] font-mono-code uppercase tracking-[0.35em]"
-            style={{ color: 'var(--text-muted)' }}
+          {/* Photo */}
+          <div className="aspect-[3/4.25] sm:aspect-[3/4] w-full overflow-hidden">
+            <img
+              src={PERSONAL_INFO.photo}
+              alt={`${PERSONAL_INFO.name} portrait`}
+              className="w-full h-full object-cover object-top sm:object-center"
+              loading="lazy"
+              onError={(e) => {
+                // Fallback if photo doesn't exist
+                const target = e.target as HTMLImageElement;
+                target.style.display = 'none';
+                if (target.parentElement) {
+                  target.parentElement.innerHTML = `
+                    <div class="w-full h-full flex items-center justify-center" style="background: var(--bg-secondary);">
+                      <span class="font-display text-7xl tracking-widest" style="color: var(--text-muted);">${PERSONAL_INFO.name.charAt(0)}</span>
+                    </div>
+                  `;
+                }
+              }}
+            />
+          </div>
+
+          {/* Bottom label */}
+          <div
+            className="absolute bottom-0 inset-x-0 py-3 px-4 text-center pointer-events-none"
+            style={{
+              background: 'linear-gradient(to top, var(--bg-primary) 0%, transparent 100%)',
+            }}
           >
-            {PERSONAL_INFO.name} · {new Date().getFullYear()}
-          </span>
-        </div>
-      </motion.div>
-    </div>
+            <span
+              className="text-[10px] font-mono-code uppercase tracking-[0.35em]"
+              style={{ color: 'var(--text-muted)' }}
+            >
+              {PERSONAL_INFO.name} · {new Date().getFullYear()}
+            </span>
+          </div>
+        </motion.div>
+      </div>
+
+      {/* Terminal-style Photo Viewer Modal */}
+      <PhotoViewerModal isOpen={isModalOpen} onClose={() => setIsModalOpen(false)} />
+    </>
   );
 };
 
