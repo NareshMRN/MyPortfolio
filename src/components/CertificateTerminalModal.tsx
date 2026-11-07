@@ -47,15 +47,21 @@ export const CertificateTerminalModal: React.FC<CertificateTerminalModalProps> =
     }
   }, [certificate]);
 
-  // Lock body scroll when open and not minimized
+  // Lock body scroll and pause Lenis smooth scroll when open and not minimized
   useEffect(() => {
     if (!certificate || isMinimized) {
       document.body.style.overflow = 'auto';
+      if (window.__lenis) {
+        window.__lenis.start();
+      }
       return;
     }
 
     const prevOverflow = document.body.style.overflow;
     document.body.style.overflow = 'hidden';
+    if (window.__lenis) {
+      window.__lenis.stop();
+    }
 
     const handleKeyDown = (e: KeyboardEvent) => {
       if (e.key === 'Escape') {
@@ -70,6 +76,9 @@ export const CertificateTerminalModal: React.FC<CertificateTerminalModalProps> =
     window.addEventListener('keydown', handleKeyDown);
     return () => {
       document.body.style.overflow = prevOverflow;
+      if (window.__lenis) {
+        window.__lenis.start();
+      }
       window.removeEventListener('keydown', handleKeyDown);
     };
   }, [certificate, isMinimized, isMaximized, onClose]);
@@ -158,7 +167,9 @@ export const CertificateTerminalModal: React.FC<CertificateTerminalModalProps> =
       {!isMinimized && (
         <div
           key="terminal-modal-backdrop"
-          className={`fixed inset-0 z-[99999] flex items-center justify-center transition-all duration-300 ${isMaximized ? 'p-0' : 'p-2 sm:p-6 lg:p-8'
+          data-lenis-prevent
+          onWheel={(e) => e.stopPropagation()}
+          className={`fixed inset-0 z-[99999] flex items-center justify-center overscroll-contain transition-all duration-300 ${isMaximized ? 'p-0' : 'p-2 sm:p-6 lg:p-8'
             }`}
         >
           {/* Backdrop blur */}
@@ -178,7 +189,9 @@ export const CertificateTerminalModal: React.FC<CertificateTerminalModalProps> =
             exit={{ opacity: 0, scale: 0.95, y: 15 }}
             transition={{ duration: 0.25, ease: [0.16, 1, 0.3, 1] }}
             onClick={(e) => e.stopPropagation()}
-            className={`relative flex flex-col overflow-hidden z-10 transition-all duration-300 ${isMaximized
+            onWheel={(e) => e.stopPropagation()}
+            data-lenis-prevent
+            className={`relative flex flex-col overflow-hidden z-10 transition-all duration-300 overscroll-contain ${isMaximized
               ? 'w-full h-full max-w-none rounded-none border-none'
               : 'w-full max-w-5xl h-[94vh] sm:h-[88vh] rounded-xl sm:rounded-2xl border shadow-2xl'
               }`}
@@ -281,42 +294,9 @@ export const CertificateTerminalModal: React.FC<CertificateTerminalModalProps> =
                   )}
                 </button>
 
-                {/* Full View / Restore Toggle */}
-                <button
-                  type="button"
-                  onClick={() => setIsMaximized(!isMaximized)}
-                  title={isMaximized ? 'Restore View' : 'Full View'}
-                  className={`inline-flex items-center gap-1.5 p-1.5 sm:px-2.5 sm:py-1.5 rounded-lg text-xs font-mono-code uppercase tracking-wider border transition-all cursor-pointer ${isDark
-                    ? 'border-white/15 bg-white/5 text-zinc-300 hover:border-white/35 hover:text-white'
-                    : 'border-black/15 bg-black/5 text-zinc-700 hover:border-black/30 hover:text-black'
-                    }`}
-                >
-                  {isMaximized ? (
-                    <>
-                      <Minimize2 className="w-3.5 h-3.5" />
-                      <span className="hidden sm:inline">Restore</span>
-                    </>
-                  ) : (
-                    <>
-                      <Maximize2 className="w-3.5 h-3.5" />
-                      <span className="hidden sm:inline">Full View</span>
-                    </>
-                  )}
-                </button>
 
-                {/* Window Close X */}
-                {/*<button
-                  type="button"
-                  onClick={onClose}
-                  aria-label="Close"
-                  className={`p-1.5 rounded-lg transition-colors cursor-pointer ${isDark
-                    ? 'text-zinc-400 hover:text-white hover:bg-white/10'
-                    : 'text-zinc-500 hover:text-zinc-900 hover:bg-black/10'
-                    }`}
-                >
-                  <X className="w-4 h-4" />
-                </button>
-                */}
+
+
               </div>
             </div>
 
@@ -357,36 +337,40 @@ export const CertificateTerminalModal: React.FC<CertificateTerminalModalProps> =
               </div>
             </div>
 
-            {/* High-Fidelity Certificate Canvas (Fits properly and centers beautifully) */}
+            {/* High-Fidelity Certificate Canvas (Fits properly, centered, scrollable inside terminal) */}
             <div
-              className={`flex-1 w-full min-h-0 relative flex items-center justify-center p-2 sm:p-6 overflow-auto transition-colors duration-300 ${isDark ? 'bg-[#06080d]' : 'bg-[#eef2f6]'
+              data-lenis-prevent
+              onWheel={(e) => e.stopPropagation()}
+              className={`flex-1 w-full min-h-0 relative overflow-y-auto overflow-x-hidden overscroll-contain transition-colors duration-300 ${isDark ? 'bg-[#06080d]' : 'bg-[#eef2f6]'
                 }`}
             >
-              {certificate.image ? (
-                <div className="relative max-w-full max-h-full flex items-center justify-center p-1 sm:p-2">
-                  <img
-                    src={certificate.image}
-                    alt={certificate.title}
-                    className={`max-w-full max-h-full w-auto h-auto object-contain rounded-lg sm:rounded-xl shadow-2xl transition-all duration-300 ${isMaximized ? 'max-h-[75vh]' : 'max-h-[48vh] min-[480px]:max-h-[56vh] sm:max-h-[64vh]'
-                      }`}
-                    style={{
-                      border: isDark
-                        ? '1px solid rgba(255, 255, 255, 0.15)'
-                        : '1px solid rgba(0, 0, 0, 0.12)',
-                      boxShadow: isDark
-                        ? '0 20px 50px rgba(0, 0, 0, 0.8)'
-                        : '0 20px 45px rgba(0, 0, 0, 0.18)',
-                    }}
-                  />
-                </div>
-              ) : (
-                <div className="p-6 text-center font-mono-code text-xs">
-                  <ShieldCheck className="w-8 h-8 sm:w-10 sm:h-10 text-emerald-500 mx-auto mb-2" />
-                  <span className={`font-semibold text-xs sm:text-sm ${isDark ? 'text-white' : 'text-zinc-900'}`}>
-                    {certificate.title}
-                  </span>
-                </div>
-              )}
+              <div className="min-h-full w-full flex items-center justify-center p-2 sm:p-6">
+                {certificate.image ? (
+                  <div className="relative max-w-full flex items-center justify-center p-1 sm:p-2">
+                    <img
+                      src={certificate.image}
+                      alt={certificate.title}
+                      className={`max-w-full w-auto h-auto object-contain rounded-lg sm:rounded-xl shadow-2xl transition-all duration-300 ${isMaximized ? 'max-h-[80vh]' : 'max-h-[50vh] min-[480px]:max-h-[58vh] sm:max-h-[66vh]'
+                        }`}
+                      style={{
+                        border: isDark
+                          ? '1px solid rgba(255, 255, 255, 0.15)'
+                          : '1px solid rgba(0, 0, 0, 0.12)',
+                        boxShadow: isDark
+                          ? '0 20px 50px rgba(0, 0, 0, 0.8)'
+                          : '0 20px 45px rgba(0, 0, 0, 0.18)',
+                      }}
+                    />
+                  </div>
+                ) : (
+                  <div className="p-6 text-center font-mono-code text-xs">
+                    <ShieldCheck className="w-8 h-8 sm:w-10 sm:h-10 text-emerald-500 mx-auto mb-2" />
+                    <span className={`font-semibold text-xs sm:text-sm ${isDark ? 'text-white' : 'text-zinc-900'}`}>
+                      {certificate.title}
+                    </span>
+                  </div>
+                )}
+              </div>
             </div>
 
             {/* Terminal Status & Action Footer */}

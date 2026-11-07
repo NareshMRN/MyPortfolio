@@ -59,8 +59,8 @@ export const Navbar: React.FC = () => {
       <div className="w-full px-4 sm:px-8 lg:px-12 xl:px-16 flex items-center justify-between">
         {/* LOGO - Orange Avenue brand name */}
         <a
-          href="/#hero"
-          onClick={(e) => handleNavClick(e, '/#hero')}
+          href="https://nareshn.me"
+          onClick={(e) => handleNavClick(e, 'https://nareshn.me')}
           className="group flex items-center gap-1.5 select-none py-1"
           style={{ color: 'var(--text-primary)' }}
           aria-label="Naresh Portfolio Home"

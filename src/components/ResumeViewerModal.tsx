@@ -43,7 +43,7 @@ export const ResumeViewerModal: React.FC<ResumeViewerModalProps> = ({ isOpen, on
     }
   }, [isOpen]);
 
-  // Handle ESC key press
+  // Handle ESC key press and scroll locking
   useEffect(() => {
     const handleKeyDown = (e: KeyboardEvent) => {
       if (e.key === 'Escape') {
@@ -56,10 +56,21 @@ export const ResumeViewerModal: React.FC<ResumeViewerModalProps> = ({ isOpen, on
     };
     if (isOpen && !isMinimized) {
       document.body.style.overflow = 'hidden';
+      if (window.__lenis) {
+        window.__lenis.stop();
+      }
       window.addEventListener('keydown', handleKeyDown);
+    } else {
+      document.body.style.overflow = 'auto';
+      if (window.__lenis) {
+        window.__lenis.start();
+      }
     }
     return () => {
       document.body.style.overflow = 'auto';
+      if (window.__lenis) {
+        window.__lenis.start();
+      }
       window.removeEventListener('keydown', handleKeyDown);
     };
   }, [isOpen, isMinimized, isFullscreen, onClose]);
@@ -130,7 +141,9 @@ export const ResumeViewerModal: React.FC<ResumeViewerModalProps> = ({ isOpen, on
       {/* Full Modal Viewer */}
       {isOpen && !isMinimized && (
         <div
-          className={`fixed inset-0 z-[9999] flex items-center justify-center transition-all duration-300 ${isFullscreen ? 'p-0' : 'p-3 sm:p-6 lg:p-10'
+          data-lenis-prevent
+          onWheel={(e) => e.stopPropagation()}
+          className={`fixed inset-0 z-[9999] flex items-center justify-center overscroll-contain transition-all duration-300 ${isFullscreen ? 'p-0' : 'p-3 sm:p-6 lg:p-10'
             }`}
         >
           {/* Backdrop Blur Overlay */}
@@ -149,7 +162,9 @@ export const ResumeViewerModal: React.FC<ResumeViewerModalProps> = ({ isOpen, on
             animate={{ opacity: 1, scale: 1, y: 0 }}
             exit={{ opacity: 0, scale: 0.95, y: 15 }}
             transition={{ duration: 0.25, ease: [0.16, 1, 0.3, 1] }}
-            className={`relative flex flex-col overflow-hidden z-10 transition-all duration-300 ${isFullscreen
+            data-lenis-prevent
+            onWheel={(e) => e.stopPropagation()}
+            className={`relative flex flex-col overflow-hidden z-10 transition-all duration-300 overscroll-contain ${isFullscreen
               ? 'w-full h-full max-w-none rounded-none border-none shadow-none'
               : 'w-full max-w-5xl h-[92vh] sm:h-[88vh] rounded-2xl border shadow-2xl'
               }`}

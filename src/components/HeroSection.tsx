@@ -126,6 +126,62 @@ export const HeroSection: React.FC = () => {
       id="hero"
       className="relative min-h-screen w-full flex items-center justify-start overflow-hidden pt-24 sm:pt-28 pb-16 px-3.5 min-[360px]:px-5 sm:px-6 lg:px-8 xl:px-12 transition-colors duration-500"
     >
+      {/* Hero Portrait Visual (Monochrome high-contrast photo) */}
+      <motion.div
+        initial={{ opacity: 0, x: 25, scale: 0.98 }}
+        animate={{ opacity: 1, x: 0, scale: 1 }}
+        transition={{ duration: 1.2, ease: [0.16, 1, 0.3, 1], delay: 0.15 }}
+        className="absolute right-0 bottom-0 top-0 w-full sm:w-4/5 md:w-3/5 lg:w-[54%] xl:w-[48%] pointer-events-none select-none flex items-end justify-end overflow-hidden z-0"
+        aria-hidden="true"
+      >
+        {/* Subtle Ambient Radial Backlight for depth in dark mode */}
+        <div
+          className="absolute inset-0 pointer-events-none transition-opacity duration-700"
+          style={{
+            background: isDark
+              ? 'radial-gradient(ellipse at 70% 50%, rgba(229, 184, 66, 0.08) 0%, rgba(255, 255, 255, 0.03) 40%, transparent 75%)'
+              : 'radial-gradient(ellipse at 70% 50%, rgba(0, 0, 0, 0.03) 0%, transparent 70%)',
+          }}
+        />
+
+        {/* Portrait Image */}
+        <img
+          src={PERSONAL_INFO.heroPhoto}
+          alt="Naresh N"
+          loading="eager"
+          className={`h-[68vh] sm:h-[78vh] md:h-[86vh] lg:h-[92vh] xl:h-[96vh] w-auto max-w-none object-contain object-right-bottom transition-all duration-700 ${
+            isDark
+              ? 'opacity-25 min-[480px]:opacity-35 sm:opacity-45 md:opacity-95'
+              : 'opacity-25 min-[480px]:opacity-35 sm:opacity-40 md:opacity-100'
+          }`}
+          style={{
+            maskImage:
+              'linear-gradient(to right, transparent 0%, black 18%, black 100%), linear-gradient(to bottom, black 85%, transparent 100%)',
+            WebkitMaskImage:
+              'linear-gradient(to right, transparent 0%, black 18%, black 100%), linear-gradient(to bottom, black 85%, transparent 100%)',
+            maskComposite: 'intersect',
+            WebkitMaskComposite: 'destination-in',
+          }}
+        />
+
+        {/* Seamless Soft Edge Left Mask to guarantee text contrast */}
+        <div
+          className="absolute inset-0 pointer-events-none transition-all duration-500"
+          style={{
+            background: isDark
+              ? 'linear-gradient(to right, var(--bg-primary) 0%, rgba(0, 0, 0, 0.8) 25%, transparent 70%)'
+              : 'linear-gradient(to right, var(--bg-primary) 0%, rgba(255, 255, 255, 0.85) 25%, transparent 70%)',
+          }}
+        />
+
+        {/* Bottom edge soft blend into the next section */}
+        <div
+          className="absolute inset-x-0 bottom-0 h-28 pointer-events-none transition-all duration-500"
+          style={{
+            background: 'linear-gradient(to top, var(--bg-primary) 0%, transparent 100%)',
+          }}
+        />
+      </motion.div>
       {/* Laptop/Desktop Top-Right Corner Status Badge (Hidden on mobile) */}
       <div className="hidden md:inline-flex absolute top-24 sm:top-28 right-6 lg:right-10 xl:right-16 z-20">
         <div
