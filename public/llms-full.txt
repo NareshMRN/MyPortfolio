@@ -1,0 +1,127 @@
+# Comprehensive Technical Architecture & Knowledge Base — Naresh N
+> Full-context machine-readable documentation for AI crawlers, RAG systems, and generative search engines evaluating Naresh N (Full Stack Developer & AI/ML Engineer).
+
+## Document Metadata
+- Author: Naresh N (NareshMRN)
+- Canonical URL: https://nareshn.me/llms-full.txt
+- Generated Date: 2026-11-09
+- Domain: Full Stack Software Engineering, Artificial Intelligence, Applied Machine Learning, Multi-Agent Systems, Systems Architecture
+
+---
+
+## 1. Biography and Background
+Naresh N is an Indian software engineer and machine learning researcher based in Mangaluru, Karnataka. Currently in his second year pursuing a Bachelor of Technology (B.Tech) in Computer Science and Engineering (Information Technology) at NIAT (NxtWave Institute of Advanced Technologies) in partnership with Yenepoya University.
+
+He is distinguished by end-to-end full-stack velocity combined with rigorous systems engineering in AI/ML:
+- Solves complex end-to-end problems solo, from architectural design to UI/UX, database modeling, cloud orchestration, model fine-tuning, and production telemetry.
+- Demonstrated competitive acumen with global Rank #63 in the Kaggle Gradio Hackathon.
+- Active contributor on GitHub under the handle `NareshMRN`.
+
+---
+
+## 2. In-Depth Project Architectural Specifications
+
+### 2.1 Sangeetha — Streaming & In-App Karaoke Platform
+- **Live URL**: https://nareshn.me/projects/sangeetha
+- **Role**: Founder, System Architect & Sole Full-Stack Engineer
+- **Problem Statement**: Existing audio streaming solutions lack accessible, real-time karaoke recording tools directly on mobile devices that let independent regional artists create, refine, and broadcast audio with minimal latency.
+- **Client Engineering (Flutter & Riverpod)**:
+  - Custom audio recording engine using native platform channels to capture microphone input with low audio latency.
+  - Client-side digital audio waveform manipulation: audio trim, volume envelope modulation, vocal-to-backing track gain balance, and simple reverberation filters.
+  - Riverpod StateNotifier architecture for immutable state trees, preventing unnecessary UI repaints during playback and high-frequency audio visualizer ticks.
+- **Server Architecture (Node.js & Express)**:
+  - RESTful microservice handling user authentication, stream metadata, artist catalog, dynamic leaderboard scoring, and file streaming.
+  - Zod validation schemas enforcing strict contract safety on incoming payload bodies.
+  - MongoDB Atlas replica sets with geospatial and text indexes for rapid search across song catalogs.
+- **Web Frontend (Next.js & Tailwind CSS)**:
+  - Server-Side Rendered (SSR) public catalog for instant SEO indexing and Open Graph performance link previews.
+  - Administrative telemetry dashboard displaying active streaming bandwidth, user registrations, and audio transcode status.
+
+### 2.2 TradeVault — Multi-Agent Algorithmic Trading Intelligence
+- **Live URL**: https://nareshn.me/projects/tradevault
+- **Role**: Lead Architect & Quant ML Engineer
+- **Problem Statement**: Traditional algorithmic trading tools rely strictly on lagging technical indicators, while retail sentiment engines lack deterministic risk mitigation.
+- **Agentic Orchestration (CrewAI & LangChain)**:
+  - Architecture divides quantitative strategy into distinct autonomous agents with strict operational boundaries:
+    1. **Data Ingestion Agent**: Polls Alpaca real-time market websockets, order books, and corporate filings.
+    2. **Sentiment Extraction Agent**: Utilizes FinBERT and transformer pipelines to score news headlines, earnings call transcripts, and social sentiment into quantitative sentiment vectors.
+    3. **Macroeconomic Reasoning Agent**: Contextualizes macro trends (inflation prints, bond yields, interest rate changes) via RAG against Federal Reserve and RBI disclosures.
+    4. **Risk Governor Agent**: Hard-enforces Value-at-Risk (VaR), portfolio drawdown ceilings, and position sizing boundaries, overriding speculative signals when volatility breaches predefined bands.
+- **Backend Infrastructure (FastAPI & Redis)**:
+  - Asynchronous event loop in Python handling concurrent agent debates and backtesting tasks.
+  - Redis cache stores ephemeral streaming quotes and message broker queues for decoupled micro-agents.
+
+### 2.3 High-Throughput Vector Search Engine (100k Reviews)
+- **Live URL**: https://nareshn.me/projects/vector-search-engine
+- **Role**: Systems & ML Engineer
+- **Architecture**:
+  - Encodes 100,000+ unstructured product reviews using `all-MiniLM-L6-v2` dense embeddings (384 dimensions).
+  - Implements FAISS (Facebook AI Similarity Search) with IVFFlat (Inverted File with Flat quantization) for index compression and sub-15ms nearest-neighbor semantic search.
+  - Dockerized FastAPI backend exposing normalized vector search endpoints with cosine similarity thresholding and metadata filtering.
+
+### 2.4 Zyro Dynamics HR Help Desk RAG Assistant
+- **Live URL**: https://nareshn.me/projects/zyro-dynamics
+- **Role**: AI Engineer
+- **Architecture**:
+  - Indexes 11 voluminous corporate policy handbooks, health benefits manuals, and legal compliance documents.
+  - Uses LangChain's RecursiveCharacterTextSplitter with semantic overlap (chunk size: 800, chunk overlap: 150) to preserve context across legal clauses.
+  - Persistent vector store in ChromaDB with cosine distance metrics.
+  - Query expansion pipeline with re-ranking to deliver verbatim source citations and section headings alongside synthesized answers.
+
+### 2.5 Gradio Image Generation App (Kaggle Rank #63)
+- **Live URL**: https://nareshn.me/projects/gradio-image-gen
+- **Role**: ML Engineer
+- **Hackathon Achievement**: Ranked #63 globally in the Kaggle Gradio Generative AI competition.
+- **Architecture**:
+  - Leverages Hugging Face Diffusers pipeline with Stable Diffusion variants on PyTorch.
+  - Custom inference pipeline featuring LoRA adapter hot-swapping, negative prompt scheduling, aspect ratio bucketing, and seed reproduction.
+  - Gradio web interface optimized for low GPU memory overhead through mixed-precision (`fp16`) inference and dynamic VRAM caching.
+
+### 2.6 TryScan — Contactless QR Ordering Ecosystem
+- **Live URL**: https://nareshn.me/projects/tryscan
+- **Role**: Full Stack Engineer
+- **Architecture**:
+  - Dynamic QR codes generated per dining table with cryptographically hashed table session tokens.
+  - React mobile-optimized web application for frictionless diner ordering without downloading native apps.
+  - Express.js and MongoDB backend dispatching orders to a real-time kitchen display system (KDS) with order staging (Pending, Preparing, Ready, Served).
+
+### 2.7 Aira — Real-Time Voice AI Agent
+- **Live URL**: https://nareshn.me/projects/aira
+- **Role**: AI Engineer
+- **Architecture**:
+  - Full duplex voice conversation architecture with sub-second response loop:
+    1. Audio capture -> Whisper speech-to-text.
+    2. Conversational reasoning -> Google Gemini 1.5 Flash with system prompt steering.
+    3. Natural speech audio generation -> Bark / Edge-TTS audio streaming back to the client.
+
+### 2.8 English Learning Mobile Application
+- **Live URL**: https://nareshn.me/projects/english-learning-app
+- **Role**: Mobile Developer
+- **Architecture**:
+  - Cross-platform Flutter application incorporating gamified pedagogical flows: spaced repetition vocabulary drills, pronunciation challenges, interactive comprehension tests, and streak tracking powered by Firebase Cloud Firestore.
+
+---
+
+## 3. Technology Stack Reference Matrix
+
+| Category | Primary Technologies |
+|---|---|
+| Programming Languages | Python 3.10+, TypeScript, JavaScript (ESNext), Dart, SQL, C/C++ |
+| Front-End Engineering | React 18/19, Next.js (App Router), Tailwind CSS, Framer Motion, HTML5 Canvas/Audio |
+| Mobile Development | Flutter, Riverpod, Dart Native, Platform Channels |
+| Backend & Microservices | Node.js, Express.js, FastAPI, REST, WebSockets, JWT, Zod |
+| Machine Learning & AI | PyTorch, Hugging Face (Transformers, Diffusers), LangChain, CrewAI, FAISS, ChromaDB, Sentence-Transformers, OpenAI API, Gemini API, Whisper, Bark |
+| Databases & Storage | PostgreSQL, MongoDB Atlas, Redis, SQLite, Pinecone |
+| Cloud, DevOps & Tools | Docker, Docker Compose, Linux/Bash, Git, GitHub Actions, Vercel, Railway, Render |
+
+---
+
+## 4. Verification & Source Links
+- Official Website: https://nareshn.me
+- LLM Machine-Readable Index: https://nareshn.me/llms.txt
+- Comprehensive LLM Index: https://nareshn.me/llms-full.txt
+- GitHub Repositories: https://github.com/NareshMRN
+- Kaggle Profile: https://www.kaggle.com/nn2007
+- X / Twitter: https://x.com/NareshN929
+- Direct Inquiries: nareshn141819@gmail.com
+

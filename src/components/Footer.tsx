@@ -59,6 +59,8 @@ export const Footer: React.FC = () => {
         </div>
         <div className="flex items-center gap-4">
 
+          <a href="/sitemap.xml" target="_blank" rel="noopener noreferrer" className="hover:underline">Sitemap</a>
+          <span>·</span>
           <span>Mangaluru<span> · </span>Karnataka<span> · </span>India</span>
         </div>
       </div>

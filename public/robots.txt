@@ -1,11 +1,15 @@
 # Robots.txt for nareshn.me — Optimized for Google, Bing, and AI Search Engines
 User-agent: *
 Allow: /
+Allow: /llms.txt
+Allow: /llms-full.txt
 Disallow: /resume.pdf
 
 # Google Search Crawlers
 User-agent: Googlebot
 Allow: /
+Allow: /llms.txt
+Allow: /llms-full.txt
 
 User-agent: Googlebot-Image
 Allow: /
@@ -14,15 +18,21 @@ Allow: /
 User-agent: Bingbot
 Allow: /
 
-# AI Search & LLM Engines (Google Gemini, ChatGPT Search, Perplexity, Claude, Apple)
+# AI Search & LLM Crawlers (Google Gemini, ChatGPT Search, Perplexity, Claude, Apple, Common Crawl)
 User-agent: GPTBot
 Allow: /
+Allow: /llms.txt
+Allow: /llms-full.txt
 
 User-agent: PerplexityBot
 Allow: /
+Allow: /llms.txt
+Allow: /llms-full.txt
 
 User-agent: ClaudeBot
 Allow: /
+Allow: /llms.txt
+Allow: /llms-full.txt
 
 User-agent: Applebot
 Allow: /
@@ -30,5 +40,8 @@ Allow: /
 User-agent: CCBot
 Allow: /
 
-# Canonical Sitemap Location
+# Canonical Sitemap and Machine-Readable Knowledge Indexes
 Sitemap: https://nareshn.me/sitemap.xml
+# LLMs.txt for Generative Engine Optimization (GEO):
+# https://nareshn.me/llms.txt
+# https://nareshn.me/llms-full.txt
