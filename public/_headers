@@ -1,7 +1,8 @@
 # Security headers for all pages
 /*
   X-Content-Type-Options: nosniff
-  X-Frame-Options: DENY
+  X-Frame-Options: SAMEORIGIN
+  Content-Security-Policy: frame-ancestors 'self'
   X-XSS-Protection: 1; mode=block
   Referrer-Policy: strict-origin-when-cross-origin
   Permissions-Policy: camera=(), microphone=(), geolocation=()
@@ -9,4 +10,6 @@
 # Prevent resume.pdf from being indexed (crawled but not indexed in GSC)
 /resume.pdf
   X-Robots-Tag: noindex, nofollow
+  X-Frame-Options: SAMEORIGIN
+  Content-Security-Policy: frame-ancestors 'self'
 

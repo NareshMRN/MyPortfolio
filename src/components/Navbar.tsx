@@ -142,18 +142,16 @@ export const Navbar: React.FC = () => {
         </div>
 
         {/* MOBILE CONTROLS */}
-        <div className="flex md:hidden items-center space-x-3">
+        <div className="flex md:hidden items-center space-x-2">
           <button
             onClick={toggleTheme}
             aria-label="Toggle theme"
-            className="p-2 rounded-full border"
+            className="p-2 transition-colors cursor-pointer"
             style={{
-              borderColor: 'var(--border-strong)',
               color: 'var(--text-primary)',
-              backgroundColor: 'var(--bg-card)',
             }}
           >
-            {theme === 'dark' ? <Sun className="w-4 h-4 text-white" /> : <Moon className="w-4 h-4 text-black" />}
+            {theme === 'dark' ? <Sun className="w-5 h-5 text-white" /> : <Moon className="w-5 h-5 text-black" />}
           </button>
 
           {/* 2-line animated hamburger toggle button for small devices */}
@@ -161,22 +159,18 @@ export const Navbar: React.FC = () => {
             onClick={() => setMobileMenuOpen(!mobileMenuOpen)}
             aria-label={mobileMenuOpen ? 'Close navigation menu' : 'Open navigation menu'}
             aria-expanded={mobileMenuOpen}
-            className="p-2 w-9 h-9 rounded-full border flex flex-col justify-center items-center gap-[6px] transition-colors cursor-pointer select-none"
-            style={{
-              borderColor: 'var(--border-strong)',
-              backgroundColor: 'var(--bg-card)',
-            }}
+            className="p-2 w-9 h-9 flex flex-col justify-center items-center gap-[6px] transition-colors cursor-pointer select-none"
           >
             <motion.span
               animate={mobileMenuOpen ? { rotate: 45, y: 4 } : { rotate: 0, y: 0 }}
               transition={{ duration: 0.25, ease: [0.25, 1, 0.5, 1] }}
-              className="w-[18px] h-[2px] rounded-full block origin-center pointer-events-none"
+              className="w-5 h-[2px] rounded-full block origin-center pointer-events-none"
               style={{ backgroundColor: 'var(--text-primary)' }}
             />
             <motion.span
               animate={mobileMenuOpen ? { rotate: -45, y: -4 } : { rotate: 0, y: 0 }}
               transition={{ duration: 0.25, ease: [0.25, 1, 0.5, 1] }}
-              className="w-[18px] h-[2px] rounded-full block origin-center pointer-events-none"
+              className="w-5 h-[2px] rounded-full block origin-center pointer-events-none"
               style={{ backgroundColor: 'var(--text-primary)' }}
             />
           </button>
