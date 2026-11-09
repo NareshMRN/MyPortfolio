@@ -107,13 +107,14 @@ export const TECH_CONFIG: Record<string, TechMeta> = {
     ),
   },
 
-  // TypeScript
+  // TypeScript - Official Microsoft TypeScript Blue Square with White TS
   typescript: {
     color: '#3178C6',
     icon: (
-      <svg className="w-3.5 h-3.5" viewBox="0 0 24 24" fill="#3178C6">
-        <rect width="24" height="24" rx="3" fill="#3178C6" />
-        <path d="M4 8h8v2H9v8H7v-8H4V8zm9 3.5h5.5v1.8H15v1.5h3v1.8h-3v1.9h4V20h-6.5V11.5z" fill="#FFFFFF" />
+      <svg className="w-3.5 h-3.5" viewBox="0 0 24 24" fill="none">
+        <rect width="24" height="24" rx="3.5" fill="#3178C6" />
+        <path d="M4.2 9.5h7.2v2.2H9.2V19H6.4v-7.3H4.2V9.5z" fill="#FFFFFF" />
+        <path d="M13.2 18.3l2-1.2c.6 1 1.4 1.6 2.5 1.6 1.1 0 1.8-.6 1.8-1.4 0-.9-.7-1.3-2.1-1.9-2-.9-3.3-1.9-3.3-3.8 0-1.9 1.5-3.3 3.8-3.3 1.7 0 2.9.6 3.8 2.2l-2 1.2c-.4-.8-.9-1.2-1.8-1.2-.8 0-1.4.5-1.4 1.2 0 .8.6 1.2 1.9 1.7 2.2.9 3.5 1.9 3.5 4 0 2.3-1.8 3.5-4.2 3.5-2.4 0-3.9-1.2-4.5-2.6z" fill="#FFFFFF" />
       </svg>
     ),
   },
@@ -360,12 +361,21 @@ export const TECH_CONFIG: Record<string, TechMeta> = {
     ),
   },
 
-  // Java - Official Oracle Java Coffee Cup
+  // Java - Official Oracle / Sun Java Steaming Coffee Cup (Cleanly Centered)
   java: {
     color: '#007396',
     icon: (
-      <svg className="w-3.5 h-3.5" viewBox="0 0 24 24" fill="#007396">
-        <path d="M8.85 16.84c0 .08.06.15.15.19 1.13.57 2.79.88 4.67.88 1.83 0 3.44-.3 4.54-.85.09-.04.14-.11.14-.19 0-.25-.41-.44-.92-.5-1.07-.12-2.38-.18-3.76-.18-1.4 0-2.72.06-3.8.18-.55.06-.98.24-.98.47zm7.57-2.02c.07.03.11.08.11.13 0 .17-.55.3-1.32.35-1.03.07-2.28.11-3.6.11-1.34 0-2.6-.04-3.65-.11-.74-.05-1.28-.18-1.28-.35 0-.05.04-.1.11-.13 1.05-.44 2.87-.71 4.82-.71 1.93 0 3.73.27 4.81.71zm-7.6-5.83c.33.68.75 1.34 1.25 1.96-1.52.28-2.58.74-2.58 1.28 0 .52 1.01.97 2.45 1.25-.39-.42-.71-.88-.94-1.37-.41-.88-.39-1.84-.18-3.12zm9.14 7.62c-.77.38-2.13.62-3.81.62-1.7 0-3.08-.24-3.84-.62-.15-.07-.22-.16-.22-.27 0-.32.61-.58 1.54-.69 1.39-.16 3.03-.24 4.7-.24 1.65 0 3.28.08 4.65.24.95.11 1.57.37 1.57.69 0 .11-.08.2-.21.27zM12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm1.88 5.76c.45-.63.95-1.2 1.5-1.7-.82 1.28-1.3 2.76-1.5 4.31-.2 1.55.07 3.08.78 4.45-.58-.33-1.08-.75-1.48-1.24-.78-.96-1.12-2.18-1.02-3.41.09-1.23.63-2.39 1.72-2.41z" />
+      <svg className="w-3.5 h-3.5" viewBox="-45 0 346 346" fill="none">
+        {/* Steam / Flame paths */}
+        <path d="M162 0s36 36-34 91c-56 45-12 70 0 99-32-30-56-56-40-80 23-35 89-53 74-110" fill="#EA2D2E" />
+        <path d="M144 166c17 19-4 36-4 36s42-22 22-49c-18-26-32-38 44-82 0 0-119 29-62 95" fill="#E76F00" />
+        {/* Cup, Saucer, and Handle */}
+        <path d="M89 190s-63 15-22 21c17 2 51 2 83-1 26-2 52-7 52-7l-16 9c-64 16-187 8-151-9 30-14 54-13 54-13" fill="#007396" />
+        <path d="M74 230s-15 11 8 13c29 3 52 3 92-4 0 0 6 5 15 8-82 24-173 2-115-17" fill="#007396" />
+        <path d="M83 267s-14 8 9 11c27 3 41 2 71-3 0 0 8 5 19 9-67 29-153-2-99-17" fill="#007396" />
+        <path d="M202 253c64-33 34-66 13-61l-7 2s2-3 6-5c41-14 73 43-14 66l2-2" fill="#007396" />
+        <path d="M233 295s10 8-10 15c-39 12-163 15-197 0-12-5 11-13 18-14l12-2c-14-9-89 19-38 28 138 22 251-10 215-27" fill="#007396" />
+        <path d="M95 345c62 4 158-3 160-32 0 0-4 11-51 20-53 10-119 9-158 2 0 0 8 7 49 10" fill="#007396" />
       </svg>
     ),
   },
@@ -429,13 +439,65 @@ export const TECH_CONFIG: Record<string, TechMeta> = {
     ),
   },
 
-  // HuggingFace - Official SimpleIcons Vector
+  // HuggingFace - Official Hugging Face Emoji Logo
   huggingface: {
     color: '#FFD21E',
     icon: (
-      <svg className="w-3.5 h-3.5" viewBox="0 0 24 24" fill="#FFD21E">
-        <path d="M12.025 1.13c-5.77 0-10.449 4.647-10.449 10.378 0 1.112.178 2.181.503 3.185.064-.222.203-.444.416-.577a.96.96 0 0 1 .524-.15c.293 0 .584.124.84.284.278.173.48.408.71.694.226.282.458.611.684.951v-.014c.017-.324.106-.622.264-.874s.403-.487.762-.543c.3-.047.596.06.787.203s.31.313.4.467c.105.183.25.344.43.465.176.118.384.186.6.196.223.012.443-.045.626-.164s.319-.296.393-.497c.465-1.258 1.402-2.32 2.643-2.909 1.241-.588 2.704-.627 3.985-.108 1.28.519 2.296 1.488 2.778 2.719s.344 2.613-.197 3.793a5.526 5.526 0 0 1-1.077 1.483 8.69 8.69 0 0 0 1.202-1.36h-1.771a7.174 7.174 0 0 1-5.227 2.252 7.174 7.174 0 0 1-5.226-2.252Z" />
+      <svg className="w-3.5 h-3.5" viewBox="0 0 24 24" fill="none">
+        <circle cx="12" cy="12" r="11" fill="#FFD21E" />
+        <ellipse cx="8" cy="9.5" rx="1.2" ry="1.6" fill="#000000" />
+        <ellipse cx="16" cy="9.5" rx="1.2" ry="1.6" fill="#000000" />
+        <ellipse cx="6" cy="12" rx="1.4" ry="0.9" fill="#FF7043" opacity="0.65" />
+        <ellipse cx="18" cy="12" rx="1.4" ry="0.9" fill="#FF7043" opacity="0.65" />
+        <path d="M7.5 13.5c1.2 3.2 7.8 3.2 9 0" stroke="#000000" strokeWidth="1.6" strokeLinecap="round" />
+        <path d="M2.2 16.2c1.8-2.6 4.6-1.2 4 1.8-.5 2.2-2.8 1.8-4-1.8z" fill="#FFA726" stroke="#E65100" strokeWidth="0.4" />
+        <path d="M21.8 16.2c-1.8-2.6-4.6-1.2-4 1.8.5 2.2 2.8 1.8 4-1.8z" fill="#FFA726" stroke="#E65100" strokeWidth="0.4" />
       </svg>
+    ),
+  },
+  'hugging face': {
+    color: '#FFD21E',
+    icon: (
+      <svg className="w-3.5 h-3.5" viewBox="0 0 24 24" fill="none">
+        <circle cx="12" cy="12" r="11" fill="#FFD21E" />
+        <ellipse cx="8" cy="9.5" rx="1.2" ry="1.6" fill="#000000" />
+        <ellipse cx="16" cy="9.5" rx="1.2" ry="1.6" fill="#000000" />
+        <ellipse cx="6" cy="12" rx="1.4" ry="0.9" fill="#FF7043" opacity="0.65" />
+        <ellipse cx="18" cy="12" rx="1.4" ry="0.9" fill="#FF7043" opacity="0.65" />
+        <path d="M7.5 13.5c1.2 3.2 7.8 3.2 9 0" stroke="#000000" strokeWidth="1.6" strokeLinecap="round" />
+        <path d="M2.2 16.2c1.8-2.6 4.6-1.2 4 1.8-.5 2.2-2.8 1.8-4-1.8z" fill="#FFA726" stroke="#E65100" strokeWidth="0.4" />
+        <path d="M21.8 16.2c-1.8-2.6-4.6-1.2-4 1.8.5 2.2 2.8 1.8 4-1.8z" fill="#FFA726" stroke="#E65100" strokeWidth="0.4" />
+      </svg>
+    ),
+  },
+
+  // Antigravity - Official Google Antigravity Full Gradient Logo
+  antigravity: {
+    color: '#3186FF',
+    icon: (
+      <img
+        src="/images/antigravity-gradient-logo.svg"
+        alt="Antigravity"
+        className="w-full h-full object-contain select-none pointer-events-none"
+        loading="lazy"
+        decoding="async"
+        width={24}
+        height={24}
+      />
+    ),
+  },
+  agy: {
+    color: '#3186FF',
+    icon: (
+      <img
+        src="/images/antigravity-gradient-logo.svg"
+        alt="Antigravity"
+        className="w-full h-full object-contain select-none pointer-events-none"
+        loading="lazy"
+        decoding="async"
+        width={24}
+        height={24}
+      />
     ),
   },
 
@@ -499,12 +561,12 @@ export const TECH_CONFIG: Record<string, TechMeta> = {
     ),
   },
 
-  // Git
+  // Git - Official Git Diamond
   git: {
     color: '#F05032',
     icon: (
       <svg className="w-3.5 h-3.5" viewBox="0 0 24 24" fill="#F05032">
-        <path d="M21.6 10.6L13.4 2.4a2.2 2.2 0 0 0-3.1 0L8.4 4.3l3.4 3.4a2.6 2.6 0 0 1 3.3 3.3l3.3 3.3a2.5 2.5 0 1 1-1.6 1.6l-3.2-3.2v4.8a2.5 2.5 0 1 1-2.2 0V9.4a2.6 2.6 0 0 1-1.4-3.4L6.9 2.7 2.4 7.2a2.2 2.2 0 0 0 0 3.1l8.2 8.2a2.2 2.2 0 0 0 3.1 0l7.9-7.9a2.2 2.2 0 0 0 0-3.1z" />
+        <path d="M23.546 10.93L13.067.452a1.5 1.5 0 0 0-2.126 0L8.808 2.585l3.076 3.077a2.25 2.25 0 0 1 2.827 2.827l3.038 3.038a2.25 2.25 0 1 1-1.06 1.06l-2.88-2.88v4.45a2.25 2.25 0 1 1-1.5 0V9.45a2.25 2.25 0 0 1-1.21-2.955L9.04 3.435 0.454 12.02a1.5 1.5 0 0 0 0 2.126l10.478 10.478a1.5 1.5 0 0 0 2.126 0l10.488-10.488a1.5 1.5 0 0 0 0-2.126v-.08z" />
       </svg>
     ),
   },
@@ -519,15 +581,20 @@ export const TECH_CONFIG: Record<string, TechMeta> = {
     ),
   },
 
-  // Linux
+  // Linux - Official Linux Tux
   linux: {
     color: '#FCC624',
     icon: (
-      <svg className="w-3.5 h-3.5" viewBox="0 0 24 24" fill="#FCC624">
-        <circle cx="12" cy="12" r="8" fill="#333333" />
-        <circle cx="9.5" cy="10" r="1.5" fill="#FFFFFF" />
-        <circle cx="14.5" cy="10" r="1.5" fill="#FFFFFF" />
-        <ellipse cx="12" cy="13.5" rx="2.5" ry="1.5" fill="#FCC624" />
+      <svg className="w-3.5 h-3.5" viewBox="0 0 24 24" fill="none">
+        <path d="M12 2C9.5 2 7.8 4 7.5 7c-.3 3.5-.8 5.5-2 8-.8 1.8-.7 3.5.5 4.5 1.5 1.2 3.5 1.5 6 1.5s4.5-.3 6-1.5c1.2-1 1.3-2.7.5-4.5-1.2-2.5-1.7-4.5-2-8-.3-3-2-5-4.5-5z" fill="#222222" />
+        <ellipse cx="12" cy="14" rx="4" ry="5.5" fill="#FFFFFF" />
+        <ellipse cx="12" cy="8" rx="2" ry="1.2" fill="#FFA500" />
+        <circle cx="10" cy="5.8" r="1.1" fill="#FFFFFF" />
+        <circle cx="10" cy="5.8" r="0.6" fill="#000000" />
+        <circle cx="14" cy="5.8" r="1.1" fill="#FFFFFF" />
+        <circle cx="14" cy="5.8" r="0.6" fill="#000000" />
+        <ellipse cx="8.5" cy="21.5" rx="2.5" ry="1" fill="#FFA500" />
+        <ellipse cx="15.5" cy="21.5" rx="2.5" ry="1" fill="#FFA500" />
       </svg>
     ),
   },
@@ -542,12 +609,20 @@ export const TECH_CONFIG: Record<string, TechMeta> = {
     ),
   },
 
-  // Redis
+  // Redis - Official Isometric Server Block
   redis: {
     color: '#DC382D',
     icon: (
       <svg className="w-3.5 h-3.5" viewBox="0 0 24 24" fill="#DC382D">
-        <path d="M12 2L2 7l10 5 10-5-10-5zm0 9L4 7.5v5l8 4.5 8-4.5v-5L12 11zm0 6l-6-3.4v4.4l6 3.5 6-3.5v-4.4L12 17z" />
+        <path d="M12.001 0l-10.97 6.335v11.33l10.97 6.335 10.969-6.335v-11.33zm-.001 2.308l8.966 5.177-3.69 2.13-8.967-5.177zm-9.13 6.138l3.69 2.13-3.69 2.13zm5.44 3.14l8.967 5.177-3.69 2.131-8.967-5.177zm-5.44 2.999l3.69 2.13-3.69 2.131zm18.261 0v4.261l-3.69-2.131zm-5.44 3.14l-8.967-5.177 3.69-2.13 8.967 5.177zm5.44-5.998v4.26l-3.69-2.13z" />
+      </svg>
+    ),
+  },
+  reddis: {
+    color: '#DC382D',
+    icon: (
+      <svg className="w-3.5 h-3.5" viewBox="0 0 24 24" fill="#DC382D">
+        <path d="M12.001 0l-10.97 6.335v11.33l10.97 6.335 10.969-6.335v-11.33zm-.001 2.308l8.966 5.177-3.69 2.13-8.967-5.177zm-9.13 6.138l3.69 2.13-3.69 2.13zm5.44 3.14l8.967 5.177-3.69 2.131-8.967-5.177zm-5.44 2.999l3.69 2.13-3.69 2.131zm18.261 0v4.261l-3.69-2.131zm-5.44 3.14l-8.967-5.177 3.69-2.13 8.967 5.177zm5.44-5.998v4.26l-3.69-2.13z" />
       </svg>
     ),
   },
@@ -1181,6 +1256,8 @@ export const TECH_URLS: Record<string, string> = {
   // APIs & Specialized Tooling
   'web audio api': 'https://developer.mozilla.org/en-US/docs/Web/API/Web_Audio_API',
   'alpaca api': 'https://alpaca.markets',
+  antigravity: 'https://antigravity.google',
+  agy: 'https://antigravity.google',
   'murf ai': 'https://murf.ai',
   figma: 'https://www.figma.com',
 };
@@ -1256,10 +1333,10 @@ export const TechBadge: React.FC<TechBadgeProps> = ({
 
     const iconSizeClass =
       size === 'sm'
-        ? '[&_svg]:!w-4 [&_svg]:!h-4'
+        ? '[&_svg]:!w-4 [&_svg]:!h-4 [&_img]:!w-4 [&_img]:!h-4'
         : size === 'lg'
-        ? '[&_svg]:!w-6.5 [&_svg]:!h-6.5 sm:[&_svg]:!w-7.5 sm:[&_svg]:!h-7.5'
-        : '[&_svg]:!w-5 [&_svg]:!h-5';
+        ? '[&_svg]:!w-6.5 [&_svg]:!h-6.5 sm:[&_svg]:!w-7.5 sm:[&_svg]:!h-7.5 [&_img]:!w-6.5 [&_img]:!h-6.5 sm:[&_img]:!w-7.5 sm:[&_img]:!h-7.5'
+        : '[&_svg]:!w-5 [&_svg]:!h-5 [&_img]:!w-5 [&_img]:!h-5';
 
     const badgeContent = (
       <>
@@ -1357,7 +1434,7 @@ export const TechBadge: React.FC<TechBadgeProps> = ({
   const pillContent = (
     <>
       {meta.icon && (
-        <span className="inline-flex items-center justify-center flex-shrink-0 [&>svg]:w-3 [&>svg]:h-3 sm:[&>svg]:w-3.5 sm:[&>svg]:h-3.5">
+        <span className="inline-flex items-center justify-center flex-shrink-0 [&>svg]:w-3 [&>svg]:h-3 sm:[&>svg]:w-3.5 sm:[&>svg]:h-3.5 [&>img]:w-3 [&>img]:h-3 sm:[&>img]:w-3.5 sm:[&>img]:h-3.5">
           {meta.icon}
         </span>
       )}

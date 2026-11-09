@@ -6,16 +6,18 @@ import { CustomCursor } from './components/CustomCursor';
 import { VideoLayer } from './components/VideoLayer';
 import { Navbar } from './components/Navbar';
 import { HomePage } from './pages/HomePage';
-import { ProjectsArchivePage } from './pages/ProjectsArchivePage';
-import { ProjectDetailPage } from './pages/ProjectDetailPage';
-import { AchievementsArchivePage } from './pages/AchievementsArchivePage';
-import { AchievementDetailPage } from './pages/AchievementDetailPage';
-import { HackathonsArchivePage } from './pages/HackathonsArchivePage';
-import { HackathonDetailPage } from './pages/HackathonDetailPage';
-import { CertificatesArchivePage } from './pages/CertificatesArchivePage';
-import { CertificateDetailPage } from './pages/CertificateDetailPage';
 import { ScrollToTopFloating } from './components/ScrollToTopFloating';
-import NotFoundPage from './pages/NotFoundPage';
+
+// Lazy load all secondary routes for optimal initial page load performance
+const ProjectsArchivePage = React.lazy(() => import('./pages/ProjectsArchivePage'));
+const ProjectDetailPage = React.lazy(() => import('./pages/ProjectDetailPage'));
+const AchievementsArchivePage = React.lazy(() => import('./pages/AchievementsArchivePage'));
+const AchievementDetailPage = React.lazy(() => import('./pages/AchievementDetailPage'));
+const HackathonsArchivePage = React.lazy(() => import('./pages/HackathonsArchivePage'));
+const HackathonDetailPage = React.lazy(() => import('./pages/HackathonDetailPage'));
+const CertificatesArchivePage = React.lazy(() => import('./pages/CertificatesArchivePage'));
+const CertificateDetailPage = React.lazy(() => import('./pages/CertificateDetailPage'));
+const NotFoundPage = React.lazy(() => import('./pages/NotFoundPage'));
 
 // Scroll to top upon route transition
 function ScrollToTop() {
@@ -116,19 +118,21 @@ export function App() {
 
           {/* Page Routing */}
           <main className="flex-1 w-full max-w-full overflow-x-hidden">
-            <Routes>
-              <Route path="/" element={<HomePage />} />
-              <Route path="/projects" element={<ProjectsArchivePage />} />
-              <Route path="/projects/:slug" element={<ProjectDetailPage />} />
-              <Route path="/achievements" element={<AchievementsArchivePage />} />
-              <Route path="/achievements/kaggle-gradio-rank-63" element={<Navigate to="/achievements/kaggle-gradio-rank-67" replace />} />
-              <Route path="/achievements/:slug" element={<AchievementDetailPage />} />
-              <Route path="/hackathons" element={<HackathonsArchivePage />} />
-              <Route path="/hackathons/:slug" element={<HackathonDetailPage />} />
-              <Route path="/certificates" element={<CertificatesArchivePage />} />
-              <Route path="/certificates/:slug" element={<CertificateDetailPage />} />
-              <Route path="*" element={<NotFoundPage />} />
-            </Routes>
+            <React.Suspense fallback={null}>
+              <Routes>
+                <Route path="/" element={<HomePage />} />
+                <Route path="/projects" element={<ProjectsArchivePage />} />
+                <Route path="/projects/:slug" element={<ProjectDetailPage />} />
+                <Route path="/achievements" element={<AchievementsArchivePage />} />
+                <Route path="/achievements/kaggle-gradio-rank-63" element={<Navigate to="/achievements/kaggle-gradio-rank-67" replace />} />
+                <Route path="/achievements/:slug" element={<AchievementDetailPage />} />
+                <Route path="/hackathons" element={<HackathonsArchivePage />} />
+                <Route path="/hackathons/:slug" element={<HackathonDetailPage />} />
+                <Route path="/certificates" element={<CertificatesArchivePage />} />
+                <Route path="/certificates/:slug" element={<CertificateDetailPage />} />
+                <Route path="*" element={<NotFoundPage />} />
+              </Routes>
+            </React.Suspense>
           </main>
           {/* Floating Scroll to Top Button */}
           <ScrollToTopFloating />

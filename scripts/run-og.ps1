@@ -2,11 +2,11 @@ Add-Type -Path "scripts/GenerateOg.cs" -ReferencedAssemblies System.Drawing
 
 $publicDir = (Resolve-Path "public").Path
 
-# 1. Generate Home OG
-$heroPath = Join-Path $publicDir "assets\hero-portrait-transparent.png"
+# 1. Main Home OG - Keep user photo (photo.jpg) as og-image.jpg
+$photoPath = Join-Path $publicDir "assets\photo.jpg"
 $ogHomePath = Join-Path $publicDir "og-image.jpg"
-[OgGenerator]::GenerateHomeOg($heroPath, $ogHomePath)
-Write-Host "Created: $ogHomePath ($((Get-Item $ogHomePath).Length) bytes)"
+Copy-Item -Path $photoPath -Destination $ogHomePath -Force
+Write-Host "Main Site OG Image: $ogHomePath ($((Get-Item $ogHomePath).Length) bytes)"
 
 # 2. Generate Square Photo OG
 $photoPath = Join-Path $publicDir "assets\photo.jpg"

@@ -112,12 +112,15 @@ for (const r of routes) {
   html = html.replace(/<meta name="description"\s+content="[^"]*"\s*\/?>/i, `<meta name="description" content="${r.description}" />`);
 
   // Replace Open Graph tags
+  html = html.replace(/<meta property="og:type" content="[^"]*"\s*\/?>/i, `<meta property="og:type" content="website" />`);
   html = html.replace(/<meta property="og:title" content="[^"]*"\s*\/?>/i, `<meta property="og:title" content="${r.title}" />`);
   html = html.replace(/<meta property="og:description"\s+content="[^"]*"\s*\/?>/i, `<meta property="og:description" content="${r.description}" />`);
   html = html.replace(/<meta property="og:url" content="[^"]*"\s*\/?>/i, `<meta property="og:url" content="${fullUrl}" />`);
   html = html.replace(/<meta property="og:image" content="[^"]*"\s*\/?>/i, `<meta property="og:image" content="${fullImg}" />`);
   html = html.replace(/<meta property="og:image:secure_url" content="[^"]*"\s*\/?>/i, `<meta property="og:image:secure_url" content="${fullImg}" />`);
   html = html.replace(/<meta property="og:image:type" content="[^"]*"\s*\/?>/i, `<meta property="og:image:type" content="${imgType}" />`);
+  html = html.replace(/<meta property="og:image:width" content="[^"]*"\s*\/?>/i, `<meta property="og:image:width" content="1200" />`);
+  html = html.replace(/<meta property="og:image:height" content="[^"]*"\s*\/?>/i, `<meta property="og:image:height" content="630" />`);
 
   // Replace Twitter tags
   html = html.replace(/<meta name="twitter:title" content="[^"]*"\s*\/?>/i, `<meta name="twitter:title" content="${r.title}" />`);

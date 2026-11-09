@@ -110,6 +110,9 @@ const TiltPhoto: React.FC = () => {
               alt={`${PERSONAL_INFO.name} portrait`}
               className="w-full h-full object-cover object-top sm:object-center"
               loading="lazy"
+              decoding="async"
+              width={600}
+              height={800}
               onError={(e) => {
                 // Fallback if photo doesn't exist
                 const target = e.target as HTMLImageElement;

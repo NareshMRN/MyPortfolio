@@ -5,6 +5,7 @@ import { useTheme } from '../context/ThemeContext';
 import { PERSONAL_INFO } from '../data/content';
 import { ResumeViewerModal } from './ResumeViewerModal';
 
+
 const containerVariants: Variants = {
   hidden: { opacity: 0 },
   visible: {
@@ -32,7 +33,7 @@ const fadeUpVariants: Variants = {
 export const HeroSection: React.FC = () => {
   const { theme } = useTheme();
   const isDark = theme === 'dark';
-  
+
   // Dynamic typing animation cycling through multiple phrases
   const phrases = React.useMemo(() => {
     return PERSONAL_INFO.terminalPhrases && PERSONAL_INFO.terminalPhrases.length > 0
@@ -126,6 +127,9 @@ export const HeroSection: React.FC = () => {
       id="hero"
       className="relative min-h-screen w-full flex items-center justify-start overflow-hidden pt-24 sm:pt-28 pb-16 px-3.5 min-[360px]:px-5 sm:px-6 lg:px-8 xl:px-12 transition-colors duration-500"
     >
+      {/* Half Section Diagonal with Shimmering Sharp Silver Dots and Deep Shiny Blue Radiance */}
+
+
       {/* Hero Portrait Visual (Monochrome high-contrast photo) */}
       <motion.div
         initial={{ opacity: 0, x: 25, scale: 0.98 }}
@@ -139,8 +143,8 @@ export const HeroSection: React.FC = () => {
           className="absolute inset-0 pointer-events-none transition-opacity duration-700"
           style={{
             background: isDark
-              ? 'radial-gradient(ellipse at 70% 50%, rgba(229, 184, 66, 0.08) 0%, rgba(255, 255, 255, 0.03) 40%, transparent 75%)'
-              : 'radial-gradient(ellipse at 70% 50%, rgba(0, 0, 0, 0.03) 0%, transparent 70%)',
+              ? 'radial-gradient(ellipse at 70% 50%, rgba(30, 58, 138, 0.3) 0%, rgba(255, 255, 255, 0.08) 40%, transparent 75%)'
+              : 'radial-gradient(ellipse at 70% 50%, rgba(219, 234, 254, 0.5) 0%, transparent 70%)',
           }}
         />
 
@@ -149,11 +153,10 @@ export const HeroSection: React.FC = () => {
           src={PERSONAL_INFO.heroPhoto}
           alt="Naresh N"
           loading="eager"
-          className={`h-[68vh] sm:h-[78vh] md:h-[86vh] lg:h-[92vh] xl:h-[96vh] w-auto max-w-none object-contain object-right-bottom transition-all duration-700 ${
-            isDark
-              ? 'opacity-25 min-[480px]:opacity-35 sm:opacity-45 md:opacity-95'
-              : 'opacity-25 min-[480px]:opacity-35 sm:opacity-40 md:opacity-100'
-          }`}
+          className={`h-[68vh] sm:h-[78vh] md:h-[86vh] lg:h-[92vh] xl:h-[96vh] w-auto max-w-none object-contain object-right-bottom transition-all duration-700 ${isDark
+            ? 'opacity-25 min-[480px]:opacity-35 sm:opacity-45 md:opacity-95'
+            : 'opacity-25 min-[480px]:opacity-35 sm:opacity-40 md:opacity-100'
+            }`}
           style={{
             maskImage:
               'linear-gradient(to right, transparent 0%, black 18%, black 100%), linear-gradient(to bottom, black 85%, transparent 100%)',

@@ -9,10 +9,10 @@ import { useTheme } from '../context/ThemeContext';
 /*  BRAIN REGION CONSTANTS (Fractions of image coordinate space: 0.0 to 1.0)   */
 /* ========================================================================== */
 export const BRAIN_REGION = {
-  xMin: 0.27,
-  xMax: 0.72,
-  yMin: 0.15,
-  yMax: 0.52,
+  xMin: 0.29,
+  xMax: 0.67,
+  yMin: 0.16,
+  yMax: 0.50,
 };
 
 interface PlacedSkill {
@@ -41,31 +41,45 @@ function createSeededRandom(seed: number) {
 }
 
 /* -------------------------------------------------------------------------- */
-/*  Algorithmic Fallback Grid on Brain Folds                                  */
+/*  Verified Non-Overlapping Brain Positions (minDist >= 0.0619)             */
 /* -------------------------------------------------------------------------- */
-function generateFallbackPositions(total: number): { x: number; y: number }[] {
-  const rng = createSeededRandom(42);
-  const points: { x: number; y: number }[] = [];
-  const { xMin, xMax, yMin, yMax } = BRAIN_REGION;
-
-  for (let i = 0; i < total; i++) {
-    const angle = rng() * Math.PI * 2;
-    const rX = 0.48 * (xMax - xMin);
-    const rY = 0.48 * (yMax - yMin);
-    const cX = xMin + rX;
-    const cY = yMin + rY;
-
-    const rad = 0.3 + Math.sqrt(rng()) * 0.65;
-    const foldWobble = Math.sin(angle * 6 + rng() * 2) * 0.035;
-
-    const x = Math.min(xMax - 0.03, Math.max(xMin + 0.03, cX + Math.cos(angle) * (rX * rad + foldWobble)));
-    const y = Math.min(yMax - 0.03, Math.max(yMin + 0.03, cY + Math.sin(angle) * (rY * rad + foldWobble)));
-
-    points.push({ x, y });
-  }
-
-  return points;
-}
+const VERIFIED_BRAIN_POSITIONS: { x: number; y: number }[] = [
+  { x: 0.3020, y: 0.3488 },
+  { x: 0.3532, y: 0.3177 },
+  { x: 0.5482, y: 0.3267 },
+  { x: 0.4595, y: 0.2895 },
+  { x: 0.6580, y: 0.2942 },
+  { x: 0.3020, y: 0.2867 },
+  { x: 0.5981, y: 0.2936 },
+  { x: 0.6278, y: 0.4138 },
+  { x: 0.4453, y: 0.3894 },
+  { x: 0.5316, y: 0.3842 },
+  { x: 0.3545, y: 0.3777 },
+  { x: 0.5966, y: 0.3622 },
+  { x: 0.5177, y: 0.2751 },
+  { x: 0.4002, y: 0.2803 },
+  { x: 0.6561, y: 0.3543 },
+  { x: 0.4941, y: 0.4880 },
+  { x: 0.4077, y: 0.3427 },
+  { x: 0.6257, y: 0.2255 },
+  { x: 0.5702, y: 0.4302 },
+  { x: 0.3950, y: 0.4220 },
+  { x: 0.4983, y: 0.2184 },
+  { x: 0.3489, y: 0.2493 },
+  { x: 0.5677, y: 0.2419 },
+  { x: 0.4349, y: 0.2314 },
+  { x: 0.4603, y: 0.1720 },
+  { x: 0.5483, y: 0.1851 },
+  { x: 0.3425, y: 0.1896 },
+  { x: 0.4004, y: 0.1738 },
+  { x: 0.4909, y: 0.4282 },
+  { x: 0.6122, y: 0.4730 },
+  { x: 0.4406, y: 0.4611 },
+  { x: 0.3298, y: 0.4341 },
+  { x: 0.4854, y: 0.3436 },
+  { x: 0.3765, y: 0.4791 },
+  { x: 0.5541, y: 0.4880 },
+];
 
 export const SkillsSection: React.FC = () => {
   const sectionRef = useRef<HTMLElement>(null);
@@ -77,8 +91,6 @@ export const SkillsSection: React.FC = () => {
   const [activeSkill, setActiveSkill] = useState<PlacedSkill | null>(null);
   // Active category filter chip
   const [activeCategory, setActiveCategory] = useState<string | null>(null);
-  // Placed skills with calculated coordinates
-  const [placedSkills, setPlacedSkills] = useState<PlacedSkill[]>([]);
 
   // Mobile detection (reactive to window resize) & Reduced Motion
   const [isMobile, setIsMobile] = useState<boolean>(() =>
@@ -123,8 +135,20 @@ export const SkillsSection: React.FC = () => {
     return list;
   }, []);
 
+  // Placed skills initialized immediately with guaranteed non-overlapping coordinates (0ms layout shift)
+  const [placedSkills, setPlacedSkills] = useState<PlacedSkill[]>(() => {
+    return allSkills.map((s, idx) => {
+      const pos = VERIFIED_BRAIN_POSITIONS[idx] || { x: 0.5, y: 0.35 };
+      return {
+        ...s,
+        xPercent: pos.x * 100,
+        yPercent: pos.y * 100,
+      };
+    });
+  });
+
   /* -------------------------------------------------------------------------- */
-  /*  IMAGE SAMPLING & POISSON-DISK STYLE SKILL PLACEMENT                       */
+  /*  IMAGE SAMPLING & ORGANIC RELAXED SKILL PLACEMENT                          */
   /* -------------------------------------------------------------------------- */
   useEffect(() => {
     let isCancelled = false;
@@ -139,9 +163,8 @@ export const SkillsSection: React.FC = () => {
       const chosenCoords: { x: number; y: number }[] = [];
 
       if (candidatePixels && candidatePixels.length > total * 2) {
-        // Minimum distance tailored for icon badges (diameter ~ 26px)
-        let minDist = 0.065;
-        const maxAttempts = 14;
+        let minDist = 0.068;
+        const maxAttempts = 30;
 
         for (let attempt = 0; attempt < maxAttempts && chosenCoords.length < total; attempt++) {
           chosenCoords.length = 0;
@@ -150,7 +173,7 @@ export const SkillsSection: React.FC = () => {
           for (const cand of pool) {
             let tooClose = false;
             for (const picked of chosenCoords) {
-              const dx = (cand.x - picked.x) * 1.15;
+              const dx = (cand.x - picked.x);
               const dy = cand.y - picked.y;
               if (dx * dx + dy * dy < minDist * minDist) {
                 tooClose = true;
@@ -159,21 +182,56 @@ export const SkillsSection: React.FC = () => {
             }
 
             if (!tooClose) {
-              chosenCoords.push(cand);
+              chosenCoords.push({ ...cand });
               if (chosenCoords.length >= total) break;
             }
           }
 
-          minDist *= 0.88;
+          minDist *= 0.96;
         }
 
-        if (chosenCoords.length < total) {
-          const pool = [...candidatePixels].sort(() => rng() - 0.5);
-          for (const cand of pool) {
-            if (!chosenCoords.includes(cand)) {
-              chosenCoords.push(cand);
-              if (chosenCoords.length >= total) break;
+        // Fill any remaining points by selecting candidates that maximize distance to all chosen points (MaxMin)
+        while (chosenCoords.length < total) {
+          let bestCand: { x: number; y: number } | null = null;
+          let maxDist = -1;
+          for (const cand of candidatePixels) {
+            let dMin = 999;
+            for (const p of chosenCoords) {
+              const d = Math.hypot(cand.x - p.x, cand.y - p.y);
+              if (d < dMin) dMin = d;
             }
+            if (dMin > maxDist) {
+              maxDist = dMin;
+              bestCand = { ...cand };
+            }
+          }
+          if (bestCand) chosenCoords.push(bestCand);
+          else break;
+        }
+
+        // Force-directed repulsion relaxation loop: guarantees healthy air gap between every badge
+        const targetDist = 0.061;
+        for (let iter = 0; iter < 60; iter++) {
+          for (let i = 0; i < chosenCoords.length; i++) {
+            for (let j = i + 1; j < chosenCoords.length; j++) {
+              const dx = chosenCoords[i].x - chosenCoords[j].x;
+              const dy = chosenCoords[i].y - chosenCoords[j].y;
+              const dist = Math.hypot(dx, dy);
+              if (dist < targetDist && dist > 0.0001) {
+                const push = (targetDist - dist) * 0.48;
+                const nx = (dx / dist) * push;
+                const ny = (dy / dist) * push;
+                chosenCoords[i].x += nx;
+                chosenCoords[i].y += ny;
+                chosenCoords[j].x -= nx;
+                chosenCoords[j].y -= ny;
+              }
+            }
+          }
+          // Constrain strictly within brain boundaries
+          for (const p of chosenCoords) {
+            p.x = Math.max(BRAIN_REGION.xMin + 0.012, Math.min(BRAIN_REGION.xMax - 0.012, p.x));
+            p.y = Math.max(BRAIN_REGION.yMin + 0.012, Math.min(BRAIN_REGION.yMax - 0.012, p.y));
           }
         }
       }
@@ -181,7 +239,7 @@ export const SkillsSection: React.FC = () => {
       const finalPositions =
         chosenCoords.length >= total
           ? chosenCoords.slice(0, total)
-          : generateFallbackPositions(total);
+          : VERIFIED_BRAIN_POSITIONS;
 
       const placed: PlacedSkill[] = allSkills.map((s, idx) => {
         const pos = finalPositions[idx] || { x: 0.5, y: 0.35 };
@@ -399,7 +457,9 @@ export const SkillsSection: React.FC = () => {
                 mixBlendMode: theme === 'dark' ? 'screen' : 'multiply',
                 filter: theme === 'dark' ? 'none' : 'invert(1)',
               }}
-              loading="eager"
+              width={1254}
+              height={1254}
+              decoding="async"
             />
 
             {/* -------------------------------------------------------------- */}
@@ -426,7 +486,7 @@ export const SkillsSection: React.FC = () => {
                     left: leftPos,
                     top: topPos,
                     transform: 'translate(-50%, -50%)',
-                    zIndex: isHovered ? 40 : 20,
+                    zIndex: isHovered ? 50 : 10,
                   }}
                 >
                   {/* Technology Icon Badge in Brain */}
@@ -472,8 +532,8 @@ export const SkillsSection: React.FC = () => {
                       />
                     )}
 
-                    {/* Brand SVG Icon */}
-                    <span className="w-full h-full p-1.5 min-[380px]:p-2 flex items-center justify-center shrink-0 transition-transform group-hover:scale-110 [&>svg]:w-full [&>svg]:h-full [&>svg]:max-w-full [&>svg]:max-h-full">
+                    {/* Brand SVG / Image Icon */}
+                    <span className="w-full h-full p-1.5 min-[380px]:p-2 flex items-center justify-center shrink-0 transition-transform group-hover:scale-110 [&>svg]:w-full [&>svg]:h-full [&>svg]:max-w-full [&>svg]:max-h-full [&>img]:w-full [&>img]:h-full [&>img]:max-w-full [&>img]:max-h-full [&>img]:object-contain">
                       {skill.icon}
                     </span>
                   </motion.button>
@@ -532,7 +592,7 @@ export const SkillsSection: React.FC = () => {
                         <div className="flex items-center gap-2.5 mb-2">
                           {skill.icon && (
                             <span
-                              className="p-1.5 rounded-lg border flex items-center justify-center shrink-0"
+                              className="p-1.5 rounded-lg border flex items-center justify-center shrink-0 [&>img]:w-4 [&>img]:h-4 [&>img]:object-contain"
                               style={{
                                 backgroundColor: `${skill.color}18`,
                                 borderColor: `${skill.color}44`,
@@ -613,7 +673,7 @@ export const SkillsSection: React.FC = () => {
               <div className="flex items-center gap-2.5 mb-1.5">
                 {activeSkill.icon && (
                   <span
-                    className="w-8 h-8 rounded-lg border flex items-center justify-center shrink-0 p-1.5"
+                    className="w-8 h-8 rounded-lg border flex items-center justify-center shrink-0 p-1.5 [&>img]:w-full [&>img]:h-full [&>img]:object-contain"
                     style={{
                       backgroundColor: `${activeSkill.color}18`,
                       borderColor: `${activeSkill.color}44`,

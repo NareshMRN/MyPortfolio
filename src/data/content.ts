@@ -267,6 +267,7 @@ export const skillCategories: SkillCategory[] = [
       { name: 'Figma', info: 'Collaborative interface design tool used for prototyping and UI wireframes.' },
       { name: 'Postman', info: 'API testing platform for building, sending, and validating HTTP network requests.' },
       { name: 'VS Code', info: 'Extensible code editor for software development, debugging, and linting.' },
+      { name: 'Antigravity', info: 'Google agentic AI development platform for autonomous workflows, code reasoning, and prompt architecture.' },
     ],
   },
 ];

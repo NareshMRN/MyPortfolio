@@ -42,8 +42,10 @@ export function useSeo({ title, description, path, image = '/og-image.jpg', noin
         meta('name', 'description', description);
         meta('name', 'robots', noindex ? 'noindex,follow' : 'index,follow');
 
+        const isProfile = path === '/' || image === '/og-image.jpg' || image === '/assets/photo.jpg';
+
         // Open Graph (WhatsApp, Facebook, LinkedIn, Discord)
-        meta('property', 'og:type', 'website');
+        meta('property', 'og:type', isProfile ? 'profile' : 'website');
         meta('property', 'og:site_name', 'Naresh N');
         meta('property', 'og:title', title);
         meta('property', 'og:description', description);
@@ -51,8 +53,8 @@ export function useSeo({ title, description, path, image = '/og-image.jpg', noin
         meta('property', 'og:image', img);
         meta('property', 'og:image:secure_url', img);
         meta('property', 'og:image:type', imgType);
-        meta('property', 'og:image:width', '1200');
-        meta('property', 'og:image:height', '630');
+        meta('property', 'og:image:width', isProfile ? '576' : '1200');
+        meta('property', 'og:image:height', isProfile ? '1024' : '630');
         meta('property', 'og:image:alt', title);
 
         // Twitter Cards

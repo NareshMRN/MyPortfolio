@@ -1,8 +1,17 @@
 import React, { useState, useEffect } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
-import { Sun, Moon, Menu, X, ArrowUpRight } from 'lucide-react';
+import { Sun, Moon, ArrowUpRight } from 'lucide-react';
 import { useTheme } from '../context/ThemeContext';
 import { NAVIGATION_LINKS } from '../data/content';
+
+// Streamlined mobile navigation links for a cleaner, compact experience on small devices
+const MOBILE_NAV_LINKS = [
+  { name: 'ABOUT', href: '/#about' },
+  { name: 'SKILLS', href: '/#skills' },
+  { name: 'PROJECTS', href: '/#projects' },
+  { name: 'ACHIEVEMENTS', href: '/#achievements' },
+  { name: 'CONTACT', href: '/#contact' },
+];
 
 export const Navbar: React.FC = () => {
   const { theme, toggleTheme } = useTheme();
@@ -147,18 +156,34 @@ export const Navbar: React.FC = () => {
             {theme === 'dark' ? <Sun className="w-4 h-4 text-white" /> : <Moon className="w-4 h-4 text-black" />}
           </button>
 
+          {/* 2-line animated hamburger toggle button for small devices */}
           <button
             onClick={() => setMobileMenuOpen(!mobileMenuOpen)}
-            aria-label="Toggle menu"
-            className="p-2 rounded-md transition-colors"
-            style={{ color: 'var(--text-primary)' }}
+            aria-label={mobileMenuOpen ? 'Close navigation menu' : 'Open navigation menu'}
+            aria-expanded={mobileMenuOpen}
+            className="p-2 w-9 h-9 rounded-full border flex flex-col justify-center items-center gap-[6px] transition-colors cursor-pointer select-none"
+            style={{
+              borderColor: 'var(--border-strong)',
+              backgroundColor: 'var(--bg-card)',
+            }}
           >
-            {mobileMenuOpen ? <X className="w-6 h-6" /> : <Menu className="w-6 h-6" />}
+            <motion.span
+              animate={mobileMenuOpen ? { rotate: 45, y: 4 } : { rotate: 0, y: 0 }}
+              transition={{ duration: 0.25, ease: [0.25, 1, 0.5, 1] }}
+              className="w-[18px] h-[2px] rounded-full block origin-center pointer-events-none"
+              style={{ backgroundColor: 'var(--text-primary)' }}
+            />
+            <motion.span
+              animate={mobileMenuOpen ? { rotate: -45, y: -4 } : { rotate: 0, y: 0 }}
+              transition={{ duration: 0.25, ease: [0.25, 1, 0.5, 1] }}
+              className="w-[18px] h-[2px] rounded-full block origin-center pointer-events-none"
+              style={{ backgroundColor: 'var(--text-primary)' }}
+            />
           </button>
         </div>
       </div>
 
-      {/* MOBILE DROPDOWN MENU - Smooth Animated Transition */}
+      {/* MOBILE DROPDOWN MENU - Smooth Animated Transition with inner wrapper to eliminate padding-height stall */}
       <AnimatePresence>
         {mobileMenuOpen && (
           <motion.div
@@ -166,64 +191,68 @@ export const Navbar: React.FC = () => {
             animate={{ opacity: 1, height: 'auto' }}
             exit={{ opacity: 0, height: 0 }}
             transition={{
-              duration: 0.35,
-              ease: [0.16, 1, 0.3, 1],
+              duration: 0.25,
+              ease: [0.25, 1, 0.5, 1],
             }}
-            className="md:hidden overflow-hidden border-t px-6 py-6 space-y-4 shadow-2xl backdrop-blur-xl"
+            className="md:hidden overflow-hidden border-t shadow-2xl backdrop-blur-xl"
             style={{
               backgroundColor: 'var(--bg-secondary)',
               borderColor: 'var(--border-subtle)',
             }}
           >
-            <motion.nav
-              initial="closed"
-              animate="open"
-              exit="closed"
-              variants={{
-                open: { transition: { staggerChildren: 0.05, delayChildren: 0.04 } },
-                closed: { transition: { staggerChildren: 0.03, staggerDirection: -1 } },
-              }}
-              className="flex flex-col space-y-2"
-            >
-              {NAVIGATION_LINKS.map((link) => (
-                <motion.a
-                  key={link.name}
-                  variants={{
-                    open: { opacity: 1, x: 0 },
-                    closed: { opacity: 0, x: -8 },
-                  }}
-                  transition={{ duration: 0.22 }}
-                  href={link.href}
-                  onClick={(e) => handleNavClick(e, link.href)}
-                  className="text-xs font-mono-code uppercase tracking-[0.25em] py-2.5 border-b transition-colors active:opacity-70"
+            <div className="px-6 py-5 space-y-4">
+              <motion.nav
+                initial="closed"
+                animate="open"
+                exit="closed"
+                variants={{
+                  open: { transition: { staggerChildren: 0.04, delayChildren: 0.02 } },
+                  closed: { transition: { staggerChildren: 0.01, staggerDirection: -1 } },
+                }}
+                className="flex flex-col space-y-1"
+              >
+                {MOBILE_NAV_LINKS.map((link) => (
+                  <motion.a
+                    key={link.name}
+                    variants={{
+                      open: { opacity: 1, x: 0 },
+                      closed: { opacity: 0, x: -6 },
+                    }}
+                    transition={{ duration: 0.18, ease: 'easeOut' }}
+                    href={link.href}
+                    onClick={(e) => handleNavClick(e, link.href)}
+                    className="flex items-center justify-between text-xs font-mono-code uppercase tracking-[0.22em] py-3 px-2 border-b transition-colors active:opacity-70"
+                    style={{
+                      borderColor: 'var(--border-subtle)',
+                      color: 'var(--text-secondary)',
+                    }}
+                  >
+                    <span>{link.name}</span>
+                    <span className="text-[10px] font-mono-code opacity-40">→</span>
+                  </motion.a>
+                ))}
+              </motion.nav>
+              <motion.div
+                initial={{ opacity: 0, y: 6 }}
+                animate={{ opacity: 1, y: 0 }}
+                exit={{ opacity: 0 }}
+                transition={{ duration: 0.18, ease: 'easeOut' }}
+                className="pt-1"
+              >
+                <a
+                  href="/#contact"
+                  onClick={(e) => handleNavClick(e, '/#contact')}
+                  className="inline-flex items-center justify-center gap-2 w-full text-xs font-mono-code uppercase tracking-wider px-4 py-3 rounded-full font-semibold active:scale-[0.98] transition-transform shadow-md"
                   style={{
-                    borderColor: 'var(--border-subtle)',
-                    color: 'var(--text-secondary)',
+                    backgroundColor: 'var(--accent-contrast)',
+                    color: 'var(--accent-contrast-inv)',
                   }}
                 >
-                  {link.name}
-                </motion.a>
-              ))}
-            </motion.nav>
-            <motion.div
-              initial={{ opacity: 0, y: 8 }}
-              animate={{ opacity: 1, y: 0 }}
-              exit={{ opacity: 0, y: 8 }}
-              transition={{ delay: 0.12, duration: 0.22 }}
-            >
-              <a
-                href="/#contact"
-                onClick={(e) => handleNavClick(e, '/#contact')}
-                className="inline-flex items-center justify-center gap-2 w-full text-xs font-mono-code uppercase tracking-wider px-4 py-3 rounded-full font-semibold mt-2 active:scale-[0.98] transition-transform"
-                style={{
-                  backgroundColor: 'var(--accent-contrast)',
-                  color: 'var(--accent-contrast-inv)',
-                }}
-              >
-                <span>LET'S TALK</span>
-                <ArrowUpRight className="w-3.5 h-3.5" />
-              </a>
-            </motion.div>
+                  <span>LET'S TALK</span>
+                  <ArrowUpRight className="w-3.5 h-3.5" />
+                </a>
+              </motion.div>
+            </div>
           </motion.div>
         )}
       </AnimatePresence>

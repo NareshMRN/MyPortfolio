@@ -394,6 +394,10 @@ export const AchievementsSection: React.FC<AchievementsSectionProps> = ({
                               <img
                                 src={item.image}
                                 alt={item.title}
+                                loading="lazy"
+                                decoding="async"
+                                width={400}
+                                height={200}
                                 onError={(e) => {
                                   (e.currentTarget as HTMLElement).style.display = 'none';
                                 }}
