@@ -6,6 +6,7 @@ import { TechBadge } from '../components/TechBadge';
 import { StatusBadge } from '../components/StatusBadge';
 import { TeamMemberCard } from '../components/TeamMemberCard';
 import { PROJECTS } from '../data/content';
+import { getTechRationale } from '../data/projectTechRationale';
 import { useSeo } from '../hooks/useSeo';
 
 export const ProjectDetailPage: React.FC = () => {
@@ -135,20 +136,13 @@ export const ProjectDetailPage: React.FC = () => {
               </a>
             )}
 
-            <Link
-              to="/projects"
-              className="inline-flex items-center gap-2 px-6 py-3 rounded-full text-xs font-mono-code uppercase tracking-wider border hover:bg-white/10 transition-colors font-semibold"
-              style={{ borderColor: 'var(--border-strong)', color: 'var(--text-primary)' }}
-            >
-              <ArrowLeft className="w-3.5 h-3.5" />
-              <span>All Projects</span>
-            </Link>
+
           </div>
 
-          {/* Quick Badges Row */}
-          <div className="flex flex-wrap gap-2">
+          {/* Quick Badges Row - Circular tech stack icons with larger radius */}
+          <div className="flex flex-wrap items-center gap-3 sm:gap-3.5">
             {project.tech.map((t) => (
-              <TechBadge key={t} name={t} />
+              <TechBadge key={t} name={t} variant="circle" size="lg" />
             ))}
           </div>
         </div>
@@ -287,19 +281,63 @@ export const ProjectDetailPage: React.FC = () => {
               </div>
             </div>
 
-            {/* Markdown Section 3: Deployed Stack */}
-            <div className="space-y-4">
-              <div className="flex items-center gap-2.5 border-b pb-3" style={{ borderColor: 'var(--border-subtle)' }}>
-                <Layers className="w-5 h-5 text-purple-400" />
-                <h3 className="text-base sm:text-lg font-mono-code uppercase tracking-wider font-bold" style={{ color: 'var(--text-primary)' }}>
-                  ## Technologies & Production Tooling
-                </h3>
+            {/* Markdown Section 3: Deployed Stack with Explanatory Rationale */}
+            <div className="space-y-4 sm:space-y-5">
+              <div className="flex items-center justify-between border-b pb-3" style={{ borderColor: 'var(--border-subtle)' }}>
+                <div className="flex items-center gap-2.5">
+                  <Layers className="w-5 h-5 text-purple-400" />
+                  <h3 className="text-base sm:text-lg font-mono-code uppercase tracking-wider font-bold" style={{ color: 'var(--text-primary)' }}>
+                    ## Technologies & Production Tooling
+                  </h3>
+                </div>
+                <span className="text-[10px] sm:text-[11px] font-mono-code uppercase tracking-widest hidden sm:inline-block" style={{ color: 'var(--text-muted)' }}>
+                  Architectural Roles & Purpose
+                </span>
               </div>
 
-              <div className="flex flex-wrap gap-2.5">
-                {project.tech.map((t) => (
-                  <TechBadge key={t} name={t} />
-                ))}
+              {/* Grid of Tech Stack Cards with Explanatory Notes */}
+              <div className="grid grid-cols-1 md:grid-cols-2 gap-3.5 sm:gap-4">
+                {project.tech.map((t) => {
+                  const rationale = getTechRationale(t, project.slug);
+                  return (
+                    <div
+                      key={t}
+                      className="group p-4 sm:p-5 rounded-xl border transition-all duration-300 hover:shadow-lg flex items-start gap-3.5 sm:gap-4 card-gold-border relative overflow-hidden"
+                      style={{
+                        backgroundColor: 'var(--bg-card)',
+                        borderColor: 'var(--border-subtle)',
+                      }}
+                    >
+                      {/* Left: White Transparent Circular Badge */}
+                      <div className="shrink-0 mt-0.5">
+                        <TechBadge name={t} variant="circle" size="md" showTooltip={false} />
+                      </div>
+
+                      {/* Right: Tech Name, Role Tag, and Explanatory Note */}
+                      <div className="min-w-0 flex-1">
+                        <div className="flex items-center justify-between gap-2 mb-1.5 flex-wrap">
+                          <h4 className="font-mono-code text-xs sm:text-sm font-bold uppercase tracking-wider group-hover:text-white transition-colors" style={{ color: 'var(--text-primary)' }}>
+                            {t}
+                          </h4>
+                          {rationale.role && (
+                            <span
+                              className="text-[9.5px] sm:text-[10px] font-mono-code uppercase tracking-wider px-2 py-0.5 rounded-full border border-black/10 dark:border-white/10"
+                              style={{
+                                backgroundColor: 'var(--bg-secondary)',
+                                color: 'var(--text-muted)',
+                              }}
+                            >
+                              {rationale.role}
+                            </span>
+                          )}
+                        </div>
+                        <p className="text-xs sm:text-[13px] leading-relaxed font-body" style={{ color: 'var(--text-secondary)' }}>
+                          {rationale.reason}
+                        </p>
+                      </div>
+                    </div>
+                  );
+                })}
               </div>
             </div>
           </div>

@@ -1,5 +1,7 @@
 @import "tailwindcss";
 
+@custom-variant dark (&:where([data-theme="dark"], [data-theme="dark"] *));
+
 @font-face {
   font-family: 'Nevera';
   src: url('/fonts/nevera.regular.otf') format('opentype');
@@ -53,6 +55,7 @@
   --font-nevera: 'Nevera', sans-serif;
   --font-orange-avenue: 'Orange Avenue', Georgia, serif;
   --font-gasdrifo: 'NCL Gasdrifo', Georgia, serif;
+  --font-segoe-script: 'Segoe Script Local', 'Segoe Script', cursive;
 
   /* Theme tokens - Black, White, Grays ONLY */
   --bg-primary: #000000;
@@ -80,6 +83,11 @@
   --gold-primary: #E5B842;
   --gold-bright: #FDE68A;
   --card-top-line: rgba(255, 255, 255, 0.75);
+
+  /* Circular Tech Stack Glass Tokens - White Transparent */
+  --circle-tech-bg: rgba(255, 255, 255, 0.08);
+  --circle-tech-border: rgba(255, 255, 255, 0.18);
+  --circle-tech-border-hover: rgba(255, 255, 255, 0.45);
 }
 
 [data-theme="light"] {
@@ -108,6 +116,11 @@
   --gold-primary: #B8860B;
   --gold-bright: #D4AF37;
   --card-top-line: rgba(0, 0, 0, 0.6);
+
+  /* Circular Tech Stack Glass Tokens - White Transparent */
+  --circle-tech-bg: rgba(255, 255, 255, 0.85);
+  --circle-tech-border: rgba(0, 0, 0, 0.12);
+  --circle-tech-border-hover: rgba(0, 0, 0, 0.35);
 }
 
 html {
@@ -180,6 +193,10 @@ body {
 
 .font-gasdrifo {
   font-family: var(--font-gasdrifo);
+}
+
+.font-segoe-script {
+  font-family: var(--font-segoe-script);
 }
 
 .gold-gradient-text {

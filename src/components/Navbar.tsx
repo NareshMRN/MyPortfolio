@@ -57,7 +57,7 @@ export const Navbar: React.FC = () => {
       }}
     >
       <div className="w-full px-4 sm:px-8 lg:px-12 xl:px-16 flex items-center justify-between">
-        {/* LOGO - Orange Avenue brand name */}
+        {/* LOGO - Segoe Script brand name */}
         <a
           href="https://nareshn.me"
           onClick={(e) => handleNavClick(e, 'https://nareshn.me')}
@@ -65,7 +65,7 @@ export const Navbar: React.FC = () => {
           style={{ color: 'var(--text-primary)' }}
           aria-label="Naresh Portfolio Home"
         >
-          <span className="font-orange-avenue text-2xl sm:text-3xl tracking-wide transition-all duration-200 group-hover:opacity-80 inline-block leading-none">
+          <span className="font-segoe-script font-bold text-2xl sm:text-3xl tracking-normal transition-all duration-200 group-hover:opacity-80 inline-block leading-none">
             Naresh N
           </span>
         </a>

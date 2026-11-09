@@ -250,14 +250,14 @@ export const ProjectsSection: React.FC = () => {
                       )}
                     </div>
 
-                    {/* Tech Stack Pills */}
+                    {/* Tech Stack */}
                     <div className="pt-6 border-t" style={{ borderColor: 'var(--border-subtle)' }}>
                       <span className="text-[10px] font-mono-code uppercase tracking-widest block mb-3" style={{ color: 'var(--text-muted)' }}>
                         TECH STACK
                       </span>
-                      <div className="flex flex-wrap gap-1.5 min-[380px]:gap-2 sm:gap-2.5">
+                      <div className="flex flex-wrap items-center gap-2 sm:gap-2.5">
                         {currentProject.tech.map((t) => (
-                          <TechBadge key={t} name={t} />
+                          <TechBadge key={t} name={t} variant="circle" />
                         ))}
                       </div>
                     </div>

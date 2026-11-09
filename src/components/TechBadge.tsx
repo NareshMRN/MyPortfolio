@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState } from 'react';
 
 export interface TechMeta {
   color: string;
@@ -31,13 +31,16 @@ export const TECH_CONFIG: Record<string, TechMeta> = {
     ),
   },
 
-  // Node.js
+  // Node.js - Official hexagon with correctly ordered "JS"
   'node.js': {
     color: '#539E43',
     icon: (
-      <svg className="w-3.5 h-3.5" viewBox="0 0 24 24" fill="#539E43">
-        <path d="M12 2l9.5 5.5v11L12 24 2.5 18.5v-11L12 2zm0 2.31L4.5 8.65v8.7L12 21.69l7.5-4.34v-8.7L12 4.31z" />
-        <path d="M12 7.5a4.5 4.5 0 1 0 4.5 4.5A4.5 4.5 0 0 0 12 7.5z" />
+      <svg className="w-3.5 h-3.5" viewBox="0 0 24 24" fill="none">
+        <path d="M12 2l8.8 5.1v10.2L12 22.4 3.2 17.3V7.1L12 2z" stroke="#539E43" strokeWidth="2.2" strokeLinejoin="round" fill="none" />
+        {/* Letter J on the left */}
+        <path d="M9.8 8.8v5.2c0 1.2-.6 1.8-1.6 1.8-.7 0-1.2-.3-1.5-.7l.6-.8c.2.3.5.5.9.5.5 0 .8-.3.8-.8V8.8h.8z" fill="#539E43" />
+        {/* Letter S on the right */}
+        <path d="M12.2 14.5c.4.5.9.8 1.6.8.8 0 1.3-.4 1.3-1 0-.6-.4-.8-1.3-1.1-1.2-.3-2-.7-2-1.8 0-1 .9-1.8 2.1-1.8 1 0 1.7.3 2.1.9l-.7.7c-.3-.4-.7-.6-1.4-.6-.6 0-1 .3-1 .8 0 .5.3.7 1.2 1 1.3.3 2.1.8 2.1 1.9 0 1.1-.9 1.9-2.3 1.9-1.1 0-1.9-.4-2.4-1.1l.7-.6z" fill="#539E43" />
       </svg>
     ),
   },
@@ -173,54 +176,65 @@ export const TECH_CONFIG: Record<string, TechMeta> = {
     ),
   },
 
-  // Zod
+  // Zod - Official SimpleIcons Vector
   zod: {
-    color: '#3E67B1',
+    color: '#3068B7',
     icon: (
-      <svg className="w-3.5 h-3.5" viewBox="0 0 24 24" fill="#3E67B1">
-        <path d="M4.5 5h15a1 1 0 0 1 .8 1.6L7.8 19h11.7a1 1 0 1 1 0 2h-15a1 1 0 0 1-.8-1.6L16.2 7H4.5a1 1 0 1 1 0-2z" />
+      <svg className="w-3.5 h-3.5" viewBox="0 0 24 24" fill="#3068B7">
+        <path d="M2.584 3.582a2.25 2.25 0 0 1 2.112-1.479h14.617c.948 0 1.794.595 2.115 1.487l2.44 6.777a2.25 2.25 0 0 1-.624 2.443l-9.61 8.52a2.25 2.25 0 0 1-2.963.018L.776 12.773a2.25 2.25 0 0 1-.64-2.467Zm12.038 4.887-9.11 5.537 5.74 5.007a1.206 1.206 0 0 0 1.593-.006l5.643-5.001H14.4l6.239-3.957c.488-.328.69-.947.491-1.5l-1.24-3.446a1.535 1.535 0 0 0-1.456-1.015H5.545a1.535 1.535 0 0 0-1.431 1.01l-1.228 3.37z" />
       </svg>
     ),
   },
 
-  // JWT
+  // JWT - Official multi-color JWT.io vector logo
   jwt: {
     color: '#D63AFF',
     icon: (
-      <svg className="w-3.5 h-3.5" viewBox="0 0 24 24" fill="none">
-        <circle cx="12" cy="12" r="10" stroke="#D63AFF" strokeWidth="2" />
-        <path d="M7 12h10M12 7v10" stroke="#D63AFF" strokeWidth="2" strokeLinecap="round" />
+      <svg className="w-3.5 h-3.5" viewBox="0 0 256 257" fill="none">
+        <path fill="#374151" d="M147.386 69.071 147.129 0h-38.515l.257 69.071 19.257 26.448zM108.871 187.442v69.328h38.515v-69.328l-19.258-26.447z"/>
+        <path fill="#00F2E6" d="m147.386 187.442 40.57 55.976 31.069-22.596-40.57-55.975-31.069-10.015zM108.871 69.071 68.044 13.095 36.975 35.691l40.57 55.976 31.326 10.014z"/>
+        <path fill="#00B9F1" d="M77.545 91.667 11.811 70.355 0 106.816l65.733 21.569 31.069-10.271zM159.198 138.399l19.257 26.448 65.734 21.311L256 149.697l-65.733-21.312z"/>
+        <path fill="#D63AFF" d="M190.267 128.385 256 106.816l-11.811-36.461-65.734 21.312-19.257 26.447zM65.733 128.385 0 149.697l11.811 36.461 65.734-21.311 19.257-26.448z"/>
+        <path fill="#FB015B" d="m77.545 164.847-40.57 55.975 31.069 22.596 40.827-55.976v-32.61zM178.455 91.667l40.57-55.976-31.069-22.596-40.57 55.976v32.61z"/>
       </svg>
     ),
   },
 
-  // Riverpod
+  // Riverpod - Exact riverpod.dev logo (cyan top wave, deep-blue bottom river)
   riverpod: {
     color: '#02569B',
     icon: (
-      <svg className="w-3.5 h-3.5" viewBox="0 0 24 24" fill="none">
-        <circle cx="12" cy="12" r="10" stroke="#02569B" strokeWidth="2" />
-        <path d="M8 10l4 4 4-4" stroke="#02569B" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round" />
+      <svg className="w-3.5 h-3.5" viewBox="0 0 36 36" fill="none">
+        <rect width="36" height="36" rx="8" fill="none" />
+        {/* Top-left cyan wave */}
+        <path d="M5 15C5 9.5 9.5 5 15 5H21C26.5 5 29.5 7.5 30.5 11C26.5 11.5 23.5 13.5 19.5 15C15 16.5 10 17 5 15Z" fill="#54C5F8" />
+        {/* Bottom-right dark-blue river */}
+        <path d="M5 15C10 17 15 16.5 19.5 15C23.5 13.5 26.5 11.5 30.5 11C30.8 12.2 31 13.5 31 15V21C31 26.5 26.5 31 21 31H15C9.5 31 5 26.5 5 21V15Z" fill="#0B4F8C" />
       </svg>
     ),
   },
 
-  // Web Audio API
+  // Web Audio API - Official W3C Waveform Spectrum Vector
   'web audio api': {
     color: '#00B4D8',
     icon: (
-      <svg className="w-3.5 h-3.5" viewBox="0 0 24 24" fill="#00B4D8">
-        <path d="M12 3v10.55c-.59-.34-1.27-.55-2-.55-2.21 0-4 1.79-4 4s1.79 4 4 4 4-1.79 4-4V7h4V3h-6z" />
+      <svg className="w-3.5 h-3.5" viewBox="0 0 24 24" fill="none" stroke="#00B4D8" strokeWidth="2.2" strokeLinecap="round" strokeLinejoin="round">
+        <path d="M3 10v4M7 6v12M11 3v18M15 7v10M19 5v14M22 11v2" />
       </svg>
     ),
   },
 
-  // Express
+  // Express - Clean centered official "ex" Vector
   express: {
-    color: '#9CA3AF',
+    color: '#64748B',
     icon: (
-      <svg className="w-3.5 h-3.5" viewBox="0 0 24 24" fill="currentColor">
-        <path d="M24 18.588l-5.69-5.717 5.666-5.69h-3.064l-4.133 4.152-4.158-4.152H9.557l5.69 5.69-5.69 5.717h3.064l4.158-4.177 4.157 4.177H24zm-14.73 0l-1.38-2.12c-.752 1.458-2.023 2.193-3.812 2.193-2.61 0-4.078-1.578-4.078-4.103 0-2.597 1.626-4.225 4.226-4.225 2.502 0 3.91 1.433 3.91 3.984v.777H2.88c.073 1.577.923 2.502 2.378 2.502 1.142 0 1.942-.51 2.453-1.528l1.559.52zm-3.958-6.608c-1.263 0-1.99.777-2.112 2.04h4.15c-.048-1.263-.777-2.04-2.038-2.04z" />
+      <svg className="w-3.5 h-3.5 text-zinc-900 dark:text-white" viewBox="0 0 24 24" fill="none">
+        <g transform="translate(1.5, 4.5)">
+          {/* Lowercase e */}
+          <path d="M5.8 11.5C2.8 11.5 0.5 9.4 0.5 5.8C0.5 2.2 2.8 0 5.8 0C8.8 0 11 2.2 11 5.8H2.4C2.6 8.2 4 9.8 6 9.8C7.4 9.8 8.4 9.1 9.1 8L10.5 9C9.5 10.6 7.8 11.5 5.8 11.5ZM5.8 1.7C3.9 1.7 2.6 3 2.4 4.3H9.2C9 3 7.6 1.7 5.8 1.7Z" fill="currentColor" />
+          {/* Lowercase x */}
+          <path d="M12.5 0.4H14.8L16.8 4.8L18.8 0.4H21L18 6.2L21 12H18.8L16.8 7.5L14.8 12H12.5L15.6 6.2L12.5 0.4Z" fill="currentColor" />
+        </g>
       </svg>
     ),
   },
@@ -415,15 +429,12 @@ export const TECH_CONFIG: Record<string, TechMeta> = {
     ),
   },
 
-  // HuggingFace
+  // HuggingFace - Official SimpleIcons Vector
   huggingface: {
     color: '#FFD21E',
     icon: (
       <svg className="w-3.5 h-3.5" viewBox="0 0 24 24" fill="#FFD21E">
-        <circle cx="12" cy="12" r="10" />
-        <circle cx="9" cy="10" r="1.5" fill="#000000" />
-        <circle cx="15" cy="10" r="1.5" fill="#000000" />
-        <path d="M8 14.5s1.5 2 4 2 4-2 4-2" stroke="#000000" strokeWidth="1.5" strokeLinecap="round" fill="none" />
+        <path d="M12.025 1.13c-5.77 0-10.449 4.647-10.449 10.378 0 1.112.178 2.181.503 3.185.064-.222.203-.444.416-.577a.96.96 0 0 1 .524-.15c.293 0 .584.124.84.284.278.173.48.408.71.694.226.282.458.611.684.951v-.014c.017-.324.106-.622.264-.874s.403-.487.762-.543c.3-.047.596.06.787.203s.31.313.4.467c.105.183.25.344.43.465.176.118.384.186.6.196.223.012.443-.045.626-.164s.319-.296.393-.497c.465-1.258 1.402-2.32 2.643-2.909 1.241-.588 2.704-.627 3.985-.108 1.28.519 2.296 1.488 2.778 2.719s.344 2.613-.197 3.793a5.526 5.526 0 0 1-1.077 1.483 8.69 8.69 0 0 0 1.202-1.36h-1.771a7.174 7.174 0 0 1-5.227 2.252 7.174 7.174 0 0 1-5.226-2.252Z" />
       </svg>
     ),
   },
@@ -468,10 +479,12 @@ export const TECH_CONFIG: Record<string, TechMeta> = {
 
   // Firebase
   firebase: {
-    color: '#FFCA28',
+    color: '#FFA000',
     icon: (
-      <svg className="w-3.5 h-3.5" viewBox="0 0 24 24" fill="#FFCA28">
-        <path d="M4.5 18.5L9 3l3.5 6.5L4.5 18.5zm15 0L16 6.5 12.5 13l7 5.5zM12 21.5L4.5 18.5 12 13l7.5 5.5-7.5 3z" />
+      <svg className="w-3.5 h-3.5" viewBox="0 0 24 24" fill="none">
+        <path d="M4.6 18.3L8.8 3.5c.2-.7 1.2-.8 1.6-.2l3.4 5.8-9.2 9.2z" fill="#FFA000" />
+        <path d="M14.2 9.7L9.9 2.4c-.4-.7-1.4-.6-1.6.2L3.5 18.2l10.7-8.5z" fill="#F57C00" />
+        <path d="M12.4 21.6l8.1-4.5c.7-.4.9-1.2.4-1.8L16.2 7.3c-.4-.6-1.4-.6-1.7 0L3.5 18.3l8.9 3.3z" fill="#FFCA28" />
       </svg>
     ),
   },
@@ -888,6 +901,303 @@ export const TECH_CONFIG: Record<string, TechMeta> = {
       </svg>
     ),
   },
+
+  // Express.js
+  'express.js': {
+    color: '#64748B',
+    icon: (
+      <svg className="w-3.5 h-3.5 text-zinc-900 dark:text-white" viewBox="0 0 24 24" fill="currentColor">
+        <path d="M24 18.588a1.529 1.529 0 01-1.895-.72l-3.45-4.771-.5-.667-4.003 5.444a1.466 1.466 0 01-1.802.708l5.158-6.92-4.798-6.251a1.595 1.595 0 011.9.666l3.576 4.83 3.596-4.81a1.435 1.435 0 011.788-.668L21.708 7.9l-2.522 3.283a.666.666 0 000 .994l4.804 6.412zM.002 11.576l.42-2.075c1.154-4.103 5.858-6.376 10.182-2.999 2.527 1.988 3.155 4.8 3.03 7.95H1.48c-.214 5.67 3.867 9.092 9.07 7.346 1.825-.613 2.9-2.042 3.438-3.83.273-.896.725-1.036 1.567-.78-.43 2.236-1.4 4.104-3.45 5.273-3.063 1.75-7.435 1.184-9.735-1.248C1 21.6.434 19.812.18 17.9c-.04-.316-.12-.617-.18-.92q.008-.776.008-1.552zm1.498-.38h12.872c-.084-4.1-2.637-7.012-6.126-7.037-3.83-.03-6.58 2.813-6.746 7.037z" />
+      </svg>
+    ),
+  },
+
+  // Socket.io
+  'socket.io': {
+    color: '#010101',
+    icon: (
+      <svg className="w-3.5 h-3.5 text-zinc-900 dark:text-white" viewBox="0 0 24 24" fill="currentColor">
+        <path d="M12 0C5.373 0 0 5.373 0 12s5.373 12 12 12 12-5.373 12-12S18.627 0 12 0zm-2.4 4.8h4.8v4.8H9.6V4.8zm0 9.6h4.8v4.8H9.6v-4.8zM4.8 9.6h4.8v4.8H4.8V9.6zm9.6 0h4.8v4.8h-4.8V9.6z" />
+      </svg>
+    ),
+  },
+
+  // Alpaca API
+  'alpaca api': {
+    color: '#E5B842',
+    icon: (
+      <svg className="w-3.5 h-3.5" viewBox="0 0 24 24" fill="none" stroke="#E5B842" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+        <path d="M12 2v4M12 18v4M4.93 4.93l2.83 2.83M16.24 16.24l2.83 2.83M2 12h4M18 12h4M4.93 19.07l2.83-2.83M16.24 7.76l2.83-2.83" />
+        <circle cx="12" cy="12" r="4" fill="#E5B842" fillOpacity="0.25" />
+      </svg>
+    ),
+  },
+  'alpaca': {
+    color: '#E5B842',
+    icon: (
+      <svg className="w-3.5 h-3.5" viewBox="0 0 24 24" fill="none" stroke="#E5B842" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+        <path d="M12 2v4M12 18v4M4.93 4.93l2.83 2.83M16.24 16.24l2.83 2.83M2 12h4M18 12h4M4.93 19.07l2.83-2.83M16.24 7.76l2.83-2.83" />
+        <circle cx="12" cy="12" r="4" fill="#E5B842" fillOpacity="0.25" />
+      </svg>
+    ),
+  },
+
+  // Matplotlib
+  'matplotlib': {
+    color: '#11557C',
+    icon: (
+      <svg className="w-3.5 h-3.5" viewBox="0 0 24 24" fill="none">
+        <path d="M3 20h18M5 16l4-6 4 4 6-8" stroke="#11557C" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round" />
+        <circle cx="9" cy="10" r="2.2" fill="#E24A33" />
+        <circle cx="13" cy="14" r="2.2" fill="#348ABD" />
+        <circle cx="19" cy="6" r="2.2" fill="#988ED5" />
+      </svg>
+    ),
+  },
+
+  // RAG (Retrieval-Augmented Generation)
+  'rag': {
+    color: '#10B981',
+    icon: (
+      <svg className="w-3.5 h-3.5" viewBox="0 0 24 24" fill="none" stroke="#10B981" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+        <path d="M4 19.5v-15A2.5 2.5 0 0 1 6.5 2H20v20H6.5a2.5 2.5 0 0 1-2.5-2.5Z" />
+        <path d="m9 9 3 3 5-5" />
+      </svg>
+    ),
+  },
+
+  // Stable Diffusion
+  'stable diffusion': {
+    color: '#A855F7',
+    icon: (
+      <svg className="w-3.5 h-3.5" viewBox="0 0 24 24" fill="none">
+        <path d="M12 2L15.09 8.26L22 9.27L17 14.14L18.18 21.02L12 17.77L5.82 21.02L7 14.14L2 9.27L8.91 8.26L12 2Z" fill="#A855F7" />
+      </svg>
+    ),
+  },
+  'stable diffusion v1.5': {
+    color: '#A855F7',
+    icon: (
+      <svg className="w-3.5 h-3.5" viewBox="0 0 24 24" fill="none">
+        <path d="M12 2L15.09 8.26L22 9.27L17 14.14L18.18 21.02L12 17.77L5.82 21.02L7 14.14L2 9.27L8.91 8.26L12 2Z" fill="#A855F7" />
+      </svg>
+    ),
+  },
+
+  // Qwen / Qwen 2.5
+  'qwen': {
+    color: '#6366F1',
+    icon: (
+      <svg className="w-3.5 h-3.5" viewBox="0 0 24 24" fill="none" stroke="#6366F1" strokeWidth="2">
+        <circle cx="12" cy="12" r="9" />
+        <path d="M12 7v5l3 3" />
+      </svg>
+    ),
+  },
+  'qwen 2.5': {
+    color: '#6366F1',
+    icon: (
+      <svg className="w-3.5 h-3.5" viewBox="0 0 24 24" fill="none" stroke="#6366F1" strokeWidth="2">
+        <circle cx="12" cy="12" r="9" />
+        <path d="M12 7v5l3 3" />
+      </svg>
+    ),
+  },
+
+  // CLIP
+  'clip': {
+    color: '#10A37F',
+    icon: (
+      <svg className="w-3.5 h-3.5" viewBox="0 0 24 24" fill="none" stroke="#10A37F" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+        <rect width="18" height="18" x="3" y="3" rx="2" ry="2" />
+        <circle cx="9" cy="9" r="2" />
+        <path d="m21 15-3.086-3.086a2 2 0 0 0-2.828 0L6 21" />
+      </svg>
+    ),
+  },
+
+  // Groq / DeepSeek-R1
+  'groq': {
+    color: '#F55036',
+    icon: (
+      <svg className="w-3.5 h-3.5" viewBox="0 0 24 24" fill="#F55036">
+        <circle cx="12" cy="12" r="9" fill="none" stroke="#F55036" strokeWidth="2" />
+        <path d="M12 6v6l4 2" stroke="#F55036" strokeWidth="2" strokeLinecap="round" />
+      </svg>
+    ),
+  },
+  'deepseek': {
+    color: '#0066FF',
+    icon: (
+      <svg className="w-3.5 h-3.5" viewBox="0 0 24 24" fill="none" stroke="#0066FF" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+        <path d="M12 2a10 10 0 0 1 10 10c0 4.418-2.87 8.166-6.85 9.475-.436.143-.88.086-1.15-.184l-2-2a1 1 0 0 1 0-1.414l3.5-3.5a1 1 0 0 0 0-1.414L12 9.5a1 1 0 0 0-1.414 0l-3.5 3.5a1 1 0 0 0 0 1.414l2 2a1 1 0 0 1 0 1.414l-1.5 1.5c-.32.32-.82.37-1.2.13C3.52 18.06 2 15.22 2 12A10 10 0 0 1 12 2z" fill="#0066FF" fillOpacity="0.2" />
+      </svg>
+    ),
+  },
+  'groq / deepseek-r1': {
+    color: '#0066FF',
+    icon: (
+      <svg className="w-3.5 h-3.5" viewBox="0 0 24 24" fill="none" stroke="#0066FF" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+        <path d="M12 2a10 10 0 0 1 10 10c0 4.418-2.87 8.166-6.85 9.475-.436.143-.88.086-1.15-.184l-2-2a1 1 0 0 1 0-1.414l3.5-3.5a1 1 0 0 0 0-1.414L12 9.5a1 1 0 0 0-1.414 0l-3.5 3.5a1 1 0 0 0 0 1.414l2 2a1 1 0 0 1 0 1.414l-1.5 1.5c-.32.32-.82.37-1.2.13C3.52 18.06 2 15.22 2 12A10 10 0 0 1 12 2z" fill="#0066FF" fillOpacity="0.2" />
+      </svg>
+    ),
+  },
+
+  // PyPDF
+  'pypdf': {
+    color: '#EF4444',
+    icon: (
+      <svg className="w-3.5 h-3.5" viewBox="0 0 24 24" fill="none" stroke="#EF4444" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+        <path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z" />
+        <polyline points="14 2 14 8 20 8" />
+        <line x1="16" y1="13" x2="8" y2="13" />
+        <line x1="16" y1="17" x2="8" y2="17" />
+        <polyline points="10 9 9 9 8 9" />
+      </svg>
+    ),
+  },
+
+  // Sentence-Transformers
+  'sentence-transformers': {
+    color: '#FF9900',
+    icon: (
+      <svg className="w-3.5 h-3.5" viewBox="0 0 24 24" fill="none" stroke="#FF9900" strokeWidth="2">
+        <circle cx="6" cy="6" r="3" />
+        <circle cx="18" cy="18" r="3" />
+        <path d="M8.5 8.5l7 7M6 18h.01M18 6h.01" />
+      </svg>
+    ),
+  },
+};
+
+// Curated official documentation and brand website URLs
+export const TECH_URLS: Record<string, string> = {
+  // Mobile & Cross-platform
+  flutter: 'https://flutter.dev',
+  dart: 'https://dart.dev',
+  'react native': 'https://reactnative.dev',
+  android: 'https://developer.android.com',
+  kotlin: 'https://kotlinlang.org',
+  'jetpack compose': 'https://developer.android.com/compose',
+  coroutines: 'https://kotlinlang.org/docs/coroutines-overview.html',
+  flow: 'https://kotlinlang.org/docs/flow.html',
+  riverpod: 'https://riverpod.dev',
+
+  // Frontend & Web
+  react: 'https://react.dev',
+  'next.js': 'https://nextjs.org',
+  nextjs: 'https://nextjs.org',
+  vue: 'https://vuejs.org',
+  'vue.js': 'https://vuejs.org',
+  svelte: 'https://svelte.dev',
+  angular: 'https://angular.dev',
+  vite: 'https://vite.dev',
+  html: 'https://developer.mozilla.org/en-US/docs/Web/HTML',
+  html5: 'https://developer.mozilla.org/en-US/docs/Web/HTML',
+  css: 'https://developer.mozilla.org/en-US/docs/Web/CSS',
+  css3: 'https://developer.mozilla.org/en-US/docs/Web/CSS',
+  javascript: 'https://developer.mozilla.org/en-US/docs/Web/JavaScript',
+  typescript: 'https://www.typescriptlang.org',
+  'tailwind css': 'https://tailwindcss.com',
+  tailwind: 'https://tailwindcss.com',
+
+  // Backend & Runtime
+  'node.js': 'https://nodejs.org',
+  nodejs: 'https://nodejs.org',
+  node: 'https://nodejs.org',
+  express: 'https://expressjs.com',
+  'express.js': 'https://expressjs.com',
+  fastapi: 'https://fastapi.tiangolo.com',
+  python: 'https://www.python.org',
+  flask: 'https://flask.palletsprojects.com',
+  django: 'https://www.djangoproject.com',
+  'socket.io': 'https://socket.io',
+  graphql: 'https://graphql.org',
+  'rest api': 'https://restfulapi.net',
+  zod: 'https://zod.dev',
+  jwt: 'https://jwt.io',
+  'json web token': 'https://jwt.io',
+  jsonwebtoken: 'https://jwt.io',
+
+  // Databases & Caching
+  mongodb: 'https://www.mongodb.com',
+  'mongodb atlas': 'https://www.mongodb.com/atlas',
+  redis: 'https://redis.io',
+  postgresql: 'https://www.postgresql.org',
+  postgres: 'https://www.postgresql.org',
+  mysql: 'https://www.mysql.com',
+  sqlite: 'https://www.sqlite.org',
+  supabase: 'https://supabase.com',
+  firebase: 'https://firebase.google.com',
+
+  // DevOps & Cloud
+  docker: 'https://www.docker.com',
+  kubernetes: 'https://kubernetes.io',
+  aws: 'https://aws.amazon.com',
+  gcp: 'https://cloud.google.com',
+  azure: 'https://azure.microsoft.com',
+  vercel: 'https://vercel.com',
+  git: 'https://git-scm.com',
+  github: 'https://github.com',
+  'github pages': 'https://pages.github.com',
+  'github actions': 'https://github.com/features/actions',
+  linux: 'https://www.kernel.org',
+
+  // AI / ML & Data Science
+  pytorch: 'https://pytorch.org',
+  tensorflow: 'https://www.tensorflow.org',
+  huggingface: 'https://huggingface.co',
+  'hugging face': 'https://huggingface.co',
+  openai: 'https://openai.com',
+  'openai api': 'https://platform.openai.com',
+  'openai/groq/gemini apis': 'https://groq.com',
+  gemini: 'https://ai.google.dev',
+  'google gemini': 'https://ai.google.dev',
+  groq: 'https://groq.com',
+  'groq / deepseek-r1': 'https://groq.com',
+  'groq deepseek-r1': 'https://groq.com',
+  'deepseek-r1': 'https://www.deepseek.com',
+  deepseek: 'https://www.deepseek.com',
+  langchain: 'https://www.langchain.com',
+  langsmith: 'https://www.langchain.com/langsmith',
+  streamlit: 'https://streamlit.io',
+  gradio: 'https://www.gradio.app',
+  kaggle: 'https://www.kaggle.com',
+  'kaggle gpu': 'https://www.kaggle.com',
+  faiss: 'https://github.com/facebookresearch/faiss',
+  'sentence-transformers': 'https://sbert.net',
+  'stable diffusion': 'https://stability.ai',
+  'stable diffusion v1.5': 'https://stability.ai',
+  'qwen 2.5': 'https://huggingface.co/Qwen',
+  qwen: 'https://huggingface.co/Qwen',
+  clip: 'https://github.com/openai/CLIP',
+  pandas: 'https://pandas.pydata.org',
+  numpy: 'https://numpy.org',
+  matplotlib: 'https://matplotlib.org',
+  scipy: 'https://scipy.org',
+  'scikit-learn': 'https://scikit-learn.org',
+  pypdf: 'https://pypdf.readthedocs.io',
+
+  // APIs & Specialized Tooling
+  'web audio api': 'https://developer.mozilla.org/en-US/docs/Web/API/Web_Audio_API',
+  'alpaca api': 'https://alpaca.markets',
+  'murf ai': 'https://murf.ai',
+  figma: 'https://www.figma.com',
+};
+
+export const getTechUrl = (name: string): string => {
+  const normalized = name.toLowerCase().trim();
+  if (TECH_URLS[normalized]) {
+    return TECH_URLS[normalized];
+  }
+  // Check partial key matches
+  for (const [key, url] of Object.entries(TECH_URLS)) {
+    if (normalized === key || normalized.includes(key) || key.includes(normalized)) {
+      return url;
+    }
+  }
+  // Fallback to high-relevance official documentation search
+  return `https://www.google.com/search?q=${encodeURIComponent(name + ' official documentation')}`;
 };
 
 export const getTechMeta = (name: string): TechMeta => {
@@ -910,29 +1220,195 @@ export const getTechMeta = (name: string): TechMeta => {
   };
 };
 
-interface TechBadgeProps {
+export interface TechBadgeProps {
   name: string;
   className?: string;
-  size?: 'sm' | 'md';
+  size?: 'sm' | 'md' | 'lg';
+  variant?: 'pill' | 'circle';
+  showTooltip?: boolean;
+  clickable?: boolean;
+  href?: string;
+  onClick?: (e: React.MouseEvent) => void;
 }
 
-export const TechBadge: React.FC<TechBadgeProps> = ({ name, className = '', size = 'md' }) => {
+export const TechBadge: React.FC<TechBadgeProps> = ({
+  name,
+  className = '',
+  size = 'md',
+  variant = 'pill',
+  showTooltip = true,
+  clickable = true,
+  href,
+  onClick,
+}) => {
   const meta = getTechMeta(name);
   const color = meta.color;
+  const targetUrl = href || getTechUrl(name);
+  const [isHovered, setIsHovered] = useState(false);
 
-  const sizeClasses = size === 'sm' 
-    ? 'px-1.5 py-0.5 text-[9px] min-[360px]:px-2 min-[360px]:text-[9.5px] sm:px-2.5 sm:text-[10px] gap-1 min-[360px]:gap-1.5' 
-    : 'px-2 py-1 text-[10px] min-[360px]:px-2.5 min-[360px]:py-1.5 min-[360px]:text-[10.5px] sm:px-3 sm:text-[11px] gap-1.5 sm:gap-2';
+  if (variant === 'circle') {
+    const circleSizeClass =
+      size === 'sm'
+        ? 'w-8 h-8 sm:w-9 sm:h-9'
+        : size === 'lg'
+        ? 'w-12 h-12 sm:w-14 sm:h-14'
+        : 'w-10 h-10';
+
+    const iconSizeClass =
+      size === 'sm'
+        ? '[&_svg]:!w-4 [&_svg]:!h-4'
+        : size === 'lg'
+        ? '[&_svg]:!w-6.5 [&_svg]:!h-6.5 sm:[&_svg]:!w-7.5 sm:[&_svg]:!h-7.5'
+        : '[&_svg]:!w-5 [&_svg]:!h-5';
+
+    const badgeContent = (
+      <>
+        {meta.icon ? (
+          meta.icon
+        ) : (
+          <span
+            className={`font-bold font-mono-code leading-none ${size === 'lg' ? 'text-xs sm:text-sm' : 'text-[11px]'}`}
+            style={{ color }}
+          >
+            {name.slice(0, 2).toUpperCase()}
+          </span>
+        )}
+      </>
+    );
+
+    const badgeStyle: React.CSSProperties = {
+      backgroundColor: isHovered
+        ? 'var(--circle-tech-bg, rgba(255, 255, 255, 0.95))'
+        : 'var(--circle-tech-bg, rgba(255, 255, 255, 0.75))',
+      border: isHovered
+        ? `1.5px solid ${color}`
+        : '1px solid var(--circle-tech-border, rgba(0, 0, 0, 0.12))',
+      boxShadow: isHovered
+        ? `0 6px 18px ${color}35, 0 2px 6px rgba(0, 0, 0, 0.08)`
+        : '0 2px 6px rgba(0, 0, 0, 0.04)',
+      transform: isHovered ? 'scale(1.12)' : 'scale(1)',
+    };
+
+    const commonClasses = `${circleSizeClass} rounded-full flex items-center justify-center transition-all duration-300 cursor-pointer select-none backdrop-blur-md ${iconSizeClass}`;
+
+    return (
+      <div
+        className={`relative inline-flex items-center justify-center shrink-0 ${className}`}
+        onMouseEnter={() => setIsHovered(true)}
+        onMouseLeave={() => setIsHovered(false)}
+      >
+        {clickable ? (
+          <a
+            href={targetUrl}
+            target="_blank"
+            rel="noopener noreferrer"
+            aria-label={`${name} (opens official website or documentation)`}
+            title={`Visit ${name} official website or documentation`}
+            onClick={(e) => {
+              e.stopPropagation();
+              onClick?.(e);
+            }}
+            className={commonClasses}
+            style={badgeStyle}
+          >
+            {badgeContent}
+          </a>
+        ) : (
+          <span
+            tabIndex={0}
+            role="img"
+            aria-label={name}
+            className={commonClasses}
+            style={badgeStyle}
+            onClick={onClick}
+          >
+            {badgeContent}
+          </span>
+        )}
+
+        {/* Floating Details Tooltip - Displays ONLY when hovered on this specific stack badge */}
+        {showTooltip && isHovered && (
+          <div
+            role="tooltip"
+            className="pointer-events-none absolute -top-9 left-1/2 -translate-x-1/2 z-50 px-2.5 py-1 rounded-md text-[10px] sm:text-[11px] font-mono-code uppercase tracking-wider font-semibold whitespace-nowrap shadow-2xl transition-all duration-150 animate-in fade-in zoom-in-95 flex items-center gap-1.5"
+            style={{
+              backgroundColor: '#0a0a0c',
+              color: '#ffffff',
+              border: '1px solid rgba(255, 255, 255, 0.2)',
+              boxShadow: '0 4px 16px rgba(0, 0, 0, 0.45)',
+            }}
+          >
+            <span>{name}</span>
+            {clickable && (
+              <span className="text-[9px] opacity-60 font-mono-code font-normal">↗</span>
+            )}
+            <span className="absolute top-full left-1/2 -translate-x-1/2 -mt-[1px] border-4 border-transparent border-t-[#0a0a0c]" />
+          </div>
+        )}
+      </div>
+    );
+  }
+
+  const sizeClasses =
+    size === 'sm'
+      ? 'px-1.5 py-0.5 text-[9px] min-[360px]:px-2 min-[360px]:text-[9.5px] sm:px-2.5 sm:text-[10px] gap-1 min-[360px]:gap-1.5'
+      : 'px-2 py-1 text-[10px] min-[360px]:px-2.5 min-[360px]:py-1.5 min-[360px]:text-[10.5px] sm:px-3 sm:text-[11px] gap-1.5 sm:gap-2';
+
+  const pillContent = (
+    <>
+      {meta.icon && (
+        <span className="inline-flex items-center justify-center flex-shrink-0 [&>svg]:w-3 [&>svg]:h-3 sm:[&>svg]:w-3.5 sm:[&>svg]:h-3.5">
+          {meta.icon}
+        </span>
+      )}
+      <span className="font-semibold">{name}</span>
+    </>
+  );
+
+  const pillStyle: React.CSSProperties = {
+    backgroundColor: `${color}14`, // ~8% opacity
+    borderColor: `${color}40`,     // ~25% opacity
+    color: 'var(--text-primary)',
+    boxShadow: `0 2px 8px ${color}15`,
+  };
+
+  const pillClasses = `inline-flex items-center font-mono-code uppercase tracking-tight min-[360px]:tracking-wider rounded-lg border transition-all duration-200 hover:scale-105 select-none shrink-0 ${clickable ? 'cursor-pointer' : ''} ${sizeClasses} ${className}`;
+
+  if (clickable) {
+    return (
+      <a
+        href={targetUrl}
+        target="_blank"
+        rel="noopener noreferrer"
+        aria-label={`${name} (opens official website or documentation)`}
+        title={`Visit ${name} official website or documentation`}
+        className={pillClasses}
+        style={pillStyle}
+        onClick={(e) => {
+          e.stopPropagation();
+          onClick?.(e);
+        }}
+        onMouseEnter={(e) => {
+          e.currentTarget.style.borderColor = `${color}90`;
+          e.currentTarget.style.backgroundColor = `${color}25`;
+          e.currentTarget.style.boxShadow = `0 4px 14px ${color}30`;
+        }}
+        onMouseLeave={(e) => {
+          e.currentTarget.style.borderColor = `${color}40`;
+          e.currentTarget.style.backgroundColor = `${color}14`;
+          e.currentTarget.style.boxShadow = `0 2px 8px ${color}15`;
+        }}
+      >
+        {pillContent}
+      </a>
+    );
+  }
 
   return (
     <span
-      className={`inline-flex items-center font-mono-code uppercase tracking-tight min-[360px]:tracking-wider rounded-lg border transition-all duration-200 hover:scale-105 select-none shrink-0 ${sizeClasses} ${className}`}
-      style={{
-        backgroundColor: `${color}14`, // ~8% opacity
-        borderColor: `${color}40`,     // ~25% opacity
-        color: 'var(--text-primary)',
-        boxShadow: `0 2px 8px ${color}15`,
-      }}
+      className={pillClasses}
+      style={pillStyle}
+      onClick={onClick}
       onMouseEnter={(e) => {
         e.currentTarget.style.borderColor = `${color}90`;
         e.currentTarget.style.backgroundColor = `${color}25`;
@@ -944,12 +1420,7 @@ export const TechBadge: React.FC<TechBadgeProps> = ({ name, className = '', size
         e.currentTarget.style.boxShadow = `0 2px 8px ${color}15`;
       }}
     >
-      {meta.icon && (
-        <span className="inline-flex items-center justify-center flex-shrink-0 [&>svg]:w-3 [&>svg]:h-3 sm:[&>svg]:w-3.5 sm:[&>svg]:h-3.5">
-          {meta.icon}
-        </span>
-      )}
-      <span className="font-semibold">{name}</span>
+      {pillContent}
     </span>
   );
 };

@@ -98,10 +98,10 @@ export const ProjectsArchivePage: React.FC = () => {
                   {project.tagline || project.description}
                 </p>
 
-                {/* Tech Tags */}
-                <div className="flex flex-wrap gap-2 mb-6">
+                {/* Tech Tags - Circular rounded icons with tooltips */}
+                <div className="flex flex-wrap items-center gap-2 mb-6">
                   {project.tech.map((t) => (
-                    <TechBadge key={t} name={t} size="sm" />
+                    <TechBadge key={t} name={t} size="sm" variant="circle" />
                   ))}
                 </div>
               </div>
