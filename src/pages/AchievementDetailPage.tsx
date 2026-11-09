@@ -22,6 +22,7 @@ export const AchievementDetailPage: React.FC = () => {
     title: item ? `${item.title} — Achievement by Naresh N` : 'Achievement — Naresh N',
     description: item?.description ?? '',
     path: `/achievements/${slug}`,
+    image: item?.image,
     noindex: !item,
   });
 

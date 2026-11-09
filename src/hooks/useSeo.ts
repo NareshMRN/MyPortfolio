@@ -26,23 +26,53 @@ const meta = (attr: 'name' | 'property', key: string, value: string) =>
 export function useSeo({ title, description, path, image = '/og-image.jpg', noindex = false }: SeoProps) {
     useEffect(() => {
         const url = SITE_URL + path;
-        const img = image.startsWith('http') ? image : SITE_URL + image;
+        
+        // Resolve image URL and prefer WhatsApp-optimized certificate versions if available
+        let resolvedImg = image || '/og-image.jpg';
+        if (resolvedImg.includes('/certificates/') && !resolvedImg.includes('/certificates/og/')) {
+            resolvedImg = resolvedImg.replace('/certificates/', '/certificates/og/');
+        }
+        const img = resolvedImg.startsWith('http') ? resolvedImg : SITE_URL + resolvedImg;
+        const imgType = img.endsWith('.png') ? 'image/png' : 'image/jpeg';
 
+        // Document Title
         document.title = title;
+
+        // Standard Meta
         meta('name', 'description', description);
         meta('name', 'robots', noindex ? 'noindex,follow' : 'index,follow');
+
+        // Open Graph (WhatsApp, Facebook, LinkedIn, Discord)
+        meta('property', 'og:type', 'website');
+        meta('property', 'og:site_name', 'Naresh N');
         meta('property', 'og:title', title);
         meta('property', 'og:description', description);
         meta('property', 'og:url', url);
         meta('property', 'og:image', img);
+        meta('property', 'og:image:secure_url', img);
+        meta('property', 'og:image:type', imgType);
+        meta('property', 'og:image:width', '1200');
+        meta('property', 'og:image:height', '630');
+        meta('property', 'og:image:alt', title);
+
+        // Twitter Cards
+        meta('name', 'twitter:card', 'summary_large_image');
         meta('name', 'twitter:title', title);
         meta('name', 'twitter:description', description);
         meta('name', 'twitter:image', img);
 
+        // Canonical URL
         upsert(
             'link[rel="canonical"]',
             () => { const l = document.createElement('link'); l.rel = 'canonical'; return l; },
             (el) => (el.href = url),
+        );
+
+        // Image Src fallback for WhatsApp and legacy chat bots
+        upsert(
+            'link[rel="image_src"]',
+            () => { const l = document.createElement('link'); l.rel = 'image_src'; return l; },
+            (el) => (el.href = img),
         );
     }, [title, description, path, image, noindex]);
 }

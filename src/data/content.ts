@@ -27,6 +27,7 @@ export interface ProjectItem {
   architectureDetails: string[];
   features: string[];
   tech: string[];
+  image?: string;
   metrics: { label: string; value: string }[];
   links: {
     live?: string;
@@ -62,6 +63,7 @@ export interface HackathonItem {
   result: 'Winner' | 'Finalist' | 'Participant' | string;
   description: string;
   tech: string[];
+  image?: string;
   links: {
     project?: string;
     repo?: string;
@@ -313,6 +315,7 @@ export const PROJECTS: ProjectItem[] = [
       'Admin dashboard with metrics on streams and user activity'
     ],
     tech: ['Flutter', 'Next.js', 'Node.js', 'Express.js', 'MongoDB Atlas', 'Docker', 'Riverpod', 'Zod', 'JWT'],
+    image: '/images/projects/sangeetha.jpg',
     metrics: [
       { label: 'ROLE', value: 'Founder & Sole Dev' },
       { label: 'PLATFORMS', value: 'Android, Web, Admin' },
@@ -352,6 +355,7 @@ export const PROJECTS: ProjectItem[] = [
       'Tamper-evident immutable audit logging with pre-hook protected MongoDB storage'
     ],
     tech: ['Python', 'FastAPI', 'Node.js', 'Express', 'React', 'Redis', 'MongoDB', 'Groq / DeepSeek-R1', 'Alpaca API', 'Docker'],
+    image: '/images/projects/tradevault.jpg',
     metrics: [
       { label: 'HACKATHON', value: '3rd Place Winner' },
       { label: 'FORECASTING', value: 'P10–P90 Quantiles' },
@@ -399,6 +403,7 @@ export const PROJECTS: ProjectItem[] = [
       'Unified restaurant management dashboard for owners and kitchen staff'
     ],
     tech: ['React', 'Node.js', 'Express', 'MongoDB', 'Socket.io', 'Tailwind CSS', 'JavaScript'],
+    image: '/images/projects/tryscan.jpg',
     metrics: [
       { label: 'ORDER FLOW', value: 'Real-time WebSockets' },
       { label: 'WORKFLOW', value: '100% Paperless' },
@@ -438,6 +443,7 @@ export const PROJECTS: ProjectItem[] = [
       'Executed end-to-end Jupyter Notebook on Kaggle with visualizations and business insights report'
     ],
     tech: ['Python', 'Sentence-Transformers', 'FAISS', 'RAG', 'PyTorch', 'Pandas', 'Matplotlib', 'Kaggle'],
+    image: '/images/projects/vector-search.jpg',
     metrics: [
       { label: 'DATASET', value: '100k+ Reviews' },
       { label: 'INDEX', value: 'FAISS IndexFlatIP' },
@@ -477,6 +483,7 @@ export const PROJECTS: ProjectItem[] = [
       'Certified by NIAT Masterclasses in collaboration with EXL Senior GenAI Engineers'
     ],
     tech: ['Python', 'Gradio', 'Stable Diffusion v1.5', 'Qwen 2.5', 'Kaggle GPU', 'PyTorch', 'CLIP'],
+    image: '/images/projects/gradio-image-gen.jpg',
     metrics: [
       { label: 'LEADERBOARD', value: '63rd Rank' },
       { label: 'EVAL CRITERIA', value: 'Prompt + CLIP + UI' },
@@ -516,6 +523,7 @@ export const PROJECTS: ProjectItem[] = [
       'Cached vector index loading with Streamlit session state and conversational memory'
     ],
     tech: ['Python', 'Streamlit', 'LangChain', 'FAISS', 'Groq', 'Sentence-Transformers', 'LangSmith', 'PyPDF'],
+    image: '/images/projects/zyro-rag-challenge.jpg',
     metrics: [
       { label: 'DOCUMENTS', value: '11 Policy PDFs' },
       { label: 'RETRIEVAL', value: 'FAISS + MMR (k=4)' },
@@ -554,6 +562,7 @@ export const PROJECTS: ProjectItem[] = [
       'Accessible responsive interface with audio waveform visualizers'
     ],
     tech: ['JavaScript', 'Web Audio API', 'OpenAI/Groq/Gemini APIs', 'GitHub Pages', 'GitHub Actions'],
+    image: '/images/projects/aira.jpg',
     metrics: [
       { label: 'LATENCY', value: 'Sub-second via Groq' },
       { label: 'PROVIDERS', value: '4 LLM Engines' },
@@ -592,6 +601,7 @@ export const PROJECTS: ProjectItem[] = [
       'Secure backend authentication with free and premium tiers'
     ],
     tech: ['Kotlin', 'Jetpack Compose', 'Node.js', 'Express', 'MongoDB', 'Coroutines'],
+    image: '/images/projects/english-learning-app.jpg',
     metrics: [
       { label: 'PLATFORM', value: 'Native Android' },
       { label: 'UI SYSTEM', value: 'Jetpack Compose' },
@@ -618,7 +628,7 @@ export const ACHIEVEMENTS: AchievementItem[] = [
     result: '3rd Place Winner',
     description:
       'Secured 3rd place in the Build to Ship Hackathon with TradeVault, an autonomous multi-agent quantitative trading and risk governance platform.',
-    image: '',
+    image: '/certificates/Build2Ship_Participants_Sem3.jpg',
     tags: ['Hackathon', 'Multi-Agent AI', 'Quant Trading', 'FastAPI', 'FinTech'],
     details:
       'Awarded 3rd place in the competitive Build to Ship Hackathon for engineering TradeVault. Built an end-to-end multi-agent trading platform featuring Groq DeepSeek-R1 adversarial Bull/Bear debates, Deflated Sharpe Ratio (DSR) and PBO overfitting gates, probabilistic quantile forecasting, fractional Kelly lot sizing, and live Alpaca paper trading with AES-256-GCM zero-trust security.',
@@ -633,7 +643,7 @@ export const ACHIEVEMENTS: AchievementItem[] = [
     result: 'Launched Solo',
     description:
       'Designed, architected, and engineered an entire music streaming and karaoke ecosystem solo from backend to Flutter Android client.',
-    image: '',
+    image: '/images/projects/sangeetha.jpg',
     tags: ['Full Stack', 'Mobile', 'System Architecture'],
     details:
       'Conceived and engineered Sangeetha completely solo. Built a Flutter mobile app with custom karaoke studio and audio recording effects, Next.js web portal and admin dashboard, MongoDB Atlas backend with Zod schema validation, and structured Docker observability.',
@@ -648,7 +658,7 @@ export const ACHIEVEMENTS: AchievementItem[] = [
     result: '67/366 th Rank',
     description:
       'Secured 67th rank on Kaggle by building an automated image generation pipeline for 15 Flipkart products in loop in HD quality using Gradio and Stable Diffusion.',
-    image: '',
+    image: '/certificates/YU_NIAT_Building_LLM_Masterclass.jpg',
     tags: ['Kaggle', 'Gradio', 'Stable Diffusion', 'Generative AI'],
     details:
       'Competed in the NIAT Masterclasses Kaggle competition to synthesize e-commerce product imagery using diffusion models and Qwen 2.5 LLM prompt engineering. Programmed an automated batch loop for 15 Flipkart products evaluated on Prompt Quality (40 pts), Image Quality with CLIP score (40 pts), and Gradio UI (20 pts), ranking 63rd on the final leaderboard.',
@@ -663,7 +673,7 @@ export const ACHIEVEMENTS: AchievementItem[] = [
     result: 'Kaggle Solved',
     description:
       'Built a complete Semantic Search and RAG pipeline with Sentence-Transformers and FAISS IndexFlatIP over 100,000+ Flipkart reviews to retrieve by intent.',
-    image: '',
+    image: '/certificates/YU_NIAT_Vector_Masterclass.jpg',
     tags: ['Kaggle', 'FAISS', 'RAG', 'Sentence-Transformers'],
     details:
       'Overcame the limitations of traditional keyword search on 100,000+ Flipkart customer reviews by engineering dense vector embeddings (SBERT) and FAISS IndexFlatIP vector search. Built a full RAG question-answering pipeline with Precision@K and Recall@K evaluation metrics, EDA visualizations, and an executed Kaggle notebook.',
@@ -678,7 +688,7 @@ export const ACHIEVEMENTS: AchievementItem[] = [
     result: '76/84 th Rank',
     description:
       'Zyro Dynamics HR bot is a AI-powered HR assistant that can answer employee questions about HR policies and procedures.',
-    image: '',
+    image: '/images/projects/zyro-rag-challenge.jpg',
     tags: ['Kaggle', 'RAG', 'Langchain', 'Langsmith', 'AI', 'Streamlit', 'Groq_API_Key', 'Langgraph'],
     details:
       'Zyro Dynamics HR bot is a AI-powered HR assistant that can answer employee questions about HR policies and procedures.',
@@ -703,6 +713,7 @@ export const HACKATHONS: HackathonItem[] = [
     description:
       'Won 3rd Place among competing engineering teams in the Build to Ship Hackathon by architecting TradeVault, an enterprise-grade hybrid multi-agent quantitative trading and statistical forecasting platform with automated Alpaca broker execution and an emergency kill switch.',
     tech: ['Python', 'FastAPI', 'Node.js', 'Express', 'React', 'Groq DeepSeek-R1', 'Redis', 'MongoDB', 'Alpaca API'],
+    image: '/certificates/Build2Ship_Participants_Sem3.jpg',
     links: {
       project: 'https://tradevaultone.vercel.app',
       repo: 'https://github.com/shivannagorkal/Tradint-agent',
@@ -728,6 +739,7 @@ export const HACKATHONS: HackathonItem[] = [
     description:
       'Engineered an interactive voice generation app leveraging Murf.AI speech synthesis APIs and real-time audio playback during the national hackathon organized by Murf AI and NIAT.',
     tech: ['Python', 'FastAPI', 'Web Audio API', 'Murf AI'],
+    image: '/certificates/NIAT_Certificate_Naresh_N__1_.jpg',
     links: {
       project: 'https://thesangeetha.vercel.app/',
       repo: 'https://github.com/NareshMRN',
@@ -746,6 +758,7 @@ export const HACKATHONS: HackathonItem[] = [
     description:
       'Automated batch image synthesis pipeline for 15 Flipkart products in loop in HD quality using Gradio and diffusion models, securing 63rd rank on the global competition leaderboard.',
     tech: ['Kaggle', 'Gradio', 'Generative AI', 'Python'],
+    image: '/certificates/YU_NIAT_Building_LLM_Masterclass.jpg',
     links: {
       project: 'https://www.kaggle.com/nn2007',
       repo: 'https://github.com/NareshMRN',

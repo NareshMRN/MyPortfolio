@@ -26,6 +26,7 @@ export const ProjectDetailPage: React.FC = () => {
     title: project ? `${project.title} — Project by Naresh N` : 'Not found',
     description: project?.description ?? '',
     path: `/projects/${slug}`,
+    image: project?.image,
     noindex: !project,
   });
 

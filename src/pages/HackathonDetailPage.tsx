@@ -24,6 +24,7 @@ export const HackathonDetailPage: React.FC = () => {
     title: item ? `${item.eventName} — Hackathon by Naresh N` : 'Hackathon — Naresh N',
     description: item?.description ?? '',
     path: `/hackathons/${slug}`,
+    image: item?.image,
     noindex: !item,
   });
 

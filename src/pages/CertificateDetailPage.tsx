@@ -22,6 +22,7 @@ export const CertificateDetailPage: React.FC = () => {
     title: item ? `${item.title} — Certificate earned by Naresh N` : 'Certificate — Naresh N',
     description: item?.description ?? '',
     path: `/certificates/${slug}`,
+    image: item?.image,
     noindex: !item,
   });
 
