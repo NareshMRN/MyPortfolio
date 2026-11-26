@@ -36,14 +36,24 @@
   <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
   <link rel="apple-touch-icon" href="/favicon.svg" />
   <link rel="manifest" href="/site.webmanifest" />
+  <!-- AI agent discovery: llms.txt profile + ARD resource catalog -->
+  <link rel="alternate" type="text/markdown" href="/llms.txt" title="LLM-readable profile" />
+  <link rel="ai-catalog" href="/.well-known/ai-catalog.json" />
   <meta name="theme-color" content="#09090b" />
 
-  <!-- Fonts: Bebas Neue (display), Syne (headline), Inter (body), JetBrains Mono (mono), Alex Brush & Great Vibes (signature) -->
+  <!-- Fonts: only the families actually used — Bebas Neue (display), Syne (headline/work titles),
+       Outfit (heading), Cormorant Garamond (hero serif), Inter (body), JetBrains Mono (mono), Alex Brush (signature).
+       Loaded non-render-blocking: preload the CSS, then switch it to a stylesheet once fetched
+       (font-display: swap keeps text visible with fallback fonts meanwhile). -->
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-  <link
-    href="https://fonts.googleapis.com/css2?family=Alex+Brush&family=Allura&family=Bebas+Neue&family=Caveat:wght@500;700&family=Cinzel:wght@400;500;600&family=Cormorant+Garamond:ital,wght@0,300;0,400;0,500;0,600;0,700;1,400&family=Great+Vibes&family=Inter:wght@100;200;300;400;500;600&family=JetBrains+Mono:wght@400;500&family=Outfit:wght@300;400;500;600;700&family=Playfair+Display:ital,wght@0,400;0,600;0,700;0,800;1,400&family=Space+Grotesk:wght@300;400;500;600;700&family=Syne:wght@400;500;600;700;800&display=swap"
-    rel="stylesheet" />
+  <link rel="preload" as="style"
+    href="https://fonts.googleapis.com/css2?family=Alex+Brush&family=Bebas+Neue&family=Cormorant+Garamond:ital,wght@0,300;0,400;0,500;0,600;0,700;1,400&family=Inter:wght@300;400;500;600&family=JetBrains+Mono:wght@400;500&family=Outfit:wght@300;400;500;600;700&family=Syne:wght@400;500;600;700;800&display=swap"
+    onload="this.onload=null;this.rel='stylesheet'" />
+  <noscript>
+    <link rel="stylesheet"
+      href="https://fonts.googleapis.com/css2?family=Alex+Brush&family=Bebas+Neue&family=Cormorant+Garamond:ital,wght@0,300;0,400;0,500;0,600;0,700;1,400&family=Inter:wght@300;400;500;600&family=JetBrains+Mono:wght@400;500&family=Outfit:wght@300;400;500;600;700&family=Syne:wght@400;500;600;700;800&display=swap" />
+  </noscript>
 
   <!-- Open Graph / Facebook / LinkedIn / WhatsApp -->
   <meta property="og:type" content="profile" />

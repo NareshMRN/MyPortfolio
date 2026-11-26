@@ -72,7 +72,7 @@ export const Navbar: React.FC = () => {
           onClick={(e) => handleNavClick(e, 'https://nareshn.me')}
           className="group flex items-center gap-1.5 select-none py-1"
           style={{ color: 'var(--text-primary)' }}
-          aria-label="Naresh Portfolio Home"
+          aria-label="Naresh N — Portfolio Home"
         >
           <span className="font-segoe-script font-bold text-2xl sm:text-3xl tracking-normal transition-all duration-200 group-hover:opacity-80 inline-block leading-none">
             Naresh N

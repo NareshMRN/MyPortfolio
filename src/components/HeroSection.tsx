@@ -3,7 +3,9 @@ import { motion, type Variants } from 'framer-motion';
 import { ArrowDownRight, FileText, Sparkles, Eye, Download } from 'lucide-react';
 import { useTheme } from '../context/ThemeContext';
 import { PERSONAL_INFO } from '../data/content';
-import { ResumeViewerModal } from './ResumeViewerModal';
+
+// Loaded on first open only, keeping it out of the initial bundle
+const ResumeViewerModal = React.lazy(() => import('./ResumeViewerModal'));
 
 
 const containerVariants: Variants = {
@@ -17,12 +19,26 @@ const containerVariants: Variants = {
   },
 };
 
+// Only compositor-friendly properties (opacity/transform) are animated; the previous
+// blur() filter animation forced non-composited repaints on every frame.
 const fadeUpVariants: Variants = {
-  hidden: { opacity: 0, y: 20, filter: 'blur(6px)' },
+  hidden: { opacity: 0, y: 20 },
   visible: {
     opacity: 1,
     y: 0,
-    filter: 'blur(0px)',
+    transition: {
+      duration: 0.8,
+      ease: [0.16, 1, 0.3, 1],
+    },
+  },
+};
+
+// The headline is the Largest Contentful Paint element, so it must be visible on the
+// very first frame (an element at opacity 0 is not counted as painted). It only slides.
+const headlineVariants: Variants = {
+  hidden: { y: 12 },
+  visible: {
+    y: 0,
     transition: {
       duration: 0.8,
       ease: [0.16, 1, 0.3, 1],
@@ -45,6 +61,7 @@ export const HeroSection: React.FC = () => {
   const [typedText, setTypedText] = useState('');
   const [isDeleting, setIsDeleting] = useState(false);
   const [isResumeModalOpen, setIsResumeModalOpen] = useState(false);
+  const [hasOpenedResume, setHasOpenedResume] = useState(false);
 
   useEffect(() => {
     const prefersReducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
@@ -127,64 +144,6 @@ export const HeroSection: React.FC = () => {
       id="hero"
       className="relative min-h-screen w-full flex items-center justify-start overflow-hidden pt-24 sm:pt-28 pb-16 px-3.5 min-[360px]:px-5 sm:px-6 lg:px-8 xl:px-12 transition-colors duration-500"
     >
-      {/* Half Section Diagonal with Shimmering Sharp Silver Dots and Deep Shiny Blue Radiance */}
-
-
-      {/* Hero Portrait Visual (Monochrome high-contrast photo) */}
-      <motion.div
-        initial={{ opacity: 0, x: 25, scale: 0.98 }}
-        animate={{ opacity: 1, x: 0, scale: 1 }}
-        transition={{ duration: 1.2, ease: [0.16, 1, 0.3, 1], delay: 0.15 }}
-        className="absolute right-0 bottom-0 top-0 w-full sm:w-4/5 md:w-3/5 lg:w-[54%] xl:w-[48%] pointer-events-none select-none flex items-end justify-end overflow-hidden z-0"
-        aria-hidden="true"
-      >
-        {/* Subtle Ambient Radial Backlight for depth in dark mode */}
-        <div
-          className="absolute inset-0 pointer-events-none transition-opacity duration-700"
-          style={{
-            background: isDark
-              ? 'radial-gradient(ellipse at 70% 50%, rgba(30, 58, 138, 0.3) 0%, rgba(255, 255, 255, 0.08) 40%, transparent 75%)'
-              : 'radial-gradient(ellipse at 70% 50%, rgba(219, 234, 254, 0.5) 0%, transparent 70%)',
-          }}
-        />
-
-        {/* Portrait Image */}
-        <img
-          src={PERSONAL_INFO.heroPhoto}
-          alt="Naresh N"
-          loading="eager"
-          className={`h-[68vh] sm:h-[78vh] md:h-[86vh] lg:h-[92vh] xl:h-[96vh] w-auto max-w-none object-contain object-right-bottom transition-all duration-700 ${isDark
-            ? 'opacity-25 min-[480px]:opacity-35 sm:opacity-45 md:opacity-95'
-            : 'opacity-25 min-[480px]:opacity-35 sm:opacity-40 md:opacity-100'
-            }`}
-          style={{
-            maskImage:
-              'linear-gradient(to right, transparent 0%, black 18%, black 100%), linear-gradient(to bottom, black 85%, transparent 100%)',
-            WebkitMaskImage:
-              'linear-gradient(to right, transparent 0%, black 18%, black 100%), linear-gradient(to bottom, black 85%, transparent 100%)',
-            maskComposite: 'intersect',
-            WebkitMaskComposite: 'destination-in',
-          }}
-        />
-
-        {/* Seamless Soft Edge Left Mask to guarantee text contrast */}
-        <div
-          className="absolute inset-0 pointer-events-none transition-all duration-500"
-          style={{
-            background: isDark
-              ? 'linear-gradient(to right, var(--bg-primary) 0%, rgba(0, 0, 0, 0.8) 25%, transparent 70%)'
-              : 'linear-gradient(to right, var(--bg-primary) 0%, rgba(255, 255, 255, 0.85) 25%, transparent 70%)',
-          }}
-        />
-
-        {/* Bottom edge soft blend into the next section */}
-        <div
-          className="absolute inset-x-0 bottom-0 h-28 pointer-events-none transition-all duration-500"
-          style={{
-            background: 'linear-gradient(to top, var(--bg-primary) 0%, transparent 100%)',
-          }}
-        />
-      </motion.div>
       {/* Laptop/Desktop Top-Right Corner Status Badge (Hidden on mobile) */}
       <div className="hidden md:inline-flex absolute top-24 sm:top-28 right-6 lg:right-10 xl:right-16 z-20">
         <div
@@ -241,19 +200,19 @@ export const HeroSection: React.FC = () => {
               className={`text-xs sm:text-sm font-mono-code uppercase tracking-[0.14em] min-[380px]:tracking-[0.2em] sm:tracking-[0.28em] font-semibold flex flex-wrap items-center gap-2 sm:gap-2.5 transition-colors duration-300 ${isDark ? 'text-zinc-400' : 'text-zinc-600'
                 }`}
             >
-              <span className={`font-bold tracking-wider text-sm sm:text-base ${isDark ? 'text-emerald-400' : 'text-emerald-600'}`}>
+              <span className={`font-bold tracking-wider text-sm sm:text-base ${isDark ? 'text-emerald-400' : 'text-emerald-700'}`}>
                 NARESH N
               </span>
               <span className={isDark ? 'text-zinc-600' : 'text-zinc-400'}>/</span>
               <Sparkles className="w-3.5 h-3.5 flex-shrink-0 text-amber-400" />
-              <span className={`text-[11px] min-[360px]:text-xs sm:text-sm font-semibold ${isDark ? 'text-emerald-400' : 'text-emerald-600'}`}>
+              <span className={`text-[11px] min-[360px]:text-xs sm:text-sm font-semibold ${isDark ? 'text-emerald-400' : 'text-emerald-700'}`}>
                 {PERSONAL_INFO.title}
               </span>
             </div>
           </motion.div>
 
           {/* Headline: Big, bold serif typography that wraps cleanly & naturally on mobile like reference image */}
-          <motion.div variants={fadeUpVariants} className="relative w-full max-w-full overflow-hidden">
+          <motion.div variants={headlineVariants} className="relative w-full max-w-full overflow-hidden">
             <h1
               className={`font-serif text-[2.75rem] min-[360px]:text-[3.25rem] min-[420px]:text-6xl md:text-7xl lg:text-8xl xl:text-[6.6rem] leading-[1.04] sm:leading-[0.96] tracking-tight uppercase transition-colors duration-300 ${isDark
                 ? 'text-white drop-shadow-[0_4px_20px_rgba(0,0,0,0.95)]'
@@ -303,7 +262,10 @@ export const HeroSection: React.FC = () => {
 
             {/* Custom Interactive Resume Viewer Trigger */}
             <button
-              onClick={() => setIsResumeModalOpen(true)}
+              onClick={() => {
+                setHasOpenedResume(true);
+                setIsResumeModalOpen(true);
+              }}
               className={`group inline-flex items-center justify-center gap-2 px-5 sm:px-6 py-3 sm:py-3.5 rounded-full border text-xs sm:text-sm font-mono-code tracking-wider uppercase transition-all duration-300 cursor-pointer shadow-lg hover:scale-105 ${isDark
                 ? 'border-white/30 bg-white/10 text-white hover:bg-white/20'
                 : 'border-black/25 bg-black/5 text-black hover:bg-black/10'
@@ -332,10 +294,14 @@ export const HeroSection: React.FC = () => {
       </div>
 
       {/* Custom Resume Viewer Modal */}
-      <ResumeViewerModal
-        isOpen={isResumeModalOpen}
-        onClose={() => setIsResumeModalOpen(false)}
-      />
+      {hasOpenedResume && (
+        <React.Suspense fallback={null}>
+          <ResumeViewerModal
+            isOpen={isResumeModalOpen}
+            onClose={() => setIsResumeModalOpen(false)}
+          />
+        </React.Suspense>
+      )}
     </section>
   );
 };

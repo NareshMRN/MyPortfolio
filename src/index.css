@@ -4,7 +4,7 @@
 
 @font-face {
   font-family: 'Nevera';
-  src: url('/fonts/nevera.regular.otf') format('opentype');
+  src: url('/fonts/nevera.regular.woff2') format('woff2'), url('/fonts/nevera.regular.otf') format('opentype');
   font-weight: 100 900;
   font-style: normal;
   font-display: swap;
@@ -28,7 +28,8 @@
 
 @font-face {
   font-family: 'Segoe Script Local';
-  src: local('Segoe Script'), url('/fonts/segoesc.ttf') format('truetype');
+  /* woff2 is a letters-only subset (~18 KB vs 590 KB TTF) — used only for the navbar logo */
+  src: local('Segoe Script'), url('/fonts/segoesc.woff2') format('woff2');
   font-weight: normal;
   font-style: normal;
   font-display: swap;
@@ -36,7 +37,7 @@
 
 @font-face {
   font-family: 'Segoe Script Local';
-  src: local('Segoe Script Bold'), url('/fonts/segoescb.ttf') format('truetype');
+  src: local('Segoe Script Bold'), url('/fonts/segoescb.woff2') format('woff2');
   font-weight: bold;
   font-style: normal;
   font-display: swap;
@@ -66,7 +67,8 @@
   --border-strong: rgba(255, 255, 255, 0.28);
   --text-primary: #ffffff;
   --text-secondary: #a1a1aa;
-  --text-muted: #71717a;
+  /* #8b8b94 keeps >= 4.5:1 contrast on the near-black backgrounds (WCAG AA) */
+  --text-muted: #8b8b94;
   --accent-contrast: #ffffff;
   --accent-contrast-inv: #000000;
   --video-mask: linear-gradient(to right, #000000 0%, rgba(0, 0, 0, 0.92) 36%, rgba(0, 0, 0, 0.65) 70%, rgba(0, 0, 0, 0.15) 100%);
@@ -258,6 +260,29 @@ body {
   font-family: 'Syne', var(--font-headline);
   font-weight: 800;
   letter-spacing: 0.035em;
+}
+
+/* Skills artwork idle float — transform-only so it runs on the compositor */
+@keyframes skills-idle-float {
+  0%,
+  100% {
+    transform: translateY(-3px);
+  }
+
+  50% {
+    transform: translateY(3px);
+  }
+}
+
+.skills-idle-float {
+  animation: skills-idle-float 6s ease-in-out infinite;
+  will-change: transform;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .skills-idle-float {
+    animation: none;
+  }
 }
 
 /* Hairline borders */

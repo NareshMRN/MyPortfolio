@@ -357,17 +357,24 @@ export const ProjectsSection: React.FC = () => {
         </div>
 
         {/* Thumbnail Dots Bar */}
-        <div className="flex items-center justify-center gap-2.5 mt-8">
+        <div className="flex flex-wrap items-center justify-center gap-1 mt-6">
           {PROJECTS.map((p, idx) => (
             <button
               key={p.id}
+              type="button"
               onClick={() => setCurrentIndex(idx)}
               aria-label={`Go to project ${p.title}`}
-              className={`h-2 transition-all duration-300 rounded-full cursor-pointer ${idx === currentIndex ? 'w-9' : 'w-2.5 hover:opacity-80'}`}
-              style={{
-                backgroundColor: idx === currentIndex ? 'var(--text-primary)' : 'var(--border-strong)',
-              }}
-            />
+              aria-current={idx === currentIndex ? 'true' : undefined}
+              className="group flex items-center justify-center min-w-6 h-6 px-1 cursor-pointer"
+            >
+              {/* Small visual dot; the button itself provides a 24px touch target */}
+              <span
+                className={`block h-2 transition-all duration-300 rounded-full ${idx === currentIndex ? 'w-9' : 'w-2.5 group-hover:opacity-80'}`}
+                style={{
+                  backgroundColor: idx === currentIndex ? 'var(--text-primary)' : 'var(--border-strong)',
+                }}
+              />
+            </button>
           ))}
         </div>
 

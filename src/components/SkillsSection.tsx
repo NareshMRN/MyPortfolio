@@ -27,58 +27,24 @@ interface PlacedSkill {
 }
 
 /* -------------------------------------------------------------------------- */
-/*  Deterministic Seeded PRNG (Mulberry32) for stable reload placement        */
-/* -------------------------------------------------------------------------- */
-function createSeededRandom(seed: number) {
-  let s = seed;
-  return function () {
-    s |= 0;
-    s = (s + 0x6d2b79f5) | 0;
-    let t = Math.imul(s ^ (s >>> 15), 1 | s);
-    t = t + Math.imul(t ^ (t >>> 7), 61 | t) ^ t;
-    return ((t ^ (t >>> 14)) >>> 0) / 4294967296;
-  };
-}
-
-/* -------------------------------------------------------------------------- */
-/*  Verified Non-Overlapping Brain Positions (minDist >= 0.0619)             */
+/*  Verified Non-Overlapping Brain Positions                                  */
+/*  Precomputed offline from the artwork's bright brain pixels, maximising    */
+/*  the minimum Chebyshev (square) spacing: >= 0.0524 of the container width, */
+/*  so square touch targets never overlap (>= 24px apart on a 412px phone).   */
 /* -------------------------------------------------------------------------- */
 const VERIFIED_BRAIN_POSITIONS: { x: number; y: number }[] = [
-  { x: 0.3020, y: 0.3488 },
-  { x: 0.3532, y: 0.3177 },
-  { x: 0.5482, y: 0.3267 },
-  { x: 0.4595, y: 0.2895 },
-  { x: 0.6580, y: 0.2942 },
-  { x: 0.3020, y: 0.2867 },
-  { x: 0.5981, y: 0.2936 },
-  { x: 0.6278, y: 0.4138 },
-  { x: 0.4453, y: 0.3894 },
-  { x: 0.5316, y: 0.3842 },
-  { x: 0.3545, y: 0.3777 },
-  { x: 0.5966, y: 0.3622 },
-  { x: 0.5177, y: 0.2751 },
-  { x: 0.4002, y: 0.2803 },
-  { x: 0.6561, y: 0.3543 },
-  { x: 0.4941, y: 0.4880 },
-  { x: 0.4077, y: 0.3427 },
-  { x: 0.6257, y: 0.2255 },
-  { x: 0.5702, y: 0.4302 },
-  { x: 0.3950, y: 0.4220 },
-  { x: 0.4983, y: 0.2184 },
-  { x: 0.3489, y: 0.2493 },
-  { x: 0.5677, y: 0.2419 },
-  { x: 0.4349, y: 0.2314 },
-  { x: 0.4603, y: 0.1720 },
-  { x: 0.5483, y: 0.1851 },
-  { x: 0.3425, y: 0.1896 },
-  { x: 0.4004, y: 0.1738 },
-  { x: 0.4909, y: 0.4282 },
-  { x: 0.6122, y: 0.4730 },
-  { x: 0.4406, y: 0.4611 },
-  { x: 0.3298, y: 0.4341 },
-  { x: 0.4854, y: 0.3436 },
-  { x: 0.3765, y: 0.4791 },
-  { x: 0.5541, y: 0.4880 },
+  { x: 0.4429, y: 0.1690 }, { x: 0.5119, y: 0.1690 }, { x: 0.3833, y: 0.1714 },
+  { x: 0.5857, y: 0.1810 }, { x: 0.3238, y: 0.1905 }, { x: 0.6595, y: 0.2071 },
+  { x: 0.4381, y: 0.2310 }, { x: 0.5143, y: 0.2333 }, { x: 0.5905, y: 0.2405 },
+  { x: 0.3810, y: 0.2429 }, { x: 0.3262, y: 0.2452 }, { x: 0.6595, y: 0.2619 },
+  { x: 0.4476, y: 0.2929 }, { x: 0.5095, y: 0.2952 }, { x: 0.2976, y: 0.3000 },
+  { x: 0.3929, y: 0.3000 }, { x: 0.5833, y: 0.3024 }, { x: 0.6571, y: 0.3262 },
+  { x: 0.3452, y: 0.3548 }, { x: 0.5262, y: 0.3595 }, { x: 0.5857, y: 0.3667 },
+  { x: 0.4690, y: 0.3690 }, { x: 0.4071, y: 0.3786 }, { x: 0.6405, y: 0.3810 },
+  { x: 0.3524, y: 0.4095 }, { x: 0.2976, y: 0.4167 }, { x: 0.5833, y: 0.4238 },
+  { x: 0.4714, y: 0.4262 }, { x: 0.5262, y: 0.4286 }, { x: 0.4071, y: 0.4381 },
+  { x: 0.3524, y: 0.4643 }, { x: 0.2976, y: 0.4786 }, { x: 0.5738, y: 0.4810 },
+  { x: 0.5190, y: 0.4857 }, { x: 0.4619, y: 0.4881 },
 ];
 
 export const SkillsSection: React.FC = () => {
@@ -135,179 +101,17 @@ export const SkillsSection: React.FC = () => {
     return list;
   }, []);
 
-  // Placed skills initialized immediately with guaranteed non-overlapping coordinates (0ms layout shift)
-  const [placedSkills, setPlacedSkills] = useState<PlacedSkill[]>(() => {
-    return allSkills.map((s, idx) => {
-      const pos = VERIFIED_BRAIN_POSITIONS[idx] || { x: 0.5, y: 0.35 };
-      return {
-        ...s,
-        xPercent: pos.x * 100,
-        yPercent: pos.y * 100,
-      };
-    });
-  });
-
-  /* -------------------------------------------------------------------------- */
-  /*  IMAGE SAMPLING & ORGANIC RELAXED SKILL PLACEMENT                          */
-  /* -------------------------------------------------------------------------- */
-  useEffect(() => {
-    let isCancelled = false;
-    const img = new Image();
-    img.src = '/images/Cybernetic_Mind_in_Profile.png';
-
-    const handlePlacement = (candidatePixels?: { x: number; y: number }[]) => {
-      if (isCancelled) return;
-
-      const total = allSkills.length;
-      const rng = createSeededRandom(1337);
-      const chosenCoords: { x: number; y: number }[] = [];
-
-      if (candidatePixels && candidatePixels.length > total * 2) {
-        let minDist = 0.068;
-        const maxAttempts = 30;
-
-        for (let attempt = 0; attempt < maxAttempts && chosenCoords.length < total; attempt++) {
-          chosenCoords.length = 0;
-          const pool = [...candidatePixels].sort(() => rng() - 0.5);
-
-          for (const cand of pool) {
-            let tooClose = false;
-            for (const picked of chosenCoords) {
-              const dx = (cand.x - picked.x);
-              const dy = cand.y - picked.y;
-              if (dx * dx + dy * dy < minDist * minDist) {
-                tooClose = true;
-                break;
-              }
-            }
-
-            if (!tooClose) {
-              chosenCoords.push({ ...cand });
-              if (chosenCoords.length >= total) break;
-            }
-          }
-
-          minDist *= 0.96;
-        }
-
-        // Fill any remaining points by selecting candidates that maximize distance to all chosen points (MaxMin)
-        while (chosenCoords.length < total) {
-          let bestCand: { x: number; y: number } | null = null;
-          let maxDist = -1;
-          for (const cand of candidatePixels) {
-            let dMin = 999;
-            for (const p of chosenCoords) {
-              const d = Math.hypot(cand.x - p.x, cand.y - p.y);
-              if (d < dMin) dMin = d;
-            }
-            if (dMin > maxDist) {
-              maxDist = dMin;
-              bestCand = { ...cand };
-            }
-          }
-          if (bestCand) chosenCoords.push(bestCand);
-          else break;
-        }
-
-        // Force-directed repulsion relaxation loop: guarantees healthy air gap between every badge
-        const targetDist = 0.061;
-        for (let iter = 0; iter < 60; iter++) {
-          for (let i = 0; i < chosenCoords.length; i++) {
-            for (let j = i + 1; j < chosenCoords.length; j++) {
-              const dx = chosenCoords[i].x - chosenCoords[j].x;
-              const dy = chosenCoords[i].y - chosenCoords[j].y;
-              const dist = Math.hypot(dx, dy);
-              if (dist < targetDist && dist > 0.0001) {
-                const push = (targetDist - dist) * 0.48;
-                const nx = (dx / dist) * push;
-                const ny = (dy / dist) * push;
-                chosenCoords[i].x += nx;
-                chosenCoords[i].y += ny;
-                chosenCoords[j].x -= nx;
-                chosenCoords[j].y -= ny;
-              }
-            }
-          }
-          // Constrain strictly within brain boundaries
-          for (const p of chosenCoords) {
-            p.x = Math.max(BRAIN_REGION.xMin + 0.012, Math.min(BRAIN_REGION.xMax - 0.012, p.x));
-            p.y = Math.max(BRAIN_REGION.yMin + 0.012, Math.min(BRAIN_REGION.yMax - 0.012, p.y));
-          }
-        }
-      }
-
-      const finalPositions =
-        chosenCoords.length >= total
-          ? chosenCoords.slice(0, total)
-          : VERIFIED_BRAIN_POSITIONS;
-
-      const placed: PlacedSkill[] = allSkills.map((s, idx) => {
-        const pos = finalPositions[idx] || { x: 0.5, y: 0.35 };
-        return {
-          ...s,
-          xPercent: pos.x * 100,
-          yPercent: pos.y * 100,
-        };
-      });
-
-      setPlacedSkills(placed);
-    };
-
-    img.onload = () => {
-      try {
-        const canvas = document.createElement('canvas');
-        const size = 420;
-        canvas.width = size;
-        canvas.height = size;
-        const ctx = canvas.getContext('2d');
-
-        if (!ctx) {
-          handlePlacement();
-          return;
-        }
-
-        ctx.drawImage(img, 0, 0, size, size);
-        const imgData = ctx.getImageData(0, 0, size, size).data;
-
-        const { xMin, xMax, yMin, yMax } = BRAIN_REGION;
-        const minPxX = Math.floor(xMin * size);
-        const maxPxX = Math.floor(xMax * size);
-        const minPxY = Math.floor(yMin * size);
-        const maxPxY = Math.floor(yMax * size);
-
-        const brightCandidates: { x: number; y: number }[] = [];
-
-        for (let py = minPxY; py < maxPxY; py += 2) {
-          for (let px = minPxX; px < maxPxX; px += 2) {
-            const idx = (py * size + px) * 4;
-            const r = imgData[idx];
-            const g = imgData[idx + 1];
-            const b = imgData[idx + 2];
-            const brightness = (r + g + b) / 3;
-
-            if (brightness > 60) {
-              brightCandidates.push({
-                x: px / size,
-                y: py / size,
-              });
-            }
-          }
-        }
-
-        handlePlacement(brightCandidates);
-      } catch {
-        handlePlacement();
-      }
-    };
-
-    img.onerror = () => {
-      handlePlacement();
-    };
-
-    return () => {
-      isCancelled = true;
-    };
-  }, [allSkills]);
+  // Skills are placed on precomputed, verified non-overlapping brain coordinates.
+  // (Previously the 1.1 MB artwork was re-downloaded and pixel-sampled on a canvas at
+  // runtime, which cost main-thread time and a forced getImageData readback.)
+  const placedSkills = useMemo<PlacedSkill[]>(
+    () =>
+      allSkills.map((s, idx) => {
+        const pos = VERIFIED_BRAIN_POSITIONS[idx] || { x: 0.5, y: 0.35 };
+        return { ...s, xPercent: pos.x * 100, yPercent: pos.y * 100 };
+      }),
+    [allSkills]
+  );
 
   // Handle keyboard Escape to dismiss active tooltip
   useEffect(() => {
@@ -439,26 +243,23 @@ export const SkillsSection: React.FC = () => {
           {/* Mobile Display Scale Wrapper (Bit bigger on mobile, 1:1 on large devices) */}
           <div className="relative w-full h-full flex items-center justify-center scale-[1.18] sm:scale-100 origin-center transition-transform duration-300">
             {/* Subtle Idle Float Wrapper */}
-            <motion.div
-              className="relative w-full h-full flex items-center justify-center"
-              animate={prefersReducedMotion ? {} : { y: [-3, 3, -3] }}
-            transition={{
-              duration: 6,
-              repeat: Infinity,
-              ease: 'easeInOut',
-            }}
-          >
+            {/* CSS keyframe float (compositor-only) instead of a JS-driven infinite loop,
+                which recalculated styles for all 35 badges every frame */}
+            <div className="relative w-full h-full flex items-center justify-center skills-idle-float">
             {/* Center Line Art Image */}
             <img
-              src="/images/Cybernetic_Mind_in_Profile.png"
+              src="/images/Cybernetic_Mind_in_Profile-800.webp"
+              srcSet="/images/Cybernetic_Mind_in_Profile-480.webp 480w, /images/Cybernetic_Mind_in_Profile-800.webp 800w, /images/Cybernetic_Mind_in_Profile-1254.webp 1254w"
+              sizes="(min-width: 1536px) 1300px, (min-width: 1280px) 1200px, (min-width: 1024px) 1060px, (min-width: 768px) 900px, (min-width: 640px) 760px, 100vw"
               alt="Cybernetic Mind in Profile"
-              className="w-full h-full object-contain pointer-events-none transition-all duration-500"
+              className="w-full h-full object-contain pointer-events-none transition-[filter] duration-500"
               style={{
                 mixBlendMode: theme === 'dark' ? 'screen' : 'multiply',
                 filter: theme === 'dark' ? 'none' : 'invert(1)',
               }}
               width={1254}
               height={1254}
+              loading="lazy"
               decoding="async"
             />
 
@@ -512,7 +313,10 @@ export const SkillsSection: React.FC = () => {
                       delay: prefersReducedMotion ? 0 : sIdx * 0.015,
                       duration: 0.3,
                     }}
-                    className="relative w-7 h-7 min-[380px]:w-8 min-[380px]:h-8 sm:w-9 sm:h-9 md:w-10 md:h-10 lg:w-12 lg:h-12 xl:w-14 xl:h-14 rounded-full flex items-center justify-center cursor-pointer outline-none transition-all duration-200 border backdrop-blur-md shadow-md group"
+                    // Sizes stay below the minimum centre-to-centre spacing of the brain
+                    // positions (~0.06 × container width) at every breakpoint, so no two
+                    // targets overlap (WCAG 2.5.8 target size / Lighthouse target-size).
+                    className="relative w-6 h-6 sm:w-8 sm:h-8 md:w-10 md:h-10 lg:w-12 lg:h-12 xl:w-14 xl:h-14 rounded-full flex items-center justify-center cursor-pointer outline-none transition-all duration-200 border backdrop-blur-md shadow-md group"
                     style={{
                       backgroundColor:
                         theme === 'dark'
@@ -533,7 +337,7 @@ export const SkillsSection: React.FC = () => {
                     )}
 
                     {/* Brand SVG / Image Icon */}
-                    <span className="w-full h-full p-1.5 min-[380px]:p-2 flex items-center justify-center shrink-0 transition-transform group-hover:scale-110 [&>svg]:w-full [&>svg]:h-full [&>svg]:max-w-full [&>svg]:max-h-full [&>img]:w-full [&>img]:h-full [&>img]:max-w-full [&>img]:max-h-full [&>img]:object-contain">
+                    <span className="w-full h-full p-1 sm:p-1.5 md:p-2 flex items-center justify-center shrink-0 transition-transform group-hover:scale-110 [&>svg]:w-full [&>svg]:h-full [&>svg]:max-w-full [&>svg]:max-h-full [&>img]:w-full [&>img]:h-full [&>img]:max-w-full [&>img]:max-h-full [&>img]:object-contain">
                       {skill.icon}
                     </span>
                   </motion.button>
@@ -622,7 +426,7 @@ export const SkillsSection: React.FC = () => {
                 </div>
               );
             })}
-          </motion.div>
+          </div>
         </div>
       </div>
 

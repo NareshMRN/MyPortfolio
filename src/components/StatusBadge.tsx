@@ -16,7 +16,7 @@ export const StatusBadge: React.FC<StatusBadgeProps> = ({
   const isInProgress = norm.includes('progress');
 
   const colorClasses = isLive
-    ? 'border-emerald-500 text-emerald-600 dark:text-emerald-400 dark:border-emerald-400'
+    ? 'border-emerald-500 text-emerald-700 dark:text-emerald-400 dark:border-emerald-400'
     : isInProgress
     ? 'border-amber-500 text-amber-600 dark:text-amber-400 dark:border-amber-400'
     : 'border-zinc-400 text-zinc-700 dark:text-zinc-300 dark:border-zinc-500';

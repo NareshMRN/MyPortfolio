@@ -52,7 +52,7 @@ He is distinguished by end-to-end full-stack velocity combined with rigorous sys
   - Redis cache stores ephemeral streaming quotes and message broker queues for decoupled micro-agents.
 
 ### 2.3 High-Throughput Vector Search Engine (100k Reviews)
-- **Live URL**: https://nareshn.me/projects/vector-search-engine
+- **Live URL**: https://nareshn.me/projects/vector-search
 - **Role**: Systems & ML Engineer
 - **Architecture**:
   - Encodes 100,000+ unstructured product reviews using `all-MiniLM-L6-v2` dense embeddings (384 dimensions).
@@ -60,7 +60,7 @@ He is distinguished by end-to-end full-stack velocity combined with rigorous sys
   - Dockerized FastAPI backend exposing normalized vector search endpoints with cosine similarity thresholding and metadata filtering.
 
 ### 2.4 Zyro Dynamics HR Help Desk RAG Assistant
-- **Live URL**: https://nareshn.me/projects/zyro-dynamics
+- **Live URL**: https://nareshn.me/projects/zyro-rag-challenge
 - **Role**: AI Engineer
 - **Architecture**:
   - Indexes 11 voluminous corporate policy handbooks, health benefits manuals, and legal compliance documents.

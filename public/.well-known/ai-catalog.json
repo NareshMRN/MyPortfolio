@@ -1,0 +1,38 @@
+{
+  "specVersion": "1.0",
+  "entries": [
+    {
+      "identifier": "urn:air:nareshn.me:docs:llms-txt",
+      "displayName": "Naresh N — LLM profile (llms.txt)",
+      "type": "text/markdown",
+      "url": "https://nareshn.me/llms.txt",
+      "description": "Concise machine-readable profile of Naresh N, Full Stack & AI/ML Developer: identity, skills, projects, awards and key page links.",
+      "representativeQueries": [
+        "Who is Naresh N?",
+        "What projects has Naresh N built?",
+        "How can I contact Naresh N?"
+      ]
+    },
+    {
+      "identifier": "urn:air:nareshn.me:docs:llms-full-txt",
+      "displayName": "Naresh N — full knowledge base (llms-full.txt)",
+      "type": "text/markdown",
+      "url": "https://nareshn.me/llms-full.txt",
+      "description": "Comprehensive long-form knowledge base covering every project, achievement, hackathon and certification on nareshn.me.",
+      "representativeQueries": [
+        "Explain the architecture of Sangeetha",
+        "List Naresh N's certifications and hackathon results"
+      ]
+    },
+    {
+      "identifier": "urn:air:nareshn.me:docs:sitemap",
+      "displayName": "nareshn.me sitemap",
+      "type": "application/xml",
+      "url": "https://nareshn.me/sitemap.xml",
+      "description": "XML sitemap listing every crawlable page on nareshn.me.",
+      "representativeQueries": [
+        "List all pages on nareshn.me"
+      ]
+    }
+  ]
+}

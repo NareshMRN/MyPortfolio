@@ -12,7 +12,11 @@ import {
 } from '../data/content';
 import { GlassCard } from './GlassCard';
 import { TechBadge } from './TechBadge';
-import { CertificateTerminalModal } from './CertificateTerminalModal';
+
+// Loaded on first open only, keeping it out of the initial bundle
+const CertificateTerminalModal = React.lazy(() =>
+  import('./CertificateTerminalModal').then((m) => ({ default: m.CertificateTerminalModal }))
+);
 
 interface AchievementsSectionProps {
   limitAchievements?: number;
@@ -27,6 +31,10 @@ export const AchievementsSection: React.FC<AchievementsSectionProps> = ({
 }) => {
   const [activeTab, setActiveTab] = useState<'achievements' | 'hackathons' | 'certificates'>('achievements');
   const [selectedCert, setSelectedCert] = useState<CertificateItem | null>(null);
+  // Mount the (lazy) modal once a certificate has been opened, then keep it mounted
+  // so its exit animation still plays on close.
+  const hasOpenedCert = useRef(false);
+  if (selectedCert) hasOpenedCert.current = true;
 
   const tabsContainerRef = useRef<HTMLDivElement>(null);
   const [canScrollRight, setCanScrollRight] = useState(true);
@@ -111,7 +119,7 @@ export const AchievementsSection: React.FC<AchievementsSectionProps> = ({
                     }}
                     className="relative px-5 py-2 rounded-full text-xs font-mono-code uppercase tracking-wider transition-colors duration-200 cursor-pointer shrink-0 whitespace-nowrap"
                     style={{
-                      color: isActive ? 'var(--text-primary)' : 'var(--text-muted)',
+                      color: isActive ? 'var(--text-primary)' : 'var(--text-secondary)',
                     }}
                   >
                     {isActive && (
@@ -179,7 +187,7 @@ export const AchievementsSection: React.FC<AchievementsSectionProps> = ({
 
                       {/* Header: Large Year & Result Badge */}
                       <div className="flex items-center justify-between mb-4">
-                        <span className="font-work-title text-3xl sm:text-5xl tracking-tight opacity-35 font-extrabold" style={{ color: 'var(--text-primary)' }}>
+                        <span className="font-work-title text-3xl sm:text-5xl tracking-tight opacity-60 font-extrabold" style={{ color: 'var(--text-primary)' }}>
                           {item.year}
                         </span>
                         {item.result && (
@@ -466,10 +474,14 @@ export const AchievementsSection: React.FC<AchievementsSectionProps> = ({
         </div>
 
         {/* Certificate Lightbox Modal - Theme-Adaptive Terminal Viewer */}
-        <CertificateTerminalModal
-          certificate={selectedCert}
-          onClose={() => setSelectedCert(null)}
-        />
+        {hasOpenedCert && (
+          <React.Suspense fallback={null}>
+            <CertificateTerminalModal
+              certificate={selectedCert}
+              onClose={() => setSelectedCert(null)}
+            />
+          </React.Suspense>
+        )}
       </div>
     </section>
   );

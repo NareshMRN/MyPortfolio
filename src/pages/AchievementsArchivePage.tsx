@@ -60,7 +60,7 @@ export const AchievementsArchivePage: React.FC = () => {
 
               <div>
                 <div className="flex items-center justify-between mb-4">
-                  <span className="font-work-title text-3xl sm:text-4xl tracking-tight opacity-35 font-extrabold" style={{ color: 'var(--text-primary)' }}>
+                  <span className="font-work-title text-3xl sm:text-4xl tracking-tight opacity-60 font-extrabold" style={{ color: 'var(--text-primary)' }}>
                     {item.year}
                   </span>
                   {item.result && (

@@ -2,7 +2,9 @@ import React, { useRef, useState, useEffect } from 'react';
 import { motion, useInView } from 'framer-motion';
 import { ABOUT_CONTENT, PERSONAL_INFO } from '../data/content';
 import { GlassCard } from './GlassCard';
-import { PhotoViewerModal } from './PhotoViewerModal';
+
+// Loaded on first open only, keeping it out of the initial bundle
+const PhotoViewerModal = React.lazy(() => import('./PhotoViewerModal'));
 
 /* ------------------------------------------------------------------ */
 /*  Animated Counter – Counts up from 0 when scrolled into view       */
@@ -71,6 +73,7 @@ const TiltPhoto: React.FC = () => {
   const frameRef = useRef<HTMLDivElement>(null);
   const [tilt, setTilt] = useState({ x: 0, y: 0 });
   const [isModalOpen, setIsModalOpen] = useState(false);
+  const [hasOpenedModal, setHasOpenedModal] = useState(false);
 
   const handleMouseMove = (e: React.MouseEvent<HTMLDivElement>) => {
     if (!frameRef.current) return;
@@ -90,7 +93,10 @@ const TiltPhoto: React.FC = () => {
         ref={frameRef}
         onMouseMove={handleMouseMove}
         onMouseLeave={handleMouseLeave}
-        onClick={() => setIsModalOpen(true)}
+        onClick={() => {
+          setHasOpenedModal(true);
+          setIsModalOpen(true);
+        }}
         className="relative w-full max-w-[340px] min-[400px]:max-w-[375px] sm:max-w-sm mx-auto cursor-pointer"
         style={{ perspective: '800px' }}
       >
@@ -104,7 +110,9 @@ const TiltPhoto: React.FC = () => {
           }}
         >
           {/* Photo */}
-          <div className="aspect-[3/4.25] sm:aspect-[3/4] w-full overflow-hidden">
+          <div className="aspect-[3/4.25] sm:aspect-[3/4] w-full overflow-hidden" data-photo-frame>
+            <picture className="contents">
+              <source srcSet={PERSONAL_INFO.photoWebp} type="image/webp" />
             <img
               src={PERSONAL_INFO.photo}
               alt={`${PERSONAL_INFO.name} portrait`}
@@ -117,8 +125,9 @@ const TiltPhoto: React.FC = () => {
                 // Fallback if photo doesn't exist
                 const target = e.target as HTMLImageElement;
                 target.style.display = 'none';
-                if (target.parentElement) {
-                  target.parentElement.innerHTML = `
+                const frame = target.closest('[data-photo-frame]');
+                if (frame) {
+                  frame.innerHTML = `
                     <div class="w-full h-full flex items-center justify-center" style="background: var(--bg-secondary);">
                       <span class="font-display text-7xl tracking-widest" style="color: var(--text-muted);">${PERSONAL_INFO.name.charAt(0)}</span>
                     </div>
@@ -126,6 +135,7 @@ const TiltPhoto: React.FC = () => {
                 }
               }}
             />
+            </picture>
           </div>
 
           {/* Bottom label */}
@@ -146,7 +156,11 @@ const TiltPhoto: React.FC = () => {
       </div>
 
       {/* Terminal-style Photo Viewer Modal */}
-      <PhotoViewerModal isOpen={isModalOpen} onClose={() => setIsModalOpen(false)} />
+      {hasOpenedModal && (
+        <React.Suspense fallback={null}>
+          <PhotoViewerModal isOpen={isModalOpen} onClose={() => setIsModalOpen(false)} />
+        </React.Suspense>
+      )}
     </>
   );
 };
