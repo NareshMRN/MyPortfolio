@@ -262,6 +262,14 @@ body {
   letter-spacing: 0.035em;
 }
 
+/* Build-time pre-rendered home hero (scripts/prerender-home.mjs). Rendered in the light
+   theme, so hidden for dark-theme visitors and on non-home routes (SPA fallback).
+   This CSS is inlined into the HTML, so the rule applies before first paint. */
+[data-noshell] #hero-shell,
+[data-theme="dark"] #hero-shell {
+  display: none;
+}
+
 /* Skills artwork idle float — transform-only so it runs on the compositor */
 @keyframes skills-idle-float {
   0%,

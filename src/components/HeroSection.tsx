@@ -46,7 +46,14 @@ const headlineVariants: Variants = {
   },
 };
 
+// When the hero was pre-rendered into index.html at build time (or while rendering it
+// at build time), it is already on screen — skip the intro animation so React's mount
+// doesn't hide and re-fade content the visitor can already see.
+const shouldSkipIntro = () =>
+  typeof window === 'undefined' || window.__HERO_PRERENDERED === true;
+
 export const HeroSection: React.FC = () => {
+  const [skipIntro] = useState(shouldSkipIntro);
   const { theme } = useTheme();
   const isDark = theme === 'dark';
 
@@ -172,7 +179,7 @@ export const HeroSection: React.FC = () => {
       <div className="w-full relative z-10 flex flex-col justify-center">
         <motion.div
           variants={containerVariants}
-          initial="hidden"
+          initial={skipIntro ? false : 'hidden'}
           animate="visible"
           className="max-w-3xl xl:max-w-4xl flex flex-col items-start space-y-4 sm:space-y-6 lg:space-y-7"
         >

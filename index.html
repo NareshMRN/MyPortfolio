@@ -1,9 +1,24 @@
 <!DOCTYPE html>
-<html lang="en" data-theme="dark" class="dark">
+<html lang="en" data-theme="light" class="light">
 
 <head>
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1" />
+
+  <!-- Apply the saved theme before first paint (avoids a dark→light flash), and hide the
+       build-time pre-rendered home hero (#hero-shell) where it doesn't apply: on other routes
+       served via the SPA fallback, and for dark-theme visitors (the shell is rendered light). -->
+  <script>
+    (function () {
+      var t = 'light';
+      try { var s = localStorage.getItem('naresh_theme'); if (s === 'dark' || s === 'light') t = s; } catch (e) { }
+      var d = document.documentElement;
+      d.setAttribute('data-theme', t);
+      d.className = t;
+      var p = location.pathname;
+      if (p !== '/' && p !== '/index.html') d.setAttribute('data-noshell', '');
+    })();
+  </script>
 
   <!-- Primary Meta Tags: Optimized for "Naresh N" entity search -->
   <title>Naresh N — Full Stack Developer &amp; AI Engineer | Official Portfolio</title>
@@ -38,6 +53,7 @@
   <link rel="manifest" href="/site.webmanifest" />
   <!-- AI agent discovery: llms.txt profile + ARD resource catalog -->
   <link rel="alternate" type="text/markdown" href="/llms.txt" title="LLM-readable profile" />
+  <link rel="ard" href="/.well-known/ard.json" />
   <link rel="ai-catalog" href="/.well-known/ai-catalog.json" />
   <meta name="theme-color" content="#09090b" />
 

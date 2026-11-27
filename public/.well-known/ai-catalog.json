@@ -31,7 +31,8 @@
       "url": "https://nareshn.me/sitemap.xml",
       "description": "XML sitemap listing every crawlable page on nareshn.me.",
       "representativeQueries": [
-        "List all pages on nareshn.me"
+        "List all pages on nareshn.me",
+        "Which pages does nareshn.me have?"
       ]
     }
   ]
