@@ -636,6 +636,20 @@ export const ACHIEVEMENTS: AchievementItem[] = [
     link: 'https://tradevaultone.vercel.app/',
   },
   {
+    id: 'ach-google-cloud-hacksprint',
+    slug: 'google-cloud-digital-campus-hacksprint',
+    title: 'Participant — Digital Campus 2.0 on Google Cloud #HackSprint',
+    organization: 'Google Cloud × Yenepoya University',
+    year: '2026',
+    result: 'Participant',
+    description:
+      'Participated in the Digital Campus 2.0 on Google Cloud #HackSprint, organised in collaboration with Google Cloud and Yenepoya University.',
+    image: '/certificates/Google_Cloud_Digital_Campus_HackSprint.jpg',
+    tags: ['Hackathon', 'Google Cloud', 'HackSprint', 'Yenepoya University'],
+    details:
+      'Awarded a Certificate of Participation by Google Cloud and Yenepoya School of Engineering & Technology for successfully participating in Digital Campus 2.0 on Google Cloud — the #HackSprint hackathon run in collaboration with Google Cloud and Yenepoya University.',
+  },
+  {
     id: 'ach-1',
     slug: 'solo-founder-sangeetha',
     title: 'Solo Product Founder & Architect — Sangeetha',
@@ -837,6 +851,17 @@ export const CERTIFICATES: CertificateItem[] = [
       'Final Hackathon Outcome: Awarded 3rd Place Winner in the Build to Ship Hackathon',
     ],
     projectLink: 'https://tradevaultone.vercel.app',
+  },
+  {
+    id: 'cert-google-cloud-hacksprint',
+    slug: 'google-cloud-digital-campus-hacksprint',
+    title: 'Digital Campus 2.0 on Google Cloud — #HackSprint',
+    issuer: 'Google Cloud & Yenepoya University',
+    date: '2026',
+    description:
+      'Certificate of Participation awarded by Google Cloud and Yenepoya School of Engineering & Technology for successfully participating in Digital Campus 2.0 on Google Cloud, the #HackSprint hackathon run in collaboration with Google Cloud and Yenepoya University.',
+    image: '/certificates/Google_Cloud_Digital_Campus_HackSprint.jpg',
+    tags: ['Google Cloud', 'HackSprint', 'Hackathon', 'Participant', 'Yenepoya University'],
   },
   {
     id: 'cert-vector-search',

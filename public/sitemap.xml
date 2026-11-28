@@ -110,6 +110,16 @@
     <priority>0.7</priority>
   </url>
   <url>
+    <loc>https://nareshn.me/achievements/google-cloud-digital-campus-hacksprint</loc>
+    <lastmod>2026-11-28</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.7</priority>
+    <image:image>
+      <image:loc>https://nareshn.me/certificates/Google_Cloud_Digital_Campus_HackSprint.jpg</image:loc>
+      <image:title>Naresh N — Digital Campus 2.0 on Google Cloud #HackSprint Certificate of Participation</image:title>
+    </image:image>
+  </url>
+  <url>
     <loc>https://nareshn.me/achievements/solo-founder-sangeetha</loc>
     <lastmod>2026-11-06</lastmod>
     <changefreq>monthly</changefreq>
@@ -160,6 +170,16 @@
     <lastmod>2026-11-06</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.65</priority>
+  </url>
+  <url>
+    <loc>https://nareshn.me/certificates/google-cloud-digital-campus-hacksprint</loc>
+    <lastmod>2026-11-28</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.65</priority>
+    <image:image>
+      <image:loc>https://nareshn.me/certificates/Google_Cloud_Digital_Campus_HackSprint.jpg</image:loc>
+      <image:title>Naresh N — Digital Campus 2.0 on Google Cloud #HackSprint Certificate of Participation</image:title>
+    </image:image>
   </url>
   <url>
     <loc>https://nareshn.me/certificates/vector-search-masterclass</loc>

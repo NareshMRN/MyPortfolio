@@ -17,6 +17,7 @@ import {
 } from 'lucide-react';
 import { Link } from 'react-router-dom';
 import { useTheme } from '../context/ThemeContext';
+import { withThemeTransition } from '../lib/themeTransition';
 import type { CertificateItem } from '../data/content';
 
 interface CertificateTerminalModalProps {
@@ -91,10 +92,9 @@ export const CertificateTerminalModal: React.FC<CertificateTerminalModalProps> =
 
   const toggleTerminalTheme = (e: React.MouseEvent) => {
     e.stopPropagation();
-    // Toggle both local terminal state and synchronize with user preference
-    setLocalTheme((prev) => {
-      const next = (prev ?? theme) === 'dark' ? 'light' : 'dark';
-      return next;
+    // Toggle the terminal's local theme with the same diagonal gradient wipe as the site
+    withThemeTransition(() => {
+      setLocalTheme((prev) => ((prev ?? theme) === 'dark' ? 'light' : 'dark'));
     });
   };
 

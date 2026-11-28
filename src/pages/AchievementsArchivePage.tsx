@@ -1,9 +1,77 @@
 import React, { useEffect } from 'react';
 import { Link } from 'react-router-dom';
-import { ArrowLeft, ArrowRight, Award } from 'lucide-react';
-import { ACHIEVEMENTS } from '../data/content';
+import { ArrowLeft, ArrowRight, Trophy, Medal, BadgeCheck, Rocket, CheckCircle2, Award, type LucideIcon } from 'lucide-react';
+import { ACHIEVEMENTS, type AchievementItem } from '../data/content';
 import { TechBadge } from '../components/TechBadge';
 import { useSeo } from '../hooks/useSeo';
+
+/* ------------------------------------------------------------------ */
+/*  Result badges: each kind of result gets its own metallic finish +  */
+/*  icon. The year coin is always natural gold (YEAR_COIN_FINISH).      */
+/* ------------------------------------------------------------------ */
+interface ResultTier {
+  icon: LucideIcon;
+  /** Metallic finish class (see .metal-* in index.css) */
+  badge: string;
+  /** Top accent bar gradient */
+  accent: string;
+}
+
+/** The year coin keeps one consistent finish on every card. */
+const YEAR_COIN_FINISH = 'metal-gold';
+
+type TierKey = 'gold' | 'silver' | 'bronze' | 'rank' | 'launch' | 'solved' | 'participant' | 'default';
+
+const TIERS: Record<TierKey, ResultTier> = {
+  gold: { icon: Trophy, badge: 'metal-gold', accent: 'from-[#eadbb0] via-[#c9a85f] to-[#eadbb0]' },
+  silver: { icon: Trophy, badge: 'metal-silver', accent: 'from-zinc-200 via-slate-400 to-zinc-200' },
+  bronze: { icon: Trophy, badge: 'metal-bronze', accent: 'from-orange-200 via-amber-600 to-orange-200' },
+  rank: { icon: Medal, badge: 'metal-silver', accent: 'from-zinc-200 via-slate-400 to-zinc-200' },
+  launch: { icon: Rocket, badge: 'metal-amber', accent: 'from-[#FFEAB5] via-[#C99726] to-[#FFEAB5]' },
+  solved: { icon: CheckCircle2, badge: 'metal-champagne', accent: 'from-[#f4e4d2] via-[#c9a581] to-[#f4e4d2]' },
+  participant: { icon: BadgeCheck, badge: 'metal-platinum', accent: 'from-slate-200 via-indigo-300 to-slate-200' },
+  default: { icon: Award, badge: 'metal-platinum', accent: 'from-slate-200 via-indigo-300 to-slate-200' },
+};
+
+/** Medal convention: 1st/winner → gold, 2nd → silver, 3rd → bronze; ranks → silver; warm golds for the rest. */
+function getTier(result?: string): ResultTier {
+  const r = (result || '').toLowerCase();
+  if (/\b(3rd|third)\b/.test(r)) return TIERS.bronze;
+  if (/\b(2nd|second|runner)/.test(r)) return TIERS.silver;
+  if (r.includes('winner') || r.includes('place') || /\b(1st|first)\b/.test(r)) return TIERS.gold;
+  if (r.includes('rank')) return TIERS.rank;
+  if (r.includes('launch')) return TIERS.launch;
+  if (r.includes('solved')) return TIERS.solved;
+  if (r.includes('participant')) return TIERS.participant;
+  return TIERS.default;
+}
+
+/** "67/366 th Rank" → "Rank 67 / 366"; other results pass through unchanged. */
+function formatResult(result: string): string {
+  const rank = result.match(/^\s*(\d+)\s*\/\s*(\d+)\s*(?:st|nd|rd|th)?\s*rank\s*$/i);
+  return rank ? `Rank ${rank[1]} / ${rank[2]}` : result;
+}
+
+/**
+ * Removes text the badge already says: a leading "<result> — " or "67th Rank — "
+ * prefix on the title, e.g. "3rd Place Winner — Build to Ship Hackathon" → "Build to Ship Hackathon".
+ */
+function displayTitle(item: AchievementItem): string {
+  let title = item.title;
+  if (item.result) {
+    const escaped = item.result.replace(/[.*+?^${}()|[\]\\]/g, '\\$&');
+    title = title.replace(new RegExp(`^${escaped}\\s*[—–-]\\s*`, 'i'), '');
+  }
+  return title.replace(/^\d+(?:st|nd|rd|th)\s+rank\s*[—–-]\s*/i, '');
+}
+
+/** Use the lighter 1200px social-preview copy for certificate images (same picture, smaller file). */
+function cardImage(src?: string): string | undefined {
+  if (!src) return undefined;
+  return src.includes('/certificates/') && !src.includes('/certificates/og/')
+    ? src.replace('/certificates/', '/certificates/og/')
+    : src;
+}
 
 export const AchievementsArchivePage: React.FC = () => {
   useSeo({
@@ -42,72 +110,112 @@ export const AchievementsArchivePage: React.FC = () => {
           </p>
         </div>
 
-        <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-          {ACHIEVEMENTS.map((item) => (
-            <div
-              key={item.id}
-              className="group relative rounded-2xl border p-7 flex flex-col justify-between transition-all duration-300 hover:-translate-y-1 hover:shadow-2xl overflow-hidden card-gold-border card-top-line"
-              style={{
-                backgroundColor: 'var(--bg-secondary)',
-                borderColor: 'var(--border-strong)',
-              }}
-            >
-              {/* Top Accent Line: White in dark theme, black in light theme */}
-              <div
-                className="absolute top-0 left-0 right-0 h-[1.5px] pointer-events-none z-20"
-                style={{ backgroundColor: 'var(--card-top-line)' }}
-              />
+        <div className="grid grid-cols-1 md:grid-cols-2 gap-6 lg:gap-7">
+          {ACHIEVEMENTS.map((item) => {
+            const tier = getTier(item.result);
+            const TierIcon = tier.icon;
+            const title = displayTitle(item);
+            // Hide the organisation line when it would just repeat the title
+            const showOrg = item.organization.trim().toLowerCase() !== title.trim().toLowerCase();
+            const image = cardImage(item.image);
 
-              <div>
-                <div className="flex items-center justify-between mb-4">
-                  <span className="font-work-title text-3xl sm:text-4xl tracking-tight opacity-60 font-extrabold" style={{ color: 'var(--text-primary)' }}>
-                    {item.year}
+            return (
+              <article
+                key={item.id}
+                className="group relative rounded-2xl border flex flex-col overflow-hidden transition-all duration-300 hover:-translate-y-1 hover:shadow-2xl"
+                style={{
+                  backgroundColor: 'var(--bg-secondary)',
+                  borderColor: 'var(--border-strong)',
+                }}
+              >
+                {/* Year coin: scalloped natural-gold coin (same on every card), pinned top-right.
+                    The rounded rim turns and breathes; the engraved face stays upright. */}
+                <span
+                  className={`year-coin ${YEAR_COIN_FINISH} absolute top-3 right-3 z-30 font-mono-code`}
+                  role="img"
+                  aria-label={`Year ${item.year}`}
+                >
+                  <span className="year-coin__spin" aria-hidden="true">
+                    <span className="year-coin__edge" />
+                    <span className="year-coin__rim" />
                   </span>
-                  {item.result && (
-                    <span
-                      className="px-3.5 py-1.5 rounded-full text-[10.5px] font-mono-code uppercase tracking-wider border font-bold shadow-sm transition-all"
-                      style={{
-                        borderColor: 'var(--border-strong)',
-                        color: 'var(--text-primary)',
-                        backgroundColor: 'var(--bg-card)',
-                      }}
-                    >
-                      {item.result}
-                    </span>
-                  )}
-                </div>
-
-                <span className="text-[11px] font-mono-code uppercase tracking-wider block mb-1" style={{ color: 'var(--text-muted)' }}>
-                  {item.organization}
+                  <span className="year-coin__face" aria-hidden="true">
+                    <span className="text-[7px] uppercase tracking-[0.18em] leading-none font-bold">Year</span>
+                    <span className="text-[12.5px] font-extrabold leading-tight">{item.year}</span>
+                  </span>
                 </span>
-                <h2 className="font-work-title text-lg min-[400px]:text-xl sm:text-2xl font-bold uppercase tracking-tight mb-3 group-hover:text-white transition-colors break-words" style={{ color: 'var(--text-primary)' }}>
-                  {item.title}
-                </h2>
 
-                <p className="text-xs sm:text-sm leading-relaxed mb-6 font-body" style={{ color: 'var(--text-secondary)' }}>
-                  {item.description}
-                </p>
-              </div>
+                {/* Tier-coloured accent bar */}
+                <div className={`absolute top-0 inset-x-0 h-1 z-20 bg-gradient-to-r ${tier.accent}`} />
 
-              <div className="pt-4 border-t space-y-2" style={{ borderColor: 'var(--border-subtle)' }}>
-                <div className="flex flex-wrap gap-1 min-[360px]:gap-1.5 w-full">
-                  {item.tags.map((t) => (
-                    <TechBadge key={t} name={t} size="sm" />
-                  ))}
-                </div>
-                <div className="flex justify-end">
+                {/* Visual: the certificate / project image */}
+                {image && (
                   <Link
                     to={`/achievements/${item.slug}`}
-                    className="inline-flex items-center gap-1.5 text-xs font-mono-code uppercase tracking-wider hover:underline"
-                    style={{ color: 'var(--text-primary)' }}
+                    className="relative block aspect-[16/8] overflow-hidden border-b"
+                    style={{ borderColor: 'var(--border-subtle)', backgroundColor: 'var(--bg-card)' }}
+                    tabIndex={-1}
+                    aria-hidden="true"
                   >
-                    <span>Details</span>
-                    <ArrowRight className="w-3.5 h-3.5" />
+                    <img
+                      src={image}
+                      alt=""
+                      loading="lazy"
+                      decoding="async"
+                      className="w-full h-full object-cover object-center transition-transform duration-500 group-hover:scale-[1.04]"
+                    />
+                    <div className="absolute inset-0 bg-gradient-to-t from-black/45 via-black/0 to-black/0" />
                   </Link>
+                )}
+
+                <div className="flex flex-col flex-1 p-6 sm:p-7">
+                  {/* Meta row: result badge + organisation · year */}
+                  <div className="flex flex-wrap items-center gap-x-3 gap-y-2 mb-3">
+                    {item.result && (
+                      <span
+                        className={`metal-badge ${tier.badge} inline-flex items-center gap-1.5 px-3.5 py-1.5 rounded-full text-[10.5px] font-mono-code uppercase tracking-wider font-extrabold`}
+                      >
+                        <TierIcon className="relative z-[2] w-3.5 h-3.5" aria-hidden="true" />
+                        <span className="relative z-[2]">{formatResult(item.result)}</span>
+                      </span>
+                    )}
+                    {showOrg && (
+                      <span className="text-[11px] font-mono-code uppercase tracking-wider" style={{ color: 'var(--text-secondary)' }}>
+                        {item.organization}
+                      </span>
+                    )}
+                  </div>
+
+                  <h2 className="font-work-title text-lg min-[400px]:text-xl sm:text-2xl font-bold uppercase tracking-tight mb-3 break-words leading-snug">
+                    <Link to={`/achievements/${item.slug}`} className="hover:underline underline-offset-4 decoration-1" style={{ color: 'var(--text-primary)' }}>
+                      {title}
+                    </Link>
+                  </h2>
+
+                  <p className="text-xs sm:text-sm leading-relaxed mb-6 font-body flex-1" style={{ color: 'var(--text-secondary)' }}>
+                    {item.description}
+                  </p>
+
+                  <div className="pt-4 border-t flex flex-wrap items-center justify-between gap-3" style={{ borderColor: 'var(--border-subtle)' }}>
+                    <div className="flex flex-wrap gap-1 min-[360px]:gap-1.5">
+                      {item.tags.map((t) => (
+                        <TechBadge key={t} name={t} size="sm" />
+                      ))}
+                    </div>
+                    <Link
+                      to={`/achievements/${item.slug}`}
+                      className="inline-flex items-center gap-1.5 text-xs font-mono-code uppercase tracking-wider font-bold hover:underline ml-auto"
+                      style={{ color: 'var(--text-primary)' }}
+                      aria-label={`View details: ${title}`}
+                    >
+                      <span>View details</span>
+                      <ArrowRight className="w-3.5 h-3.5 transition-transform group-hover:translate-x-0.5" />
+                    </Link>
+                  </div>
                 </div>
-              </div>
-            </div>
-          ))}
+              </article>
+            );
+          })}
         </div>
       </div>
     </div>

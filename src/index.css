@@ -270,6 +270,253 @@ body {
   display: none;
 }
 
+/* ------------------------------------------------------------------ */
+/*  Theme switch: diagonal wipe (View Transitions API)                 */
+/*  The new theme is revealed from the top-right corner (the toggle)   */
+/*  sweeping diagonally to the bottom-left. See ThemeContext.tsx.      */
+/* ------------------------------------------------------------------ */
+.theme-switching,
+.theme-switching *,
+.theme-switching *::before,
+.theme-switching *::after {
+  transition: none !important;
+}
+
+::view-transition-old(root),
+::view-transition-new(root) {
+  animation: none;
+  mix-blend-mode: normal;
+}
+
+/* The new theme is revealed through an oversized diagonal gradient mask: opaque toward
+   the top-right, transparent toward the bottom-left, with a soft band in between.
+   Sliding the mask across the viewport sweeps that soft gradient edge diagonally.
+   At 300% size, the start position shows only the transparent end and the end
+   position only the opaque end, so the wipe begins and finishes cleanly. */
+::view-transition-new(root) {
+  -webkit-mask-image: linear-gradient(to bottom left, #000 42%, transparent 58%);
+  mask-image: linear-gradient(to bottom left, #000 42%, transparent 58%);
+  -webkit-mask-size: 300% 300%;
+  mask-size: 300% 300%;
+  -webkit-mask-repeat: no-repeat;
+  mask-repeat: no-repeat;
+  animation: theme-diagonal-wipe 1.1s cubic-bezier(0.65, 0, 0.35, 1) both;
+}
+
+/* Positions are trimmed (13%→87% rather than 0%→100%) so the soft band enters the
+   top-right corner the moment the toggle is clicked and finishes exactly as it leaves
+   the bottom-left corner — no dead time at either end of the animation. */
+@keyframes theme-diagonal-wipe {
+  from {
+    -webkit-mask-position: 13% 87%;
+    mask-position: 13% 87%;
+  }
+
+  to {
+    -webkit-mask-position: 87% 13%;
+    mask-position: 87% 13%;
+  }
+}
+
+/* ------------------------------------------------------------------ */
+/*  Metallic result badges — natural gold finish                       */
+/*  Multi-stop gradients fake a polished-metal surface; inset shadows  */
+/*  give the bevel; ::after is a light glint that sweeps across.       */
+/*  Gradient stops are kept light enough for >= 4.5:1 text contrast.   */
+/* ------------------------------------------------------------------ */
+.metal-badge {
+  position: relative;
+  isolation: isolate;
+  overflow: hidden;
+  background: var(--metal-bg);
+  color: var(--metal-text);
+  border: 1px solid var(--metal-border);
+  box-shadow:
+    inset 0 1px 0 rgba(255, 255, 255, 0.55),
+    inset 0 -1px 0 rgba(0, 0, 0, 0.12),
+    0 2px 10px var(--metal-glow);
+  text-shadow: 0 1px 0 rgba(255, 255, 255, 0.45);
+}
+
+.metal-badge::after {
+  content: '';
+  position: absolute;
+  top: -30%;
+  bottom: -30%;
+  left: -60%;
+  width: 60%;
+  background: linear-gradient(100deg, transparent 0%, rgba(255, 255, 255, 0.32) 50%, transparent 100%);
+  transform: translateX(0) skewX(-20deg);
+  animation: metal-shine 3.8s ease-in-out infinite;
+  pointer-events: none;
+  z-index: 1;
+}
+
+@keyframes metal-shine {
+  0%,
+  55% {
+    transform: translateX(0) skewX(-20deg);
+  }
+
+  100% {
+    transform: translateX(480%) skewX(-20deg);
+  }
+}
+
+.metal-gold {
+  /* Natural, softly polished gold — the single finish for all badges and coins */
+  --metal-bg: linear-gradient(135deg, #eadbb0 0%, #d2b679 30%, #f3e8c8 52%, #cdb070 74%, #e4d1a0 100%);
+  --metal-text: #3b2c0c;
+  --metal-border: #b39552;
+  --metal-glow: rgba(196, 160, 82, 0.28);
+}
+
+/* Result-badge finishes (the year coin always stays .metal-gold) */
+.metal-silver {
+  --metal-bg: linear-gradient(135deg, #f5f6f8 0%, #bfc4cc 28%, #ffffff 50%, #aeb4be 72%, #e6e8ec 100%);
+  --metal-text: #1f2329;
+  --metal-border: #9aa1ad;
+  --metal-glow: rgba(160, 170, 185, 0.35);
+}
+
+.metal-bronze {
+  --metal-bg: linear-gradient(135deg, #f6cfa9 0%, #d08e54 28%, #ffe0c2 50%, #c47e44 72%, #ebb586 100%);
+  --metal-text: #3a1d07;
+  --metal-border: #a9652b;
+  --metal-glow: rgba(205, 127, 50, 0.35);
+}
+
+/* Amber gold — the rich gold of the section headings (.gold-gradient-text) */
+.metal-amber {
+  --metal-bg: linear-gradient(135deg, #fbe3a3 0%, #e2b545 28%, #fff0c8 50%, #d9a93c 72%, #f2d07c 100%);
+  --metal-text: #2e1f03;
+  --metal-border: #b88928;
+  --metal-glow: rgba(229, 184, 66, 0.32);
+}
+
+/* Champagne — soft warm gold with a hint of rose */
+.metal-champagne {
+  --metal-bg: linear-gradient(135deg, #f4e4d2 0%, #dcbf9f 28%, #fcf3e8 50%, #d3b392 72%, #ecd8c1 100%);
+  --metal-text: #3a2615;
+  --metal-border: #b8946f;
+  --metal-glow: rgba(196, 160, 120, 0.3);
+}
+
+.metal-platinum {
+  --metal-bg: linear-gradient(135deg, #edf2fb 0%, #c3cfe3 28%, #ffffff 50%, #b8c6dd 72%, #e1e8f5 100%);
+  --metal-text: #15213a;
+  --metal-border: #93a3bf;
+  --metal-glow: rgba(147, 163, 191, 0.3);
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .metal-badge::after {
+    animation: none;
+    display: none;
+  }
+}
+
+/* ------------------------------------------------------------------ */
+/*  Year coin: scalloped "cookie" metal coin (Google Pay-style)         */
+/*  .year-coin takes a .metal-* class for its finish. The wavy rim      */
+/*  slowly turns and breathes; the engraved face stays upright.         */
+/* ------------------------------------------------------------------ */
+.year-coin {
+  --scallop-mask: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'%3E%3Cpath d='M50.00 7.34L50.67 7.04L51.37 6.40L52.09 5.73L52.82 5.12L53.58 4.57L54.34 4.09L55.11 3.67L55.90 3.31L56.69 3.01L57.48 2.76L58.28 2.57L59.08 2.42L59.87 2.32L60.67 2.27L61.46 2.27L62.25 2.31L63.02 2.40L63.79 2.53L64.55 2.70L65.30 2.92L66.03 3.18L66.75 3.49L67.45 3.83L68.13 4.22L68.79 4.65L69.42 5.11L70.04 5.62L70.62 6.17L71.18 6.76L71.71 7.39L72.21 8.06L72.67 8.76L73.09 9.51L73.47 10.31L73.81 11.14L74.10 12.03L74.33 12.96L74.52 13.92L74.71 14.85L75.07 15.49L75.80 15.64L76.74 15.53L77.71 15.41L78.67 15.35L79.60 15.35L80.50 15.41L81.37 15.53L82.21 15.70L83.03 15.92L83.82 16.18L84.58 16.49L85.31 16.84L86.01 17.23L86.69 17.66L87.33 18.12L87.94 18.61L88.52 19.14L89.06 19.70L89.57 20.29L90.05 20.90L90.49 21.55L90.89 22.21L91.25 22.90L91.57 23.62L91.86 24.35L92.10 25.10L92.30 25.88L92.45 26.66L92.55 27.47L92.61 28.29L92.62 29.12L92.58 29.96L92.48 30.82L92.32 31.69L92.10 32.56L91.82 33.44L91.46 34.33L91.04 35.22L90.65 36.08L90.57 36.82L91.07 37.37L91.89 37.83L92.75 38.30L93.56 38.82L94.31 39.36L95.00 39.94L95.64 40.55L96.22 41.18L96.75 41.84L97.24 42.52L97.67 43.22L98.06 43.93L98.40 44.66L98.69 45.40L98.94 46.15L99.14 46.91L99.30 47.68L99.41 48.45L99.48 49.22L99.50 50.00L99.48 50.78L99.41 51.55L99.30 52.32L99.14 53.09L98.94 53.85L98.69 54.60L98.40 55.34L98.06 56.07L97.67 56.78L97.24 57.48L96.75 58.16L96.22 58.82L95.64 59.45L95.00 60.06L94.31 60.64L93.56 61.18L92.75 61.70L91.89 62.17L91.07 62.63L90.57 63.18L90.65 63.92L91.04 64.78L91.46 65.67L91.82 66.56L92.10 67.44L92.32 68.31L92.48 69.18L92.58 70.04L92.62 70.88L92.61 71.71L92.55 72.53L92.45 73.34L92.30 74.12L92.10 74.90L91.86 75.65L91.57 76.38L91.25 77.10L90.89 77.79L90.49 78.45L90.05 79.10L89.57 79.71L89.06 80.30L88.52 80.86L87.94 81.39L87.33 81.88L86.69 82.34L86.01 82.77L85.31 83.16L84.58 83.51L83.82 83.82L83.03 84.08L82.21 84.30L81.37 84.47L80.50 84.59L79.60 84.65L78.67 84.65L77.71 84.59L76.74 84.47L75.80 84.36L75.07 84.51L74.71 85.15L74.52 86.08L74.33 87.04L74.10 87.97L73.81 88.86L73.47 89.69L73.09 90.49L72.67 91.24L72.21 91.94L71.71 92.61L71.18 93.24L70.62 93.83L70.04 94.38L69.42 94.89L68.79 95.35L68.13 95.78L67.45 96.17L66.75 96.51L66.03 96.82L65.30 97.08L64.55 97.30L63.79 97.47L63.02 97.60L62.25 97.69L61.46 97.73L60.67 97.73L59.87 97.68L59.08 97.58L58.28 97.43L57.48 97.24L56.69 96.99L55.90 96.69L55.11 96.33L54.34 95.91L53.58 95.43L52.82 94.88L52.09 94.27L51.37 93.60L50.67 92.96L50.00 92.66L49.33 92.96L48.63 93.60L47.91 94.27L47.18 94.88L46.42 95.43L45.66 95.91L44.89 96.33L44.10 96.69L43.31 96.99L42.52 97.24L41.72 97.43L40.92 97.58L40.13 97.68L39.33 97.73L38.54 97.73L37.75 97.69L36.98 97.60L36.21 97.47L35.45 97.30L34.70 97.08L33.97 96.82L33.25 96.51L32.55 96.17L31.87 95.78L31.21 95.35L30.58 94.89L29.96 94.38L29.38 93.83L28.82 93.24L28.29 92.61L27.79 91.94L27.33 91.24L26.91 90.49L26.53 89.69L26.19 88.86L25.90 87.97L25.67 87.04L25.48 86.08L25.29 85.15L24.93 84.51L24.20 84.36L23.26 84.47L22.29 84.59L21.33 84.65L20.40 84.65L19.50 84.59L18.63 84.47L17.79 84.30L16.97 84.08L16.18 83.82L15.42 83.51L14.69 83.16L13.99 82.77L13.31 82.34L12.67 81.88L12.06 81.39L11.48 80.86L10.94 80.30L10.43 79.71L9.95 79.10L9.51 78.45L9.11 77.79L8.75 77.10L8.43 76.38L8.14 75.65L7.90 74.90L7.70 74.12L7.55 73.34L7.45 72.53L7.39 71.71L7.38 70.88L7.42 70.04L7.52 69.18L7.68 68.31L7.90 67.44L8.18 66.56L8.54 65.67L8.96 64.78L9.35 63.92L9.43 63.18L8.93 62.63L8.11 62.17L7.25 61.70L6.44 61.18L5.69 60.64L5.00 60.06L4.36 59.45L3.78 58.82L3.25 58.16L2.76 57.48L2.33 56.78L1.94 56.07L1.60 55.34L1.31 54.60L1.06 53.85L0.86 53.09L0.70 52.32L0.59 51.55L0.52 50.78L0.50 50.00L0.52 49.22L0.59 48.45L0.70 47.68L0.86 46.91L1.06 46.15L1.31 45.40L1.60 44.66L1.94 43.93L2.33 43.22L2.76 42.52L3.25 41.84L3.78 41.18L4.36 40.55L5.00 39.94L5.69 39.36L6.44 38.82L7.25 38.30L8.11 37.83L8.93 37.37L9.43 36.82L9.35 36.08L8.96 35.22L8.54 34.33L8.18 33.44L7.90 32.56L7.68 31.69L7.52 30.82L7.42 29.96L7.38 29.12L7.39 28.29L7.45 27.47L7.55 26.66L7.70 25.88L7.90 25.10L8.14 24.35L8.43 23.62L8.75 22.90L9.11 22.21L9.51 21.55L9.95 20.90L10.43 20.29L10.94 19.70L11.48 19.14L12.06 18.61L12.67 18.12L13.31 17.66L13.99 17.23L14.69 16.84L15.42 16.49L16.18 16.18L16.97 15.92L17.79 15.70L18.63 15.53L19.50 15.41L20.40 15.35L21.33 15.35L22.29 15.41L23.26 15.53L24.20 15.64L24.93 15.49L25.29 14.85L25.48 13.92L25.67 12.96L25.90 12.03L26.19 11.14L26.53 10.31L26.91 9.51L27.33 8.76L27.79 8.06L28.29 7.39L28.82 6.76L29.38 6.17L29.96 5.62L30.58 5.11L31.21 4.65L31.87 4.22L32.55 3.83L33.25 3.49L33.97 3.18L34.70 2.92L35.45 2.70L36.21 2.53L36.98 2.40L37.75 2.31L38.54 2.27L39.33 2.27L40.13 2.32L40.92 2.42L41.72 2.57L42.52 2.76L43.31 3.01L44.10 3.31L44.89 3.67L45.66 4.09L46.42 4.57L47.18 5.12L47.91 5.73L48.63 6.40L49.33 7.04Z'/%3E%3C/svg%3E");
+  /* Positioned by the component (absolute, top-right); children are absolutely placed inside it */
+  width: 64px;
+  height: 64px;
+  display: grid;
+  place-items: center;
+  filter: drop-shadow(0 4px 10px var(--metal-glow)) drop-shadow(0 1px 1px rgba(0, 0, 0, 0.3));
+}
+
+.year-coin__spin {
+  position: absolute;
+  inset: 0;
+  animation: coin-spin 18s linear infinite, coin-breathe 3.2s ease-in-out infinite;
+}
+
+.year-coin__edge,
+.year-coin__rim {
+  position: absolute;
+  -webkit-mask: var(--scallop-mask) center / contain no-repeat;
+  mask: var(--scallop-mask) center / contain no-repeat;
+}
+
+/* Darker bevel line around the scallops */
+.year-coin__edge {
+  inset: 0;
+  background: var(--metal-border);
+}
+
+/* Polished metal rim */
+.year-coin__rim {
+  inset: 2px;
+  background: var(--metal-bg);
+}
+
+/* Raised, engraved centre face */
+.year-coin__face {
+  position: relative;
+  z-index: 1;
+  width: 70%;
+  height: 70%;
+  border-radius: 9999px;
+  overflow: hidden;
+  isolation: isolate;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  background: var(--metal-bg);
+  color: var(--metal-text);
+  text-shadow: 0 1px 0 rgba(255, 255, 255, 0.55);
+  box-shadow:
+    0 0 0 1px var(--metal-border),
+    inset 0 2px 3px rgba(0, 0, 0, 0.28),
+    inset 0 -2px 2px rgba(255, 255, 255, 0.75);
+}
+
+/* Glint sweeping across the face */
+.year-coin__face::after {
+  content: '';
+  position: absolute;
+  top: -30%;
+  bottom: -30%;
+  left: -80%;
+  width: 70%;
+  background: linear-gradient(100deg, transparent 0%, rgba(255, 255, 255, 0.32) 50%, transparent 100%);
+  transform: translateX(0) skewX(-20deg);
+  animation: metal-shine 4.4s ease-in-out infinite;
+  pointer-events: none;
+  z-index: -1;
+}
+
+@keyframes coin-spin {
+  to {
+    rotate: 360deg;
+  }
+}
+
+@keyframes coin-breathe {
+  0%,
+  100% {
+    scale: 1;
+  }
+
+  50% {
+    scale: 1.06;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .year-coin__spin,
+  .year-coin__face::after {
+    animation: none;
+  }
+}
+
 /* reCAPTCHA v3 floating badge: hidden, with the required attribution text shown in the
    contact form instead (allowed by Google's reCAPTCHA FAQ) */
 .grecaptcha-badge {

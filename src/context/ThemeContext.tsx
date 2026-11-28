@@ -1,4 +1,5 @@
-import React, { createContext, useContext, useEffect, useState } from 'react';
+import React, { createContext, useContext, useEffect, useRef, useState } from 'react';
+import { withThemeTransition } from '../lib/themeTransition';
 
 type Theme = 'dark' | 'light';
 
@@ -9,6 +10,14 @@ interface ThemeContextType {
 }
 
 const ThemeContext = createContext<ThemeContextType | undefined>(undefined);
+
+/** Reflects the theme on <html> (data-theme attribute + dark/light class). */
+function applyThemeToDocument(theme: Theme) {
+  const root = document.documentElement;
+  root.setAttribute('data-theme', theme);
+  root.classList.toggle('dark', theme === 'dark');
+  root.classList.toggle('light', theme === 'light');
+}
 
 export const ThemeProvider: React.FC<{ children: React.ReactNode }> = ({ children }) => {
   const [theme, setThemeState] = useState<Theme>(() => {
@@ -21,16 +30,12 @@ export const ThemeProvider: React.FC<{ children: React.ReactNode }> = ({ childre
     return 'light'; // default cinematic light
   });
 
+  // Latest theme, so rapid repeated toggles always flip from the current value
+  const themeRef = useRef(theme);
+  themeRef.current = theme;
+
   useEffect(() => {
-    const root = document.documentElement;
-    root.setAttribute('data-theme', theme);
-    if (theme === 'dark') {
-      root.classList.add('dark');
-      root.classList.remove('light');
-    } else {
-      root.classList.add('light');
-      root.classList.remove('dark');
-    }
+    applyThemeToDocument(theme);
     try {
       localStorage.setItem('naresh_theme', theme);
     } catch {
@@ -38,12 +43,25 @@ export const ThemeProvider: React.FC<{ children: React.ReactNode }> = ({ childre
     }
   }, [theme]);
 
+  /**
+   * Switches theme with a diagonal wipe: the new theme sweeps in from the top-right
+   * corner (where the toggle lives) to the bottom-left, via the View Transitions API.
+   * Falls back to an instant switch where unsupported or when reduced motion is preferred.
+   */
+  const changeTheme = (next: Theme) => {
+    if (next === themeRef.current) return;
+    withThemeTransition(() => {
+      setThemeState(next);
+      applyThemeToDocument(next);
+    });
+  };
+
   const toggleTheme = () => {
-    setThemeState((prev) => (prev === 'dark' ? 'light' : 'dark'));
+    changeTheme(themeRef.current === 'dark' ? 'light' : 'dark');
   };
 
   const setTheme = (t: Theme) => {
-    setThemeState(t);
+    changeTheme(t);
   };
 
   return (

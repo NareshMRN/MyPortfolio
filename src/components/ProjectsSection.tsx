@@ -1,5 +1,5 @@
-import React, { useState, useEffect, useRef, useCallback } from 'react';
-import { motion, AnimatePresence } from 'framer-motion';
+import React, { useState, useEffect, useLayoutEffect, useRef, useCallback } from 'react';
+import { motion, AnimatePresence, useIsPresent } from 'framer-motion';
 import { ChevronLeft, ChevronRight, ExternalLink, Play, ArrowRight, Layers } from 'lucide-react';
 import { GithubIcon } from './Icons';
 import { Link } from 'react-router-dom';
@@ -10,8 +10,34 @@ import { TechBadge } from './TechBadge';
 import { StatusBadge } from './StatusBadge';
 import { TeamMemberCard } from './TeamMemberCard';
 
+// One smooth, linear-feeling glide shared by the slide and the height adjustment
+const SLIDE_TRANSITION = { duration: 0.55, ease: [0.22, 1, 0.36, 1] as const };
+
+/**
+ * Reports the height of the slide it is rendered in, so the track can ease to the
+ * active card's height. Only the entering (present) slide reports — the exiting one
+ * is ignored while it glides out.
+ */
+const SlideHeightReporter: React.FC<{ onHeight: (h: number) => void }> = ({ onHeight }) => {
+  const markerRef = useRef<HTMLSpanElement>(null);
+  const isPresent = useIsPresent();
+
+  useLayoutEffect(() => {
+    const slide = markerRef.current?.parentElement;
+    if (!slide || !isPresent) return;
+    const report = () => onHeight(slide.offsetHeight);
+    report();
+    const observer = new ResizeObserver(report);
+    observer.observe(slide);
+    return () => observer.disconnect();
+  }, [isPresent, onHeight]);
+
+  return <span ref={markerRef} aria-hidden="true" className="hidden" />;
+};
+
 export const ProjectsSection: React.FC = () => {
   const [currentIndex, setCurrentIndex] = useState(0);
+  const [trackHeight, setTrackHeight] = useState<number | 'auto'>('auto');
   const [direction, setDirection] = useState<'forward' | 'backward'>('forward');
   const total = PROJECTS.length;
   const containerRef = useRef<HTMLDivElement>(null);
@@ -68,18 +94,17 @@ export const ProjectsSection: React.FC = () => {
 
   const currentProject = PROJECTS[currentIndex];
 
+  // Carousel track: the outgoing and incoming cards travel together along one straight
+  // horizontal line (full card width), so there is no vertical movement or fade gap.
   const sliderVariants = {
     enter: (dir: 'forward' | 'backward') => ({
-      x: dir === 'forward' ? 60 : -60,
-      opacity: 0,
+      x: dir === 'forward' ? '100%' : '-100%',
     }),
     center: {
-      x: 0,
-      opacity: 1,
+      x: '0%',
     },
     exit: (dir: 'forward' | 'backward') => ({
-      x: dir === 'forward' ? -60 : 60,
-      opacity: 0,
+      x: dir === 'forward' ? '-100%' : '100%',
     }),
   };
 
@@ -178,8 +203,15 @@ export const ProjectsSection: React.FC = () => {
         </div>
 
         {/* Horizontal Slider Area */}
-        <div className="relative min-h-[540px] flex items-center justify-center">
-          <AnimatePresence mode="wait" custom={direction}>
+        {/* Height eases to the active card's height (no snapping when cards differ),
+            and cards are top-aligned so nothing re-centres vertically mid-slide. */}
+        <motion.div
+          className="relative w-full"
+          animate={{ height: trackHeight }}
+          initial={false}
+          transition={SLIDE_TRANSITION}
+        >
+          <AnimatePresence mode="popLayout" initial={false} custom={direction}>
             <motion.div
               key={currentProject.id}
               custom={direction}
@@ -187,9 +219,10 @@ export const ProjectsSection: React.FC = () => {
               initial="enter"
               animate="center"
               exit="exit"
-              transition={{ duration: 0.38, ease: [0.16, 1, 0.3, 1] }}
+              transition={SLIDE_TRANSITION}
               className="w-full"
             >
+              <SlideHeightReporter onHeight={setTrackHeight} />
               {/* Card Container with Glass & Cinematic Styling */}
               <GlassCard className="p-4 sm:p-8 lg:p-12 shadow-2xl card-gold-border">
                 {/* Big Background Watermark Number */}
@@ -354,7 +387,7 @@ export const ProjectsSection: React.FC = () => {
               </GlassCard>
             </motion.div>
           </AnimatePresence>
-        </div>
+        </motion.div>
 
         {/* Thumbnail Dots Bar */}
         <div className="flex flex-wrap items-center justify-center gap-1 mt-6">

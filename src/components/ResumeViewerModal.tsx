@@ -15,6 +15,7 @@ import {
 } from 'lucide-react';
 import { PERSONAL_INFO } from '../data/content';
 import { useTheme } from '../context/ThemeContext';
+import { withThemeTransition } from '../lib/themeTransition';
 
 interface ResumeViewerModalProps {
   isOpen: boolean;
@@ -255,7 +256,7 @@ export const ResumeViewerModal: React.FC<ResumeViewerModalProps> = ({ isOpen, on
                 {/* Manual Document reading tone toggle (defaults to White Doc until clicked) */}
                 <button
                   type="button"
-                  onClick={() => setInvertDoc((prev) => !prev)}
+                  onClick={() => withThemeTransition(() => setInvertDoc((prev) => !prev))}
                   className={`inline-flex items-center justify-center p-2 sm:px-3 sm:py-1.5 rounded-lg text-xs font-mono-code uppercase tracking-wider border transition-all cursor-pointer shrink-0 ${isDark
                     ? 'border-white/15 bg-white/5 text-zinc-300 hover:border-white/40 hover:text-white'
                     : 'border-black/15 bg-black/5 text-zinc-700 hover:border-black/30 hover:text-black'

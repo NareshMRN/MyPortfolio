@@ -143,37 +143,51 @@ export const TECH_CONFIG: Record<string, TechMeta> = {
     ),
   },
 
-  // FAISS
+  // FAISS (Meta AI) - official Meta logo; FAISS has no standalone logo
   faiss: {
-    color: '#FF6F00',
+    color: '#0467DF',
     icon: (
-      <svg className="w-3.5 h-3.5" viewBox="0 0 24 24" fill="none" stroke="#FF6F00" strokeWidth="2.5">
-        <circle cx="11" cy="11" r="7" />
-        <path d="M21 21l-4.35-4.35M11 8v6M8 11h6" />
-      </svg>
+      <img
+        src="/images/tech/faiss-meta.svg"
+        alt="FAISS by Meta AI"
+        className="w-full h-full object-contain select-none pointer-events-none"
+        loading="lazy"
+        decoding="async"
+        width={24}
+        height={24}
+      />
     ),
   },
 
-  // Gradio
+  // Gradio - official logo (Simple Icons, CC0)
   gradio: {
-    color: '#FF7C00',
+    color: '#F97316',
     icon: (
-      <svg className="w-3.5 h-3.5" viewBox="0 0 24 24" fill="#FF7C00">
-        <rect x="2" y="2" width="9" height="9" rx="2" />
-        <rect x="13" y="2" width="9" height="9" rx="2" fillOpacity="0.7" />
-        <rect x="2" y="13" width="9" height="9" rx="2" fillOpacity="0.7" />
-        <circle cx="17.5" cy="17.5" r="4.5" />
-      </svg>
+      <img
+        src="/images/tech/gradio.svg"
+        alt="Gradio"
+        className="w-full h-full object-contain select-none pointer-events-none"
+        loading="lazy"
+        decoding="async"
+        width={24}
+        height={24}
+      />
     ),
   },
 
-  // Jetpack Compose
+  // Jetpack Compose - official logo (Devicon, MIT)
   'jetpack compose': {
     color: '#4285F4',
     icon: (
-      <svg className="w-3.5 h-3.5" viewBox="0 0 24 24" fill="#4285F4">
-        <path d="M12 2L2 7l10 5 10-5-10-5zm0 8.5L5.5 8 12 4.8 18.5 8 12 10.5zM2 17l10 5 10-5-2.5-1.25L12 19.5 4.5 15.75 2 17zm0-5l10 5 10-5-2.5-1.25L12 14.5 4.5 10.75 2 12z" />
-      </svg>
+      <img
+        src="/images/tech/jetpack-compose.svg"
+        alt="Jetpack Compose"
+        className="w-full h-full object-contain select-none pointer-events-none"
+        loading="lazy"
+        decoding="async"
+        width={24}
+        height={24}
+      />
     ),
   },
 
@@ -439,35 +453,34 @@ export const TECH_CONFIG: Record<string, TechMeta> = {
     ),
   },
 
-  // HuggingFace - Official Hugging Face Emoji Logo
+  // Hugging Face - official logo (huggingface.co)
   huggingface: {
     color: '#FFD21E',
     icon: (
-      <svg className="w-3.5 h-3.5" viewBox="0 0 24 24" fill="none">
-        <circle cx="12" cy="12" r="11" fill="#FFD21E" />
-        <ellipse cx="8" cy="9.5" rx="1.2" ry="1.6" fill="#000000" />
-        <ellipse cx="16" cy="9.5" rx="1.2" ry="1.6" fill="#000000" />
-        <ellipse cx="6" cy="12" rx="1.4" ry="0.9" fill="#FF7043" opacity="0.65" />
-        <ellipse cx="18" cy="12" rx="1.4" ry="0.9" fill="#FF7043" opacity="0.65" />
-        <path d="M7.5 13.5c1.2 3.2 7.8 3.2 9 0" stroke="#000000" strokeWidth="1.6" strokeLinecap="round" />
-        <path d="M2.2 16.2c1.8-2.6 4.6-1.2 4 1.8-.5 2.2-2.8 1.8-4-1.8z" fill="#FFA726" stroke="#E65100" strokeWidth="0.4" />
-        <path d="M21.8 16.2c-1.8-2.6-4.6-1.2-4 1.8.5 2.2 2.8 1.8 4-1.8z" fill="#FFA726" stroke="#E65100" strokeWidth="0.4" />
-      </svg>
+      <img
+        src="/images/tech/huggingface.svg"
+        alt="Hugging Face"
+        className="w-full h-full object-contain select-none pointer-events-none"
+        loading="lazy"
+        decoding="async"
+        width={24}
+        height={24}
+      />
     ),
   },
+  // Hugging Face - official logo (huggingface.co)
   'hugging face': {
     color: '#FFD21E',
     icon: (
-      <svg className="w-3.5 h-3.5" viewBox="0 0 24 24" fill="none">
-        <circle cx="12" cy="12" r="11" fill="#FFD21E" />
-        <ellipse cx="8" cy="9.5" rx="1.2" ry="1.6" fill="#000000" />
-        <ellipse cx="16" cy="9.5" rx="1.2" ry="1.6" fill="#000000" />
-        <ellipse cx="6" cy="12" rx="1.4" ry="0.9" fill="#FF7043" opacity="0.65" />
-        <ellipse cx="18" cy="12" rx="1.4" ry="0.9" fill="#FF7043" opacity="0.65" />
-        <path d="M7.5 13.5c1.2 3.2 7.8 3.2 9 0" stroke="#000000" strokeWidth="1.6" strokeLinecap="round" />
-        <path d="M2.2 16.2c1.8-2.6 4.6-1.2 4 1.8-.5 2.2-2.8 1.8-4-1.8z" fill="#FFA726" stroke="#E65100" strokeWidth="0.4" />
-        <path d="M21.8 16.2c-1.8-2.6-4.6-1.2-4 1.8.5 2.2 2.8 1.8 4-1.8z" fill="#FFA726" stroke="#E65100" strokeWidth="0.4" />
-      </svg>
+      <img
+        src="/images/tech/huggingface.svg"
+        alt="Hugging Face"
+        className="w-full h-full object-contain select-none pointer-events-none"
+        loading="lazy"
+        decoding="async"
+        width={24}
+        height={24}
+      />
     ),
   },
 
@@ -599,13 +612,19 @@ export const TECH_CONFIG: Record<string, TechMeta> = {
     ),
   },
 
-  // MySQL
+  // MySQL - official dolphin logo (Devicon, MIT)
   mysql: {
     color: '#4479A1',
     icon: (
-      <svg className="w-3.5 h-3.5" viewBox="0 0 24 24" fill="#4479A1">
-        <path d="M12 3C6.5 3 2 7 2 12c0 3.5 2.2 6.5 5.5 8 1-.8 1.5-2.2 1.5-3.8 0-2.8-1.5-4.8-1.5-6.2 0-1.5 1-2.5 2.5-2.5s2.5 1 2.5 2.5c0 1.4-1.5 3.4-1.5 6.2 0 1.6.5 3 1.5 3.8 3.3-1.5 5.5-4.5 5.5-8 0-5-4.5-9-10-9z" />
-      </svg>
+      <img
+        src="/images/tech/mysql.svg"
+        alt="MySQL"
+        className="w-full h-full object-contain select-none pointer-events-none"
+        loading="lazy"
+        decoding="async"
+        width={24}
+        height={24}
+      />
     ),
   },
 
@@ -641,13 +660,19 @@ export const TECH_CONFIG: Record<string, TechMeta> = {
     ),
   },
 
-  // Postman - Official Spaceman Icon
+  // Postman - official logo (Devicon, MIT)
   postman: {
     color: '#FF6C37',
     icon: (
-      <svg className="w-3.5 h-3.5" viewBox="0 0 24 24" fill="#FF6C37">
-        <path d="M13.684 0a10.316 10.316 0 0 0-8.814 15.658L0 24l8.342-4.87A10.316 10.316 0 1 0 13.684 0zm5.176 13.918l-5.69-2.31a.81.81 0 0 1-.458-.518l-1.39-4.865a.81.81 0 0 1 1.488-.56l1.792 3.823 4.43 1.802a.81.81 0 0 1-.172 1.628z" />
-      </svg>
+      <img
+        src="/images/tech/postman.svg"
+        alt="Postman"
+        className="w-full h-full object-contain select-none pointer-events-none"
+        loading="lazy"
+        decoding="async"
+        width={24}
+        height={24}
+      />
     ),
   },
 
