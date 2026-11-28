@@ -1,18 +1,25 @@
 import React, { useRef, useState, type FormEvent, type KeyboardEvent } from 'react';
-import { motion, useInView } from 'framer-motion';
+import { motion, useInView, AnimatePresence } from 'framer-motion';
 import { ArrowUpRight, Download, Send, Terminal, CheckCircle2, AlertCircle, Loader2 } from 'lucide-react';
 import { PERSONAL_INFO } from '../data/content';
 import { SocialIcons } from './SocialIcons';
 
 const sleep = (ms: number) => new Promise((resolve) => setTimeout(resolve, ms));
 
+// Contact form messages are capped to deter spam/lengthy junk submissions;
+// genuine longer messages are pointed to email instead.
+const MESSAGE_MAX_LENGTH = 100;
+
 export const ContactSection: React.FC = () => {
   const sectionRef = useRef<HTMLElement>(null);
   const isInView = useInView(sectionRef, { once: true, margin: '-80px' });
 
   const [formData, setFormData] = useState({ name: '', email: '', message: '' });
+  const messageLength = formData.message.length;
+  const messageAtLimit = messageLength >= MESSAGE_MAX_LENGTH;
   const [status, setStatus] = useState<'idle' | 'sending' | 'success' | 'error'>('idle');
-  const [terminalLogs, setTerminalLogs] = useState<string[]>([]);
+  // Single-line terminal status: each step replaces the previous line in place
+  const [terminalLine, setTerminalLine] = useState('');
 
   const emailInputRef = useRef<HTMLInputElement>(null);
   const messageInputRef = useRef<HTMLTextAreaElement>(null);
@@ -39,22 +46,29 @@ export const ContactSection: React.FC = () => {
 
     if (!formData.name.trim() || !formData.email.trim() || !formData.message.trim()) {
       setStatus('error');
-      setTerminalLogs(['zsh: validation error: all parameters (name, email, message) are required']);
+      setTerminalLine('zsh: validation error: name, email and message are all required');
+      return;
+    }
+
+    // Guard against the textarea limit being bypassed (e.g. edited via devtools)
+    if (formData.message.trim().length > MESSAGE_MAX_LENGTH) {
+      setStatus('error');
+      setTerminalLine(`zsh: message exceeds ${MESSAGE_MAX_LENGTH} characters — for longer messages email ${PERSONAL_INFO.email}`);
       return;
     }
 
     setStatus('sending');
-    setTerminalLogs(['Establishing secure connection...']);
+    setTerminalLine('Establishing secure connection...');
 
     const { name, email, message } = formData;
     const formspreeId = (import.meta.env.VITE_FORMSPREE_ID || 'mrpeyjyl').trim();
 
     try {
       await sleep(350);
-      setTerminalLogs((prev) => [...prev, 'Encrypting message packet...']);
+      setTerminalLine('Encrypting message packet...');
 
       await sleep(350);
-      setTerminalLogs((prev) => [...prev, 'Dispatching to destination...']);
+      setTerminalLine('Dispatching to destination...');
 
       const response = await fetch(`https://formspree.io/f/${formspreeId}`, {
         method: 'POST',
@@ -71,17 +85,11 @@ export const ContactSection: React.FC = () => {
       });
 
       if (response.ok) {
-        await sleep(300);
-        setTerminalLogs((prev) => [...prev, 'Dispatching to destination... [DONE]']);
+        await sleep(350);
+        setTerminalLine('Dispatching to destination... [DONE]');
 
-        await sleep(300);
-        setTerminalLogs((prev) => [...prev, '✓ Message transmitted successfully']);
-
-        await sleep(300);
-        setTerminalLogs((prev) => [...prev, `✓ Notification delivered to ${PERSONAL_INFO.email}`]);
-
-        await sleep(300);
-        setTerminalLogs((prev) => [...prev, 'Process completed with status code 0 (SUCCESS)']);
+        await sleep(450);
+        setTerminalLine('✓ Message sent successfully — I will get back to you soon');
 
         setStatus('success');
         setFormData({ name: '', email: '', message: '' });
@@ -94,14 +102,11 @@ export const ContactSection: React.FC = () => {
         throw new Error(errorMsg);
       }
     } catch (err: any) {
+      // The technical reason (e.g. a Formspree/reCAPTCHA rejection) goes to the console
+      // for debugging only; visitors see a friendly message with the email fallback.
       console.error('Form submission error:', err);
       await sleep(250);
-      setTerminalLogs((prev) => [
-        ...prev,
-        'zsh: fatal: transmission interrupted',
-        '✗ Error: Unable to deliver message right now',
-        `Direct dispatch fallback: ${PERSONAL_INFO.email}`,
-      ]);
+      setTerminalLine(`✗ Couldn't send your message right now — please email ${PERSONAL_INFO.email}`);
       setStatus('error');
     }
   };
@@ -333,12 +338,52 @@ export const ContactSection: React.FC = () => {
                       name="message"
                       rows={3}
                       required
+                      maxLength={MESSAGE_MAX_LENGTH}
+                      aria-describedby="mac-message-counter"
                       disabled={status === 'sending'}
                       value={formData.message}
-                      onChange={(e) => setFormData({ ...formData, message: e.target.value })}
-                      placeholder="Enter details of your project, opportunity or message..."
-                      className="w-full bg-[#11131b] border border-white/15 rounded-lg px-3.5 py-2.5 text-white placeholder-zinc-600 focus:outline-none focus:border-cyan-400 focus:ring-1 focus:ring-cyan-400 transition-all font-mono-code resize-none disabled:opacity-60 disabled:cursor-not-allowed"
+                      onChange={(e) =>
+                        setFormData({ ...formData, message: e.target.value.slice(0, MESSAGE_MAX_LENGTH) })
+                      }
+                      placeholder={`Short message (max ${MESSAGE_MAX_LENGTH} characters)...`}
+                      className={`w-full bg-[#11131b] border rounded-lg px-3.5 py-2.5 text-white placeholder-zinc-600 focus:outline-none focus:ring-1 transition-all font-mono-code resize-none disabled:opacity-60 disabled:cursor-not-allowed ${messageAtLimit
+                        ? 'border-red-400/70 focus:border-red-400 focus:ring-red-400'
+                        : 'border-white/15 focus:border-cyan-400 focus:ring-cyan-400'
+                        }`}
                     />
+                  </div>
+
+                  {/* Character counter + email fallback for longer messages */}
+                  <div
+                    id="mac-message-counter"
+                    className="flex items-start justify-between gap-3 text-[10.5px] leading-snug"
+                  >
+                    <span className={messageAtLimit ? 'text-red-400' : 'text-zinc-500'}>
+                      {messageAtLimit ? (
+                        <>
+                          Limit reached. For a longer message, email{' '}
+                          <a
+                            href={`mailto:${PERSONAL_INFO.email}`}
+                            className="underline underline-offset-2 text-cyan-300 hover:text-cyan-200"
+                          >
+                            {PERSONAL_INFO.email}
+                          </a>
+                        </>
+                      ) : (
+                        'Keep it short; longer messages go by email.'
+                      )}
+                    </span>
+                    <span
+                      aria-live="polite"
+                      className={`shrink-0 tabular-nums font-semibold ${messageAtLimit
+                        ? 'text-red-400'
+                        : messageLength >= MESSAGE_MAX_LENGTH - 20
+                          ? 'text-amber-400'
+                          : 'text-zinc-500'
+                        }`}
+                    >
+                      {messageLength}/{MESSAGE_MAX_LENGTH}
+                    </span>
                   </div>
                 </div>
 
@@ -366,10 +411,12 @@ export const ContactSection: React.FC = () => {
                   </button>
                 </div>
 
-                {/* Terminal Live Output Logs */}
-                {terminalLogs.length > 0 && (
+                {/* Terminal Live Output: a single line, each step replaces the previous one */}
+                {terminalLine && (
                   <div
-                    className="p-3.5 rounded-lg border text-[11px] leading-relaxed space-y-1.5 font-mono-code bg-[#08090d] transition-all duration-300"
+                    role="status"
+                    aria-live="polite"
+                    className="px-3.5 py-3 rounded-lg border text-[11px] leading-relaxed font-mono-code bg-[#08090d] transition-colors duration-300 min-h-[2.75rem] flex items-center overflow-hidden"
                     style={{
                       borderColor:
                         status === 'success'
@@ -379,29 +426,29 @@ export const ContactSection: React.FC = () => {
                             : 'rgba(255, 255, 255, 0.1)',
                     }}
                   >
-                    {terminalLogs.map((log, idx) => (
+                    <AnimatePresence mode="wait" initial={false}>
                       <motion.div
-                        key={idx}
-                        initial={{ opacity: 0, y: 3 }}
+                        key={terminalLine}
+                        initial={{ opacity: 0, y: 4 }}
                         animate={{ opacity: 1, y: 0 }}
-                        transition={{ duration: 0.25 }}
-                        className={`flex items-center gap-2 ${log.startsWith('✓')
+                        exit={{ opacity: 0, y: -4 }}
+                        transition={{ duration: 0.18 }}
+                        className={`flex items-start gap-2 w-full ${terminalLine.startsWith('✓')
                           ? 'text-emerald-400 font-bold'
-                          : log.startsWith('✗') || log.startsWith('zsh:')
+                          : terminalLine.startsWith('✗') || terminalLine.startsWith('zsh:')
                             ? 'text-red-400 font-bold'
                             : 'text-zinc-400'
                           }`}
                       >
                         <span className="text-zinc-600 select-none">{'>'}</span>
-                        <span>{log}</span>
+                        <span className="break-words min-w-0">
+                          {terminalLine}
+                          {status === 'sending' && (
+                            <span className="inline-block w-2 h-3.5 ml-1.5 align-middle bg-cyan-400 animate-pulse" />
+                          )}
+                        </span>
                       </motion.div>
-                    ))}
-                    {status === 'sending' && (
-                      <div className="flex items-center gap-2 text-cyan-400 pt-0.5">
-                        <span className="text-zinc-600 select-none">{'>'}</span>
-                        <span className="inline-block w-2 h-3.5 bg-cyan-400 animate-pulse" />
-                      </div>
-                    )}
+                    </AnimatePresence>
                   </div>
                 )}
               </form>

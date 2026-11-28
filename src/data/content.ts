@@ -147,8 +147,8 @@ export const PERSONAL_INFO = {
   quote:
     'Architecture is not just how software runs under load—it is how effortlessly it feels to the human on the other side.',
   signatureText: 'Naresh N',
-  photo: '/assets/photo.jpg',
-  photoWebp: '/assets/photo.webp',
+  photo: '/images/naresh-n-portrait-2026.jpg',
+  photoWebp: '/images/naresh-n-portrait-2026.webp',
   resumeUrl: '/resume.pdf',
   videoUrl: '/videos/hero.mp4',
   videoPoster: '/videos/hero-poster.jpg',

@@ -71,7 +71,7 @@ for (const c of certificates) {
     path: `/certificates/${c.slug}`,
     title: `${c.title} — Certificate earned by Naresh N`,
     description: c.description || `Verified technical credential and certificate earned by Naresh N.`,
-    image: img || '/og-image.jpg',
+    image: img || '/images/naresh-n-portrait-2026.jpg',
   });
 }
 
@@ -81,7 +81,7 @@ for (const a of achievements) {
     path: `/achievements/${a.slug}`,
     title: `${a.title} — Milestone by Naresh N`,
     description: a.description || `Achievement and engineering milestone by Naresh N.`,
-    image: a.image || '/og-image.jpg',
+    image: a.image || '/images/naresh-n-portrait-2026.jpg',
   });
 }
 

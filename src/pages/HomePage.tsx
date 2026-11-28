@@ -15,7 +15,7 @@ export const HomePage: React.FC = () => {
     description:
       'Official portfolio of Naresh N (NareshMRN), Full Stack & AI/ML Developer and Founder of Sangeetha based in Mangaluru, India. B.Tech CSE-IT at NIAT x Yenepoya University. Explore software projects, machine learning models, Kaggle competitions, hackathons, and certifications.',
     path: '/',
-    image: '/og-image.jpg',
+    image: '/images/naresh-n-portrait-2026.jpg',
   });
 
   return (

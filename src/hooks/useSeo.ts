@@ -23,12 +23,12 @@ const meta = (attr: 'name' | 'property', key: string, value: string) =>
         (el) => el.setAttribute('content', value),
     );
 
-export function useSeo({ title, description, path, image = '/og-image.jpg', noindex = false }: SeoProps) {
+export function useSeo({ title, description, path, image = '/images/naresh-n-portrait-2026.jpg', noindex = false }: SeoProps) {
     useEffect(() => {
         const url = SITE_URL + path;
         
         // Resolve image URL and prefer WhatsApp-optimized certificate versions if available
-        let resolvedImg = image || '/og-image.jpg';
+        let resolvedImg = image || '/images/naresh-n-portrait-2026.jpg';
         if (resolvedImg.includes('/certificates/') && !resolvedImg.includes('/certificates/og/')) {
             resolvedImg = resolvedImg.replace('/certificates/', '/certificates/og/');
         }
@@ -42,7 +42,7 @@ export function useSeo({ title, description, path, image = '/og-image.jpg', noin
         meta('name', 'description', description);
         meta('name', 'robots', noindex ? 'noindex,follow' : 'index,follow');
 
-        const isProfile = path === '/' || image === '/og-image.jpg' || image === '/assets/photo.jpg';
+        const isProfile = path === '/' || image === '/images/naresh-n-portrait-2026.jpg' || image === '/images/naresh-n-headshot-2026.jpg';
 
         // Open Graph (WhatsApp, Facebook, LinkedIn, Discord)
         meta('property', 'og:type', isProfile ? 'profile' : 'website');

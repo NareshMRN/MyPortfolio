@@ -13,16 +13,16 @@
   <!-- Core Pages -->
   <url>
     <loc>https://nareshn.me/</loc>
-    <lastmod>2026-11-06</lastmod>
+    <lastmod>2026-11-27</lastmod>
     <changefreq>weekly</changefreq>
     <priority>1.0</priority>
     <image:image>
-      <image:loc>https://nareshn.me/og-image.jpg</image:loc>
+      <image:loc>https://nareshn.me/images/naresh-n-portrait-2026.jpg</image:loc>
       <image:title>Naresh N — Full Stack Developer &amp; AI Engineer</image:title>
       <image:caption>Official Portfolio of Naresh N (NareshMRN)</image:caption>
     </image:image>
     <image:image>
-      <image:loc>https://nareshn.me/assets/photo.jpg</image:loc>
+      <image:loc>https://nareshn.me/images/naresh-n-headshot-2026.jpg</image:loc>
       <image:title>Naresh N</image:title>
       <image:caption>Portrait of Naresh N</image:caption>
     </image:image>
