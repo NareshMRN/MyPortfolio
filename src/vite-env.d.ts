@@ -8,6 +8,8 @@ interface Window {
 
 interface ImportMetaEnv {
   readonly VITE_FORMSPREE_ID?: string;
+  /** Public Google reCAPTCHA v3 site key for the contact form (secret key lives in Formspree) */
+  readonly VITE_RECAPTCHA_SITE_KEY?: string;
 }
 
 interface ImportMeta {

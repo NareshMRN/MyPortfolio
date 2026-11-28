@@ -3,6 +3,7 @@ import { motion, useInView, AnimatePresence } from 'framer-motion';
 import { ArrowUpRight, Download, Send, Terminal, CheckCircle2, AlertCircle, Loader2 } from 'lucide-react';
 import { PERSONAL_INFO } from '../data/content';
 import { SocialIcons } from './SocialIcons';
+import { RECAPTCHA_SITE_KEY, getRecaptchaToken, loadRecaptcha } from '../lib/recaptcha';
 
 const sleep = (ms: number) => new Promise((resolve) => setTimeout(resolve, ms));
 
@@ -70,18 +71,21 @@ export const ContactSection: React.FC = () => {
       await sleep(350);
       setTerminalLine('Dispatching to destination...');
 
+      // Sent form-encoded (Formspree's documented AJAX + reCAPTCHA format) with the
+      // reCAPTCHA v3 token in `g-recaptcha-response` when a site key is configured.
+      const payload = new URLSearchParams({
+        name: name.trim(),
+        email: email.trim(),
+        message: message.trim(),
+        _subject: `New Portfolio Message from ${name.trim()}`,
+      });
+      const recaptchaToken = await getRecaptchaToken('contact');
+      if (recaptchaToken) payload.set('g-recaptcha-response', recaptchaToken);
+
       const response = await fetch(`https://formspree.io/f/${formspreeId}`, {
         method: 'POST',
-        headers: {
-          'Content-Type': 'application/json',
-          Accept: 'application/json',
-        },
-        body: JSON.stringify({
-          name: name.trim(),
-          email: email.trim(),
-          message: message.trim(),
-          _subject: `New Portfolio Message from ${name.trim()}`,
-        }),
+        headers: { Accept: 'application/json' },
+        body: payload,
       });
 
       if (response.ok) {
@@ -261,7 +265,9 @@ export const ContactSection: React.FC = () => {
 
               {/* Terminal Body (Always dark terminal with full terminal syntax coloring) */}
               <form onSubmit={handleSubmit} className="p-6 sm:p-7 space-y-5 font-mono-code text-xs" action="https://formspree.io/f/mrpeyjyl"
-                method="POST">
+                method="POST"
+                // Preload reCAPTCHA as soon as the visitor starts filling the form (not on page load)
+                onFocus={() => { loadRecaptcha().catch(() => { /* retried on submit */ }); }}>
                 {/* Initial command line */}
                 <div className="flex flex-wrap items-center gap-1.5 pb-3 border-b border-white/10">
                   <span className="text-emerald-400 font-bold">naresh@portfolio</span>
@@ -450,6 +456,21 @@ export const ContactSection: React.FC = () => {
                       </motion.div>
                     </AnimatePresence>
                   </div>
+                )}
+
+                {/* Required reCAPTCHA attribution (the floating badge is hidden in index.css) */}
+                {RECAPTCHA_SITE_KEY && (
+                  <p className="text-[10px] leading-snug text-zinc-500 font-body">
+                    Protected by reCAPTCHA. The Google{' '}
+                    <a href="https://policies.google.com/privacy" target="_blank" rel="noopener noreferrer" className="underline underline-offset-2 hover:text-zinc-300">
+                      Privacy Policy
+                    </a>{' '}
+                    and{' '}
+                    <a href="https://policies.google.com/terms" target="_blank" rel="noopener noreferrer" className="underline underline-offset-2 hover:text-zinc-300">
+                      Terms of Service
+                    </a>{' '}
+                    apply.
+                  </p>
                 )}
               </form>
             </motion.div>

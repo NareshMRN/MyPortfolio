@@ -270,6 +270,12 @@ body {
   display: none;
 }
 
+/* reCAPTCHA v3 floating badge: hidden, with the required attribution text shown in the
+   contact form instead (allowed by Google's reCAPTCHA FAQ) */
+.grecaptcha-badge {
+  visibility: hidden !important;
+}
+
 /* Skills artwork idle float — transform-only so it runs on the compositor */
 @keyframes skills-idle-float {
   0%,
